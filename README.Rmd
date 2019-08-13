@@ -12,7 +12,9 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.org/news-r/textanalysis.svg?branch=master)](https://travis-ci.org/news-r/textanalysis)
 <!-- badges: end -->
 
 # textanalysis
@@ -40,4 +42,10 @@ word2vec.r::init_textanalysis() # setup word2vec Julia dependency
 
 ```{r}
 library(textanalysis)
+
+# initialise a session
+init_textanalysis()
+
+# build document
+doc <- string_document("This is a document.")
 ```
