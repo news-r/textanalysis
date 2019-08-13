@@ -86,6 +86,11 @@ get_text.document <- function(document){
   call_julia("text", document)
 }
 
+#' @rdname get_text
+#' @method get_text JuliaObject
+#' @export
+get_text.JuliaObject <- get_text.document 
+
 #' Extract Tokens
 #' 
 #' Access tokens of documents as a vector.
@@ -113,6 +118,11 @@ get_tokens <- function(document) UseMethod("get_tokens")
 get_tokens.document <- function(document){
   call_julia("tokens", document)
 }
+
+#' @rdname get_tokens
+#' @method get_tokens JuliaObject
+#' @export
+get_tokens.JuliaObject <- get_tokens.document 
 
 #' Extract NGrams
 #' 
@@ -150,6 +160,11 @@ get_ngrams.document <- function(document, ...){
   )
 }
 
+#' @rdname get_ngrams
+#' @method get_ngrams JuliaObject
+#' @export
+get_ngrams.JuliaObject <- get_ngrams.document
+
 #' Determine NGram Complexity
 #' 
 #' Determine whether an \code{ngram_document} (output of \code{\link{ngram_document}}) 
@@ -180,6 +195,11 @@ ngram_complexity <- function(document) UseMethod("ngram_complexity")
 ngram_complexity.ngram_document <- function(document){
   call_julia("ngram_complexity", document)
 }
+
+#' @rdname ngram_complexity
+#' @method ngram_complexity JuliaObject
+#' @export
+ngram_complexity.JuliaObject <- ngram_complexity.ngram_document
 
 #' Metadata
 #' 
@@ -218,6 +238,11 @@ title_.document <- function(document, ...){
 }
 
 #' @rdname document_metadata
+#' @method title_ JuliaObject
+#' @export
+title_.JuliaObject <- title_.document
+
+#' @rdname document_metadata
 #' @export
 language_ <- function(document, ...) UseMethod("language_")
 
@@ -238,6 +263,11 @@ language_.document <- function(document, ...){
 }
 
 #' @rdname document_metadata
+#' @method language_ JuliaObject
+#' @export
+language_.JuliaObject <- language_.document
+
+#' @rdname document_metadata
 #' @export
 author_ <- function(document, ...) UseMethod("author_")
 
@@ -251,6 +281,11 @@ author_.document <- function(document, ...){
 }
 
 #' @rdname document_metadata
+#' @method author_ JuliaObject
+#' @export
+author_.JuliaObject <- author_.document
+
+#' @rdname document_metadata
 #' @export
 timestamp_ <- function(document, ...) UseMethod("timestamp_")
 
@@ -262,3 +297,8 @@ timestamp_.document <- function(document, ...){
   func <- ifelse(L > 0, "timestamp!", "timestamp")
   call_julia(func, document, ...)
 }
+
+#' @rdname document_metadata
+#' @method timestamp_ JuliaObject
+#' @export
+timestamp_.JuliaObject <- timestamp_.document

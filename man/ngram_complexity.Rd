@@ -3,11 +3,14 @@
 \name{ngram_complexity}
 \alias{ngram_complexity}
 \alias{ngram_complexity.ngram_document}
+\alias{ngram_complexity.JuliaObject}
 \title{Determine NGram Complexity}
 \usage{
 ngram_complexity(document)
 
 \method{ngram_complexity}{ngram_document}(document)
+
+\method{ngram_complexity}{JuliaObject}(document)
 }
 \arguments{
 \item{document}{A document as returned by the \code{*_document} 

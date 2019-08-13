@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/news-r/textanalysis.svg?branch=master)](https://travis-ci.org/news-r/textanalysis) <!-- badges: end -->
+[![Travis build status](https://travis-ci.org/news-r/textanalysis.svg?branch=master)](https://travis-ci.org/news-r/textanalysis) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) <!-- badges: end -->
 
 textanalysis
 ============
@@ -40,13 +40,31 @@ library(textanalysis)
 doc <- string_document("They <span>write</span>, it writes too!!!")
 
 # basic cleanup
-prepare_document(doc)
-#> ⚠ This function replaces `document` in place
+prepare(doc)
+#> ⚠ This function changes `document` in place!
 get_text(doc)
 #> [1] "  write     writes  "
 
 # stem
-stem_document(doc)
+stem_words(doc)
 get_text(doc)
+#> [1] "write write"
+
+# corpus
+doc2 <- token_document("Hey another, document.")
+get_text(doc2)
+#> [1] "Hey another , document ."
+
+# combine
+corpus <- corpus(doc, doc2)
+
+# standardize
+standardize(corpus, "token_document")
+#> ⚠ This function changes `corpus` in place!
+
+# prepare corpus
+corpus <- prepare(corpus, strip_html_tags = FALSE)
+#> ⚠ This function changes `cropus` in place!
+get_text(corpus[[1]])
 #> [1] "write write"
 ```

@@ -3,11 +3,14 @@
 \name{get_ngrams}
 \alias{get_ngrams}
 \alias{get_ngrams.document}
+\alias{get_ngrams.JuliaObject}
 \title{Extract NGrams}
 \usage{
 get_ngrams(document, ...)
 
 \method{get_ngrams}{document}(document, ...)
+
+\method{get_ngrams}{JuliaObject}(document, ...)
 }
 \arguments{
 \item{document}{A document as returned by the \code{*_document} 

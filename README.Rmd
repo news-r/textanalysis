@@ -1,5 +1,7 @@
 ---
-output: github_document
+output: 
+  github_document:
+    html_preview: false
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -15,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/news-r/textanalysis.svg?branch=master)](https://travis-ci.org/news-r/textanalysis)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 # textanalysis
@@ -47,10 +50,24 @@ library(textanalysis)
 doc <- string_document("They <span>write</span>, it writes too!!!")
 
 # basic cleanup
-prepare_document(doc)
+prepare(doc)
 get_text(doc)
 
 # stem
-stem_document(doc)
+stem_words(doc)
 get_text(doc)
+
+# corpus
+doc2 <- token_document("Hey another, document.")
+get_text(doc2)
+
+# combine
+corpus <- corpus(doc, doc2)
+
+# standardize
+standardize(corpus, "token_document")
+
+# prepare corpus
+corpus <- prepare(corpus, strip_html_tags = FALSE)
+get_text(corpus[[1]])
 ```

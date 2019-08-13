@@ -2,7 +2,7 @@
 #' 
 #' Preprocess the document, note that this replaces the object in place.
 #' 
-#' @inheritParams get_text
+#' @param text An object inheriting of class \code{document} or \code{corpus}.
 #' @param remove_corrupt_utf8 Remove corrupt UTF8 characters.
 #' @param remove_case Convert to lowercase.
 #' @param strip_punctuation Remove punctuation.
@@ -28,37 +28,33 @@
 #' doc <- string_document("This <span>is</span> a very short document!!!")
 #' 
 #' # replaces in place!
-#' prepare_document(doc)
+#' prepare(doc)
 #' get_text(doc)
 #' }
 #' 
-#' @seealso \code{\link{stem_document}} to stem your document.
+#' @seealso \code{\link{stem_words}} to stem your document.
 #' 
-#' @name prepare_document
+#' @name prepare
 #' @export
-prepare_document <- function(document, ...) UseMethod("prepare_document")
+prepare <- function(text, ...) UseMethod("prepare")
 
-#' @rdname prepare_document
-#' @method prepare_document document
+#' @rdname prepare
+#' @method prepare document
 #' @export
-prepare_document.document <- function(document, remove_corrupt_utf8 = TRUE, remove_case = TRUE, strip_stopwords = TRUE, 
+prepare.document <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE, strip_stopwords = TRUE, 
   strip_numbers = TRUE, strip_html_tags = TRUE, strip_punctuation = TRUE, remove_words = NULL, strip_non_letters = FALSE, 
   strip_spares_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
   strip_indefinite_articles = FALSE, strip_definite_articles = FALSE, strip_preposition = FALSE, 
   strip_pronouns = FALSE, ...){
 
-  cat(
-    crayon::yellow(cli::symbol$warning),
-    "This function replaces `document`",
-    crayon::yellow("in place"), "\n"
-  )
+  warning_in_place("document")
   
   # warn as docs advises otherwise
   validate_that(has_corrupt(remove_corrupt_utf8))
 
-  if(remove_corrupt_utf8) call_julia("remove_corrupt_utf8!", document)
-  if(remove_case) call_julia("remove_case!", document)
-  if(!is.null(remove_words)) call_julia("remove_words!", document, remove_words)
+  if(remove_corrupt_utf8) call_julia("remove_corrupt_utf8!", text)
+  if(remove_case) call_julia("remove_case!", text)
+  if(!is.null(remove_words)) call_julia("remove_words!", text, remove_words)
 
   # use prepare function
   classes <- c(...)
@@ -76,19 +72,68 @@ prepare_document.document <- function(document, remove_corrupt_utf8 = TRUE, remo
   
   # return early if nothing to strip
   if(!length(classes))
-    return(document)
+    return(text)
 
   # keep that to re-assign later
-  keep_class <- class(document)
-  julia_assign("sd", document)
+  keep_class <- class(text)
+  julia_assign("sd", text)
 
   expr <- paste0(classes, collapse = "| ")
 
   julia_eval(paste0("prepare!(sd, ", expr, ")"))
 
-  document <- julia_eval("sd")
-  document <- structure(document, class = keep_class)
-  invisible(document)
+  text <- julia_eval("sd")
+  text <- structure(text, class = keep_class)
+  invisible(text)
+}
+
+#' @rdname prepare
+#' @method prepare corpus
+#' @export
+prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE, strip_stopwords = TRUE, 
+  strip_numbers = TRUE, strip_html_tags = TRUE, strip_punctuation = TRUE, remove_words = NULL, strip_non_letters = FALSE, 
+  strip_spares_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
+  strip_indefinite_articles = FALSE, strip_definite_articles = FALSE, strip_preposition = FALSE, 
+  strip_pronouns = FALSE, ...){
+
+  warning_in_place("cropus")
+  
+  # warn as docs advises otherwise
+  validate_that(has_corrupt(remove_corrupt_utf8))
+
+  if(remove_corrupt_utf8) call_julia("remove_corrupt_utf8!", text)
+  if(remove_case) call_julia("remove_case!", text)
+  if(!is.null(remove_words)) call_julia("remove_words!", text, remove_words)
+
+  # use prepare function
+  classes <- c(...)
+  if(strip_articles) classes <- append(classes, "strip_articles")
+  if(strip_indefinite_articles) classes <- append(classes, "strip_indefinite_articles")
+  if(strip_definite_articles) classes <- append(classes, "strip_definite_articles")
+  if(strip_preposition) classes <- append(classes, "strip_preposition")
+  if(strip_pronouns) classes <- append(classes, "strip_pronouns")
+  if(strip_stopwords) classes <- append(classes, "strip_stopwords")
+  if(strip_non_letters) classes <- append(classes, "strip_non_letters")
+  if(strip_spares_terms) classes <- append(classes, "strip_spares_terms")
+  if(strip_frequent_terms) classes <- append(classes, "strip_frequent_terms")
+  if(strip_html_tags) classes <- append(classes, "strip_html_tags")
+  if(strip_punctuation) classes <- append(classes, "strip_punctuation")
+  
+  # return early if nothing to strip
+  if(!length(classes))
+    return(text)
+
+  # keep that to re-assign later
+  keep_class <- class(text)
+  julia_assign("sd", text)
+
+  expr <- paste0(classes, collapse = "| ")
+
+  julia_eval(paste0("prepare!(sd, ", expr, ")"))
+
+  text <- julia_eval("sd")
+  text <- structure(text, class = keep_class)
+  invisible(text)
 }
 
 #' Stem
@@ -105,18 +150,18 @@ prepare_document.document <- function(document, remove_corrupt_utf8 = TRUE, remo
 #' doc <- string_document("They write, it writes")
 #' 
 #' # replaces in place!
-#' stem_document(doc)
+#' stem_words(doc)
 #' get_text(doc)
 #' }
 #' 
-#' @name stem_document
+#' @name stem_words
 #' @export
-stem_document <- function(document) UseMethod("stem_document")
+stem_words <- function(document) UseMethod("stem_words")
 
-#' @rdname stem_document
-#' @method stem_document document
+#' @rdname stem_words
+#' @method stem_words document
 #' @export
-stem_document.document <- function(document){
+stem_words.document <- function(document){
   call_julia("stem!", document)
   invisible()
 }

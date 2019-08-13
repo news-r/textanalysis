@@ -3,11 +3,14 @@
 \name{get_text}
 \alias{get_text}
 \alias{get_text.document}
+\alias{get_text.JuliaObject}
 \title{Extract Text}
 \usage{
 get_text(document)
 
 \method{get_text}{document}(document)
+
+\method{get_text}{JuliaObject}(document)
 }
 \arguments{
 \item{document}{A document as returned by the \code{*_document} 
