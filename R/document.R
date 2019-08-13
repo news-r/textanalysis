@@ -88,7 +88,7 @@ get_text.document <- function(document){
 
 #' Extract Tokens
 #' 
-#' Access tokens of documents as a string.
+#' Access tokens of documents as a vector.
 #' 
 #' @inheritParams get_text
 #' 
@@ -112,4 +112,40 @@ get_tokens <- function(document) UseMethod("get_tokens")
 #' @export
 get_tokens.document <- function(document){
   call_julia("tokens", document)
+}
+
+#' Extract NGrams
+#' 
+#' Access n-grams tokens of documents as a vector.
+#' 
+#' @inheritParams get_text
+#' @param ... Any other positional arguments.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("This is a document.")
+#' 
+#' # extract text
+#' get_ngrams(doc)
+#' get_ngrams(doc, 2L)
+#' }
+#' 
+#' @return A \link[tibble]{tibble} of ngrams and their occurences.
+#' 
+#' @name get_ngrams
+#' @export
+get_ngrams <- function(document, ...) UseMethod("get_ngrams")
+
+#' @rdname get_ngrams
+#' @method get_ngrams document
+#' @export
+get_ngrams.document <- function(document, ...){
+  x <- call_julia("ngrams", document, ...)
+  tibble::tibble(
+    ngrams = names(x),
+    n = unname(unlist(x))
+  )
 }
