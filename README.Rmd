@@ -12,10 +12,10 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-# textanalysis
-
 <!-- badges: start -->
 <!-- badges: end -->
+
+# textanalysis
 
 Text Analysis in R via Julia.
 
@@ -40,5 +40,4 @@ word2vec.r::init_textanalysis() # setup word2vec Julia dependency
 
 ```{r}
 library(textanalysis)
-
 ```
