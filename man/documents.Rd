@@ -34,7 +34,7 @@ init_textanalysis()
 
 doc <- "This is a document."
 string_document(doc)
-ngram_document(doc, 2)
+ngram_document(doc, 2L)
 }
 
 }
