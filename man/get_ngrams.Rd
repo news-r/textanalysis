@@ -28,7 +28,7 @@ init_textanalysis()
 # build document
 doc <- string_document("This is a document.")
 
-# extract text
+# extract n-grams
 get_ngrams(doc)
 get_ngrams(doc, 2L)
 }

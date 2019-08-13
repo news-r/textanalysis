@@ -23,7 +23,7 @@ init_textanalysis()
 # build document
 doc <- string_document("This is a document.")
 
-# extract text
+# extract tokens
 get_tokens(doc)
 }
 

@@ -99,7 +99,7 @@ get_text.document <- function(document){
 #' # build document
 #' doc <- string_document("This is a document.")
 #' 
-#' # extract text
+#' # extract tokens
 #' get_tokens(doc)
 #' }
 #' 
@@ -128,7 +128,7 @@ get_tokens.document <- function(document){
 #' # build document
 #' doc <- string_document("This is a document.")
 #' 
-#' # extract text
+#' # extract n-grams
 #' get_ngrams(doc)
 #' get_ngrams(doc, 2L)
 #' }
@@ -150,38 +150,33 @@ get_ngrams.document <- function(document, ...){
   )
 }
 
-#' Extract NGrams
+#' Determine NGram Complexity
 #' 
-#' Access n-grams tokens of documents as a vector.
+#' Determine whether an \code{ngram_document} (output of \code{\link{ngram_document}}) 
+#' contains unigrams, bigrams or a higher-order representation.
 #' 
 #' @inheritParams get_text
-#' @param ... Any other positional arguments.
 #' 
 #' @examples
 #' \dontrun{
 #' init_textanalysis()
 #' 
 #' # build document
-#' doc <- string_document("This is a document.")
+#' unigram <- ngram_document("This is a document.", 1L)
+#' bigram <- ngram_document("This is a document.", 2L)
 #' 
-#' # extract text
-#' get_ngrams(doc)
-#' get_ngrams(doc, 2L)
+#' # test complexity
+#' identical(ngram_complexity(unigram), 1L)
+#' identical(ngram_complexity(bigram), 2L)
 #' }
 #' 
-#' @return A \link[tibble]{tibble} of ngrams and their occurences.
-#' 
-#' @name get_ngrams
+#' @name ngram_complexity
 #' @export
-get_ngrams <- function(document, ...) UseMethod("get_ngrams")
+ngram_complexity <- function(document) UseMethod("ngram_complexity")
 
-#' @rdname get_ngrams
-#' @method get_ngrams document
+#' @rdname ngram_complexity
+#' @method ngram_complexity ngram_document
 #' @export
-get_ngrams.document <- function(document, ...){
-  x <- call_julia("ngrams", document, ...)
-  tibble::tibble(
-    ngrams = names(x),
-    n = unname(unlist(x))
-  )
+ngram_complexity.ngram_document <- function(document){
+  call_julia("ngram_complexity", document)
 }
