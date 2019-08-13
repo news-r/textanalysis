@@ -12,6 +12,7 @@
 init_textanalysis <- function (...){
   julia <- JuliaCall::julia_setup(...)
   JuliaCall::julia_install_package_if_needed("TextAnalysis")
+  JuliaCall::julia_install_package_if_needed("Languages")
   JuliaCall::julia_library("TextAnalysis")
 }
 

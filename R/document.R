@@ -180,3 +180,85 @@ ngram_complexity <- function(document) UseMethod("ngram_complexity")
 ngram_complexity.ngram_document <- function(document){
   call_julia("ngram_complexity", document)
 }
+
+#' Metadata
+#' 
+#' Get and set document metadata.
+#' 
+#' @inheritParams get_text
+#' @param ... A character string to set.
+#' 
+#' @details Note that the value (three dots) for the \code{language}
+#' function is taken from the Julia \code{Language} package.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("This is a document.")
+#' 
+#' # get and et metadata
+#' title_(doc) # get
+#' title_(doc, "Hello World") # set
+#' language_(doc, "Spanish") # from Language pack
+#' }
+#' 
+#' @name document_metadata
+#' @export
+title_ <- function(document, ...) UseMethod("title_")
+
+#' @rdname document_metadata
+#' @method title_ document
+#' @export
+title_.document <- function(document, ...){
+  L <- length(list(...))
+  func <- ifelse(L > 0, "title!", "title")
+  call_julia(func, document, ...)
+}
+
+#' @rdname document_metadata
+#' @export
+language_ <- function(document, ...) UseMethod("language_")
+
+#' @rdname document_metadata
+#' @method language_ document
+#' @export
+language_.document <- function(document, ...){
+  L <- length(list(...))
+  if(L == 0){
+    call_julia("language", document)
+  } else {
+    lang <- list(...)[[1]] # get language
+    assert_that(has_ta(lang)) # test if Language pkg installed & lang valid
+    julia_assign("sd", document)
+    expr <- paste0("language!(sd, Languages.", lang,"())")
+    julia_eval(expr)
+  }
+}
+
+#' @rdname document_metadata
+#' @export
+author_ <- function(document, ...) UseMethod("author_")
+
+#' @rdname document_metadata
+#' @method author_ document
+#' @export
+author_.document <- function(document, ...){
+  L <- length(list(...))
+  func <- ifelse(L > 0, "author!", "author")
+  call_julia(func, document, ...)
+}
+
+#' @rdname document_metadata
+#' @export
+timestamp_ <- function(document, ...) UseMethod("timestamp_")
+
+#' @rdname document_metadata
+#' @method timestamp_ document
+#' @export
+timestamp_.document <- function(document, ...){
+  L <- length(list(...))
+  func <- ifelse(L > 0, "timestamp!", "timestamp")
+  call_julia(func, document, ...)
+}
