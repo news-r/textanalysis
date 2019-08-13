@@ -35,7 +35,7 @@ remotes::install_github("news-r/textanalysis") # github
 You _must_ run `init_textanalysis` at the begining of every session, you will otherwise encounter errors and be prompted to do so.
 
 ```{r}
-word2vec.r::init_textanalysis() # setup word2vec Julia dependency
+textanalysis::init_textanalysis() # setup word2vec Julia dependency
 ```
 
 ## Example
@@ -43,9 +43,14 @@ word2vec.r::init_textanalysis() # setup word2vec Julia dependency
 ```{r}
 library(textanalysis)
 
-# initialise a session
-init_textanalysis()
-
 # build document
-doc <- string_document("This is a document.")
+doc <- string_document("They <span>write</span>, it writes too!!!")
+
+# basic cleanup
+prepare_document(doc)
+get_text(doc)
+
+# stem
+stem_document(doc)
+get_text(doc)
 ```
