@@ -58,7 +58,7 @@ stem_words(doc)
 get_text(doc)
 
 # corpus
-doc2 <- token_document("Hey another, document.")
+doc2 <- token_document("Hey write another document.")
 get_text(doc2)
 
 # combine
@@ -70,4 +70,7 @@ standardize(corpus, "token_document")
 # prepare corpus
 corpus <- prepare(corpus, strip_html_tags = FALSE)
 get_text(corpus[[1]])
+
+update_lexicon(corpus)
+lexicon(corpus)
 ```

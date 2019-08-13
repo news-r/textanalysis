@@ -201,7 +201,7 @@ ngram_complexity.ngram_document <- function(document){
 #' @export
 ngram_complexity.JuliaObject <- ngram_complexity.ngram_document
 
-#' Metadata
+#' Document Metadata
 #' 
 #' Get and set document metadata.
 #' 

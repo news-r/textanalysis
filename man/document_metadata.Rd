@@ -14,7 +14,7 @@
 \alias{timestamp_}
 \alias{timestamp_.document}
 \alias{timestamp_.JuliaObject}
-\title{Metadata}
+\title{Document Metadata}
 \usage{
 title_(document, ...)
 

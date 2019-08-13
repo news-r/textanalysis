@@ -25,9 +25,6 @@ You *must* run `init_textanalysis` at the begining of every session, you will ot
 
 ``` r
 textanalysis::init_textanalysis() # setup word2vec Julia dependency
-#> Julia version 1.1.1 at location /home/jp/Downloads/julia-1.1.1-linux-x86_64/julia-1.1.1/bin will be used.
-#> Loading setup script for JuliaCall...
-#> Finish loading setup script for JuliaCall.
 ```
 
 Example
@@ -51,9 +48,9 @@ get_text(doc)
 #> [1] "write write"
 
 # corpus
-doc2 <- token_document("Hey another, document.")
+doc2 <- token_document("Hey write another document.")
 get_text(doc2)
-#> [1] "Hey another , document ."
+#> [1] "Hey write another document ."
 
 # combine
 corpus <- corpus(doc, doc2)
@@ -67,4 +64,14 @@ corpus <- prepare(corpus, strip_html_tags = FALSE)
 #> ⚠ This function changes `cropus` in place!
 get_text(corpus[[1]])
 #> [1] "write write"
+
+update_lexicon(corpus)
+lexicon(corpus)
+#> # A tibble: 4 x 2
+#>   words        n
+#>   <chr>    <int>
+#> 1 document     1
+#> 2 write        3
+#> 3 hey          1
+#> 4 ""           2
 ```
