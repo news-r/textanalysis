@@ -36,6 +36,7 @@ document_term_matrix.corpus <- function(corpus){
 #' 
 #' @param dtm An object of class \code{document_term_matrix} 
 #' as returned by \code{document_term_matrix}.
+#' @param density Whether to return a \code{dense} or \code{sparse} matrix.
 #' 
 #' @examples
 #' \dontrun{

@@ -9,6 +9,9 @@ corpus_to_tibble(corpus)
 
 \method{corpus_to_tibble}{corpus}(corpus)
 }
+\arguments{
+\item{corpus}{A corpus, as returned vy \code{\link{corpus}}.}
+}
 \description{
 Convert a corpus to a \link[tibble]{tibble}.
 }

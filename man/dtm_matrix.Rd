@@ -12,6 +12,8 @@ dtm_matrix(dtm, density)
 \arguments{
 \item{dtm}{An object of class \code{document_term_matrix} 
 as returned by \code{document_term_matrix}.}
+
+\item{density}{Whether to return a \code{dense} or \code{sparse} matrix.}
 }
 \description{
 Creates a simple sparse matrix of \code{document_term_matrix} object.

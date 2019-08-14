@@ -399,6 +399,8 @@ inverse_index.corpus <- function(corpus){
 #' Convert Corpus
 #' 
 #' Convert a corpus to a \link[tibble]{tibble}.
+#'
+#' @inheritParams standardize
 #' 
 #' @examples
 #' \dontrun{
