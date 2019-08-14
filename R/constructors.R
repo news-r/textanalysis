@@ -2,6 +2,10 @@
   structure(x, class = c("document", ..., class(x)))
 }
 
+.construct_documents <- function(x, ...) {
+  structure(x, class = c("documents", ..., class(x)))
+}
+
 .construct_corpus <- function(x, ...) {
   structure(x, class = c("corpus", ..., class(x)))
 }
