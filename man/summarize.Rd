@@ -28,7 +28,7 @@ init_textanalysis()
 doc <- string_document(
   paste("Assume this Short Document as an example.",
     "Assume this as an example summarizer.", 
-    "This has too foo sentences."
+    "This has too few sentences."
   )
 )
 
