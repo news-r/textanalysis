@@ -364,3 +364,34 @@ update_inverse_index.corpus <- function(corpus) {
   call_julia("update_inverse_index!", corpus)
   invisible()
 }
+
+#' Index Size
+#' 
+#' Tells the size of the inverse index.
+#'
+#' @inheritParams standardize
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' corpus <- corpus(doc1, doc2)
+#' 
+#' update_inverse_index(corpus)
+#' inverse_index(corpus)
+#' }
+#' 
+#' @name inverse_index
+#' @export
+inverse_index <- function(corpus) UseMethod("inverse_index")
+
+#' @rdname inverse_index
+#' @method inverse_index corpus
+#' @export
+inverse_index.corpus <- function(corpus){
+  call_julia("index_size", corpus)
+}

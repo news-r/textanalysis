@@ -11,6 +11,10 @@ inverse_index(corpus)
 \method{inverse_index}{corpus}(corpus)
 
 \method{update_inverse_index}{corpus}(corpus)
+
+inverse_index(corpus)
+
+\method{inverse_index}{corpus}(corpus)
 }
 \arguments{
 \item{corpus}{A corpus, as returned vy \code{\link{corpus}}.}
@@ -21,8 +25,23 @@ want to know which documents in a corpus contain
 that term. The inverse index tells us this and 
 therefore provides a simplistic sort of search 
 algorithm.
+
+Tells the size of the inverse index.
 }
 \examples{
+\dontrun{
+init_textanalysis()
+
+# build document
+doc1 <- string_document("First document.")
+doc2 <- string_document("Second document.")
+
+corpus <- corpus(doc1, doc2)
+
+update_inverse_index(corpus)
+inverse_index(corpus)
+}
+
 \dontrun{
 init_textanalysis()
 
