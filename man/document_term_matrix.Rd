@@ -9,6 +9,9 @@ document_term_matrix(corpus)
 
 \method{document_term_matrix}{corpus}(corpus)
 }
+\arguments{
+\item{corpus}{A corpus, as returned vy \code{\link{corpus}}.}
+}
 \description{
 Represent documents as a matrix of word counts.
 }

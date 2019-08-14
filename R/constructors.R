@@ -7,5 +7,5 @@
 }
 
 .construct_dtm <- function(x, ...) {
-  structure(x, class = c("dtm", ..., class(x)))
+  structure(x, class = c("document_term_matrix", "dtm", ..., class(x)))
 }
