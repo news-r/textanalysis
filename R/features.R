@@ -105,3 +105,77 @@ document_term_vector.corpus <- function(corpus, document){
   expr <- paste0("dtv(crps[", document, "], lexicon(crps))")
   julia_eval(expr)
 }
+
+#' Term Frequency
+#' 
+#' Compute term-frequency.
+#' 
+#' @inheritParams dtm_matrix
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' corpus <- corpus(doc1, doc2)
+#' 
+#' update_lexicon(corpus)
+#' m <- document_term_matrix(corpus)
+#' tf(m)
+#' }
+#' 
+#' @name tf
+#' @export
+tf <- function(dtm) UseMethod("tf")
+
+#' @rdname tf
+#' @method tf dtm
+#' @export
+tf.dtm <- function(dtm){
+  call_julia("tf", dtm)
+}
+
+#' @rdname tf
+#' @method tf JuliaObject
+#' @export
+tf.JuliaObject <- tf.dtm
+
+#' Term Frequency Inverse Document Freqency
+#' 
+#' Compute term-frequency inverse-document-frequency.
+#' 
+#' @inheritParams dtm_matrix
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' corpus <- corpus(doc1, doc2)
+#' 
+#' update_lexicon(corpus)
+#' m <- document_term_matrix(corpus)
+#' tf_idf(m)
+#' }
+#' 
+#' @name tf_idf
+#' @export
+tf_idf <- function(dtm) UseMethod("tf_idf")
+
+#' @rdname tf_idf
+#' @method tf_idf dtm
+#' @export
+tf_idf.dtm <- function(dtm){
+  call_julia("tf_idf", dtm)
+}
+
+#' @rdname tf_idf
+#' @method tf_idf JuliaObject
+#' @export
+tf_idf.JuliaObject <- tf_idf.dtm
