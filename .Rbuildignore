@@ -1,3 +1,6 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^\.travis\.yml$
+^data-raw$
+^_pkgdown\.yml$
+^index\.Rmd$

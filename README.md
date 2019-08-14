@@ -1,41 +1,34 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.org/news-r/textanalysis.svg?branch=master)](https://travis-ci.org/news-r/textanalysis) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) <!-- badges: end -->
 
-[![Travis build
-status](https://travis-ci.org/news-r/textanalysis.svg?branch=master)](https://travis-ci.org/news-r/textanalysis)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-<!-- badges: end -->
-
-# textanalysis
+textanalysis
+============
 
 Text Analysis in R via Julia.
 
-## Installation
+Installation
+------------
 
-Being a wrapper to a [Julia](https://julialang.org/) package,
-textanalysis requires the latter to be installed.
+Being a wrapper to a [Julia](https://julialang.org/) package, textanalysis requires the latter to be installed.
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("news-r/textanalysis") # github
 ```
 
-## Setup
+Setup
+-----
 
-You *must* run `init_textanalysis` at the begining of every session, you
-will otherwise encounter errors and be prompted to do so.
+You *must* run `init_textanalysis` at the begining of every session, you will otherwise encounter errors and be prompted to do so.
 
 ``` r
 textanalysis::init_textanalysis() # setup textanalysis Julia dependency
-#> Julia version 1.1.1 at location /Applications/Julia-1.1.app/Contents/Resources/julia/bin will be used.
-#> Loading setup script for JuliaCall...
-#> Finish loading setup script for JuliaCall.
 ```
 
-## Example
+Example
+-------
 
 Very basic.
 
@@ -122,33 +115,41 @@ sentiment(corpus)
 summarize(string_document(str), ns = 2L)
 #> [1] "They <span>write</span>, it writes too!!!"
 #> [2] "This is another sentence."
-
-# lda 2 topics
-lda(m, 2L, 1000L)
-#> $ntopics_nwords
-#>      [,1] [,2]  [,3]  [,4]  [,5]  [,6]
-#> [1,]    0 0.25 0.125 0.125 0.125 0.375
-#> [2,]    1 0.00 0.000 0.000 0.000 0.000
-#> 
-#> $ntopics_ndocs
-#>      [,1] [,2]
-#> [1,]    1  0.6
-#> [2,]    0  0.4
 ```
 
-textanalysis is rather fast thanks to Julia, let’s take a larger dataset
-and train an LDA model on macbeth (data from
-[word2vec.r](https://word2vec.news-r.org)).
+fit LDA on the [gensimr](https://gensimr.news-r.org) data.
 
 ``` r
-data("macbeth", package = "word2vec.r")
+set.seed(42)
 
-tictoc::tic("LDA")
-s <- string_document(macbeth)
-crps <- corpus(s)
-update_lexicon(corpus)
-dtm <- document_term_matrix(corpus)
-lda <- lda(dtm, 50L, 1000L)
-tictoc::toc()
-#> LDA: 0.146 sec elapsed
+data("corpus", package = "gensimr")
+documents <- as_documents(corpus) # convert vector to documents
+
+crps <- corpus(documents)
+update_lexicon(crps)
+dtm <- document_term_matrix(crps)
+
+# 50 topics
+# 10K iterations
+lda_data <- lda(dtm, 2L, 1000L)
+
+# visualise topics
+plot(t(lda_data$ntopics_ndocs))
 ```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+``` r
+
+mat <- dtm_matrix(dtm, "dense")
+
+tfidf <- tf_idf(mat)
+
+km <- kmeans(tfidf, centers = 2)
+
+km_data <- dplyr::bind_cols(as.data.frame(t(lda_data$ntopics_ndocs)), tibble::tibble(cluster = km$cluster))
+
+plot(jitter(km_data$V1), jitter(km_data$V2), col = km_data$cluster)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />

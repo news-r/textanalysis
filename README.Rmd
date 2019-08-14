@@ -101,24 +101,34 @@ sentiment(corpus)
 
 # summarise in 2 sentences
 summarize(string_document(str), ns = 2L)
-
-# lda 2 topics
-lda(m, 2L)
 ```
 
-textanalysis is rather fast thanks to Julia, let's take a larger dataset and train an LDA model on macbeth (data from [word2vec.r](https://word2vec.news-r.org)).
+fit LDA on the [gensimr](https://gensimr.news-r.org) data.
 
 ```{r}
-data("macbeth", package = "word2vec.r")
+set.seed(42)
 
-tictoc::tic("LDA")
-s <- string_document(macbeth)
-crps <- corpus(s)
-update_lexicon(corpus)
-dtm <- document_term_matrix(corpus)
+data("corpus", package = "gensimr")
+documents <- as_documents(corpus) # convert vector to documents
+
+crps <- corpus(documents)
+update_lexicon(crps)
+dtm <- document_term_matrix(crps)
 
 # 50 topics
 # 10K iterations
-lda <- lda(dtm, 50L, 10000L, 1.5, .1)
-tictoc::toc()
+lda_data <- lda(dtm, 2L, 1000L)
+
+# visualise topics
+plot(t(lda_data$ntopics_ndocs))
+
+mat <- dtm_matrix(dtm, "dense")
+
+tfidf <- tf_idf(mat)
+
+km <- kmeans(tfidf, centers = 2)
+
+km_data <- dplyr::bind_cols(as.data.frame(t(lda_data$ntopics_ndocs)), tibble::tibble(cluster = km$cluster))
+
+plot(jitter(km_data$V1), jitter(km_data$V2), col = km_data$cluster)
 ```

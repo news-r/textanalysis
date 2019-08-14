@@ -2,14 +2,22 @@
 % Please edit documentation in R/corpus.R
 \name{corpus}
 \alias{corpus}
+\alias{corpus.document}
+\alias{corpus.list}
 \alias{directory_corpus}
 \title{Corpus}
 \usage{
-corpus(...)
+corpus(doc, ...)
+
+\method{corpus}{document}(doc, ...)
+
+\method{corpus}{list}(doc, ...)
 
 directory_corpus(directory)
 }
 \arguments{
+\item{doc}{First \code{document}, a \code{list}, or a \code{vector} of documents.}
+
 \item{...}{Objects inheriting of class \code{document} to build a corpus.}
 
 \item{directory}{Path to a directory of text files.}
