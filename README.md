@@ -126,14 +126,14 @@ summarize(string_document(str), ns = 2L)
 # lda 2 topics
 lda(m, 2L, 1000L)
 #> $ntopics_nwords
-#>      [,1] [,2] [,3] [,4] [,5] [,6]
-#> [1,]  0.0  0.2  0.0  0.2  0.2  0.4
-#> [2,]  0.4  0.2  0.2  0.0  0.0  0.2
+#>      [,1] [,2]  [,3]  [,4]  [,5]  [,6]
+#> [1,]    0 0.25 0.125 0.125 0.125 0.375
+#> [2,]    1 0.00 0.000 0.000 0.000 0.000
 #> 
 #> $ntopics_ndocs
 #>      [,1] [,2]
-#> [1,]    1    0
-#> [2,]    0    1
+#> [1,]    1  0.6
+#> [2,]    0  0.4
 ```
 
 textanalysis is rather fast thanks to Julia, let’s take a larger dataset
@@ -148,7 +148,7 @@ s <- string_document(macbeth)
 crps <- corpus(s)
 update_lexicon(corpus)
 dtm <- document_term_matrix(corpus)
-lda <- lda(m, 50L, 1000L)
+lda <- lda(dtm, 50L, 1000L)
 tictoc::toc()
-#> LDA: 0.145 sec elapsed
+#> LDA: 0.146 sec elapsed
 ```

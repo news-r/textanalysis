@@ -103,7 +103,7 @@ sentiment(corpus)
 summarize(string_document(str), ns = 2L)
 
 # lda 2 topics
-lda(m, 2L, 1000L)
+lda(m, 2L)
 ```
 
 textanalysis is rather fast thanks to Julia, let's take a larger dataset and train an LDA model on macbeth (data from [word2vec.r](https://word2vec.news-r.org)).
@@ -116,6 +116,9 @@ s <- string_document(macbeth)
 crps <- corpus(s)
 update_lexicon(corpus)
 dtm <- document_term_matrix(corpus)
-lda <- lda(m, 50L, 1000L)
+
+# 50 topics
+# 10K iterations
+lda <- lda(dtm, 50L, 10000L, 1.5, .1)
 tictoc::toc()
 ```
