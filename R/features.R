@@ -183,7 +183,11 @@ tf_idf.JuliaObject <- tf_idf.dtm
 #' Sentiment Analyzer
 #' 
 #' Find the sentiment score (between 0 and 1) of a 
-#' word, sentence or a Document.
+#' word, sentence or a Document based on a trained 
+#' model (using Flux) on IMDB word corpus with weights 
+#' saved are used to calculate the sentiments.
+#' 
+#' @param text An object of class \code{document} or \code{corpus}.
 #' 
 #' @examples
 #' \dontrun{
@@ -199,28 +203,75 @@ tf_idf.JuliaObject <- tf_idf.dtm
 #' 
 #' @name sentiment
 #' @export
-sentiment <- function(document) UseMethod("sentiment")
+sentiment <- function(text) UseMethod("sentiment")
 
 #' @rdname sentiment
 #' @method sentiment document
 #' @export
-sentiment.document <- function(document){
+sentiment.document <- function(text){
   if(!julia_exists("textanalysisSentiment"))
     julia_eval("textanalysisSentiment = SentimentAnalyzer()")
-  call_julia("textanalysisSentiment", document)
+  call_julia("textanalysisSentiment", text)
 }
 
 #' @rdname sentiment
 #' @method sentiment corpus
 #' @export
-sentiment.corpus <- function(corpus){
+sentiment.corpus <- function(text){
   if(!julia_exists("textanalysisSentiment"))
     julia_eval("textanalysisSentiment = SentimentAnalyzer()")
-  L <- length(corpus)
+  L <- length(text)
   scores <- c()
   for(i in seq_along(1:L)){
-    score <- call_julia("textanalysisSentiment", corpus[[i]])
+    score <- call_julia("textanalysisSentiment", text[[i]])
     scores <- append(scores, score)
   }
   return(scores)
+}
+
+
+#' Summarize
+#' 
+#' Simple text-rank based summarizer.
+#' 
+#' @inheritParams sentiment
+#' @param ns Number of sentences.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document(
+#'   paste("Assume this Short Document as an example.",
+#'     "Assume this as an example summarizer.", 
+#'     "This has too few sentences."
+#'   )
+#' )
+#' 
+#' summarize(doc, ns = 2L)
+#' }
+#' 
+#' @name summarize
+#' @export
+summarize <- function(text, ns = 2L) UseMethod("summarize")
+
+#' @rdname summarize
+#' @method summarize document
+#' @export
+summarize.document <- function(text, ns = 2L){
+  call_julia("summarize", text, ns = ns)
+}
+
+#' @rdname summarize
+#' @method summarize corpus
+#' @export
+summarize.corpus <- function(text, ns = 2L){
+  L <- length(text)
+  summarizations <- c()
+  for(i in seq_along(1:L)){
+    summ <- call_julia("summarize", text[[i]], ns = ns)
+    summarizations <- append(summarizations, summ)
+  }
+  return(summarizations)
 }

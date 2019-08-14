@@ -6,24 +6,31 @@
 \alias{sentiment.corpus}
 \title{Sentiment Analyzer}
 \usage{
-sentiment(document)
+sentiment(text)
 
-\method{sentiment}{document}(document)
+\method{sentiment}{document}(text)
 
-\method{sentiment}{corpus}(corpus)
+\method{sentiment}{corpus}(text)
+}
+\arguments{
+\item{text}{An object of class \code{document} or \code{corpus}.}
 }
 \description{
 Find the sentiment score (between 0 and 1) of a 
-word, sentence or a Document.
+word, sentence or a Document based on a trained 
+model (using Flux) on IMDB word corpus with weights 
+saved are used to calculate the sentiments.
 }
 \examples{
 \dontrun{
 init_textanalysis()
 
 # build document
-doc <- string_document("An awesome, great, simply brillaint, function!")
+doc <- string_document(
+  "An awesome, great, simply brillaint, function!"
+)
 
-sentiment(pos_doc)
+sentiment(doc)
 }
 
 }
