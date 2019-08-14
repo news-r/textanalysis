@@ -37,6 +37,8 @@ textanalysis::init_textanalysis() # setup textanalysis Julia dependency
 
 ## Example
 
+Very basic.
+
 ``` r
 library(textanalysis)
 
@@ -124,12 +126,29 @@ summarize(string_document(str), ns = 2L)
 # lda 2 topics
 lda(m, 2L, 1000L)
 #> $ntopics_nwords
-#>      [,1]      [,2] [,3]      [,4] [,5] [,6]
-#> [1,]  0.0 0.3333333 0.00 0.1666667 0.00  0.5
-#> [2,]  0.5 0.0000000 0.25 0.0000000 0.25  0.0
+#>      [,1] [,2] [,3] [,4] [,5] [,6]
+#> [1,]  0.0  0.2  0.0  0.2  0.2  0.4
+#> [2,]  0.4  0.2  0.2  0.0  0.0  0.2
 #> 
 #> $ntopics_ndocs
 #>      [,1] [,2]
-#> [1,]  0.8  0.4
-#> [2,]  0.2  0.6
+#> [1,]    1    0
+#> [2,]    0    1
+```
+
+textanalysis is rather fast thanks to Julia, let’s take a larger dataset
+and train an LDA model on macbeth (data from
+[word2vec.r](https://word2vec.news-r.org)).
+
+``` r
+data("macbeth", package = "word2vec.r")
+
+tictoc::tic("LDA")
+s <- string_document(macbeth)
+crps <- corpus(s)
+update_lexicon(corpus)
+dtm <- document_term_matrix(corpus)
+lda <- lda(m, 50L, 1000L)
+tictoc::toc()
+#> LDA: 0.145 sec elapsed
 ```
