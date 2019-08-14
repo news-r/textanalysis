@@ -66,7 +66,8 @@ dtm_matrix.dtm <- function(dtm, density = c("sparse", "dense")){
   density <- paste0(":", density)
   julia_assign("m", dtm)
   expr <- paste0("dtm(m, ", density, ")")
-  julia_eval(expr)
+  dtm <- julia_eval(expr)
+  .construct_dtm(dtm)
 }
 
 #' Document Term Vector
