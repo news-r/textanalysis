@@ -6,6 +6,7 @@
 \alias{string_document}
 \alias{token_document}
 \alias{ngram_document}
+\alias{as_documents}
 \title{Document}
 \usage{
 file_document(path)
@@ -15,6 +16,8 @@ string_document(text)
 token_document(text)
 
 ngram_document(text, ...)
+
+as_documents(text, type = c("string", "token", "ngram"))
 }
 \arguments{
 \item{path}{The path to the file.}
@@ -22,6 +25,8 @@ ngram_document(text, ...)
 \item{text}{The text, tokens, or ngrams.}
 
 \item{...}{Other positonal arguments.}
+
+\item{type}{Type of \code{*_document} function to use.}
 }
 \description{
 The basic unit of text analysis is a document. 
@@ -37,4 +42,7 @@ string_document(doc)
 ngram_document(doc, 2L)
 }
 
+}
+\seealso{
+\code{\link{directory_corpus}} to read a dicrectory of files as corpus.
 }

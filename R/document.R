@@ -6,6 +6,7 @@
 #' 
 #' @param path The path to the file.
 #' @param text The text, tokens, or ngrams.
+#' @param type Type of \code{*_document} function to use.
 #' @param ... Other positonal arguments.
 #' 
 #' @examples
@@ -16,6 +17,8 @@
 #' string_document(doc)
 #' ngram_document(doc, 2L)
 #' }
+#' 
+#' @seealso \code{\link{directory_corpus}} to read a dicrectory of files as corpus.
 #' 
 #' @name documents
 #' @export 
@@ -55,6 +58,25 @@ ngram_document <- function(text, ...) {
   assert_that(length(text) == 1)
   doc <- call_julia("NGramDocument", text, ...)
   .construct_document(doc, "ngram_document")
+}
+
+#' @name documents
+#' @export 
+as_documents <- function(text, type = c("string", "token", "ngram")){
+  assert_that(!missing(text), msg = "Missing `text`")
+  assert_that(length(text) > 1, msg = "User other `*_document` functions for a single document.")
+  type <- match.arg(type)
+
+  documents <- purrr::map(text, function(doc, type){
+    if(type == "token")
+      token_document(doc)
+    else if(type == "ngram")
+      ngram_document(doc)
+    else
+      string_document(doc)
+  }, type = type)
+
+  .construct_documents(documents)
 }
 
 #' Extract Text
