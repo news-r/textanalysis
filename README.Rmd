@@ -74,4 +74,7 @@ get_text(corpus[[1]])
 update_lexicon(corpus)
 lexicon(corpus)
 lexical_frequency(corpus, "document")
+
+update_inverse_index(corpus)
+inverse_index(corpus)
 ```

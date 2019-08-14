@@ -1,8 +1,9 @@
 #' Corpus
 #' 
-#' Build a corpus of documents.
+#' Build a corpus from documents or a directory of text files.
 #' 
-#' @param ... Documents.
+#' @param ... Objects inheriting of class \code{document} to build a corpus.
+#' @param directory Path to a directory of text files.
 #' 
 #' @examples
 #' \dontrun{
@@ -16,10 +17,18 @@
 #' }
 #' 
 #' @name corpus
-#' 
 #' @export
 corpus <- function(...) {
   corpus <- call_julia("Corpus", JuliaObject(list(...)))
+  .construct_corpus(corpus)
+}
+
+#' @rdname corpus
+#' @export
+directory_corpus <- function(directory) {
+  assert_that(dir.exists(directory), msg = "`directory` does not exist")
+  directory <- normalizePath(directory)
+  corpus <- call_julia("DirectoryCorpus", directory)
   .construct_corpus(corpus)
 }
 
@@ -236,6 +245,21 @@ update_lexicon.corpus <- function(corpus) {
 #' @inheritParams standardize
 #' @param word Word to check frequency.
 #' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build documents
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' # build corpus
+#' corpus <- corpus(doc1, doc2)
+#' 
+#' update_lexicon(corpus)
+#' lexical_frequency(corpus, "document")
+#' }
+#' 
 #' @name lexical_frequency 
 #' @export
 lexical_frequency <- function(corpus, word) UseMethod("lexical_frequency")
@@ -246,4 +270,97 @@ lexical_frequency <- function(corpus, word) UseMethod("lexical_frequency")
 lexical_frequency.corpus <- function(corpus, word){
   assert_that(!missing(word), msg = "Missing `word`")
   call_julia("lexical_frequency", corpus, word)
+}
+
+#' Lexicon Size
+#' 
+#' Tells the total number of terms in a lexicon.
+#'
+#' @inheritParams standardize
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' corpus <- corpus(doc1, doc2)
+#' 
+#' update_lexicon(corpus)
+#' lexicon_size(corpus)
+#' }
+#' 
+#' @name lexicon_size
+#' @export
+lexicon_size <- function(corpus) UseMethod("lexicon_size")
+
+#' @rdname lexicon_size
+#' @method lexicon_size corpus
+#' @export
+lexicon_size.corpus <- function(corpus){
+  call_julia("lexicon_size", corpus)
+}
+
+#' Inverse Index
+#' 
+#' If we are interested in a specific term, we often 
+#' want to know which documents in a corpus contain 
+#' that term. The inverse index tells us this and 
+#' therefore provides a simplistic sort of search 
+#' algorithm.
+#'
+#' @inheritParams standardize
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' corpus <- corpus(doc1, doc2)
+#' 
+#' update_inverse_index(corpus)
+#' inverse_index(corpus)
+#' }
+#' 
+#' @name inverse_index
+#' @export
+inverse_index <- function(corpus) UseMethod("inverse_index")
+
+#' @rdname lexicon
+#' @export
+update_inverse_index <- function(corpus) UseMethod("update_inverse_index")
+
+#' @rdname inverse_index
+#' @method inverse_index corpus
+#' @export
+inverse_index.corpus <- function(corpus) {
+  inv <- call_julia("inverse_index", corpus)
+  if(!length(inv))
+    stop("No inverse_index, see `inverse_index`")
+  
+  # tidy
+  words <- names(inv)
+  inv %>% 
+    unname() %>% 
+    purrr::map(list) %>% 
+    purrr::map2(words, function(x, y){
+      tibble::tibble(
+        word = y,
+        index = x
+      )
+    }) %>% 
+    purrr::map_dfr(dplyr::bind_rows) 
+}
+
+#' @rdname inverse_index
+#' @method update_inverse_index corpus
+#' @export
+update_inverse_index.corpus <- function(corpus) {
+  call_julia("update_inverse_index!", corpus)
+  invisible()
 }
