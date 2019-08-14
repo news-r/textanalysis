@@ -68,3 +68,40 @@ dtm_matrix.dtm <- function(dtm, density = c("sparse", "dense")){
   expr <- paste0("dtm(m, ", density, ")")
   julia_eval(expr)
 }
+
+#' Document Term Vector
+#' 
+#' Produce a single row of a DocumentTermMatrix.
+#' 
+#' @inheritParams standardize
+#' @param document Index of document within the corpus.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' corpus <- corpus(doc1, doc2)
+#' 
+#' update_lexicon(corpus)
+#' document_term_vector(corpus)
+#' }
+#' 
+#' @name document_term_vector
+#' @export
+document_term_vector <- function(corpus, document) UseMethod("document_term_vector")
+
+#' @rdname document_term_vector
+#' @method document_term_vector corpus
+#' @export
+document_term_vector.corpus <- function(corpus, document){
+  assert_that(!missing(document), msg = "Missing `document`")
+  assert_that(is.numeric(document))
+
+  julia_assign("crps", corpus)
+  expr <- paste0("dtv(crps[", document, "], lexicon(crps))")
+  julia_eval(expr)
+}
