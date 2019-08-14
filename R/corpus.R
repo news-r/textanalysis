@@ -2,6 +2,7 @@
 #' 
 #' Build a corpus from documents or a directory of text files.
 #' 
+#' @param doc First \code{document}, a \code{list}, or a \code{vector} of documents.
 #' @param ... Objects inheriting of class \code{document} to build a corpus.
 #' @param directory Path to a directory of text files.
 #' 
@@ -18,8 +19,21 @@
 #' 
 #' @name corpus
 #' @export
-corpus <- function(...) {
-  corpus <- call_julia("Corpus", JuliaObject(list(...)))
+corpus <- function(doc, ...) UseMethod("corpus")
+
+#' @rdname corpus
+#' @method corpus document
+#' @export
+corpus.document <- function(doc, ...) {
+  corpus <- call_julia("Corpus", JuliaObject(list(doc, ...)))
+  .construct_corpus(corpus)
+}
+
+#' @rdname corpus
+#' @method corpus list
+#' @export
+corpus.list <- function(doc, ...) {
+  corpus <- call_julia("Corpus", JuliaObject(doc))
   .construct_corpus(corpus)
 }
 
