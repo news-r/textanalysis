@@ -179,3 +179,48 @@ tf_idf.dtm <- function(dtm){
 #' @method tf_idf JuliaObject
 #' @export
 tf_idf.JuliaObject <- tf_idf.dtm
+
+#' Sentiment Analyzer
+#' 
+#' Find the sentiment score (between 0 and 1) of a 
+#' word, sentence or a Document.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document(
+#'   "An awesome, great, simply brillaint, function!"
+#' )
+#' 
+#' sentiment(doc)
+#' }
+#' 
+#' @name sentiment
+#' @export
+sentiment <- function(document) UseMethod("sentiment")
+
+#' @rdname sentiment
+#' @method sentiment document
+#' @export
+sentiment.document <- function(document){
+  if(!julia_exists("textanalysisSentiment"))
+    julia_eval("textanalysisSentiment = SentimentAnalyzer()")
+  call_julia("textanalysisSentiment", document)
+}
+
+#' @rdname sentiment
+#' @method sentiment corpus
+#' @export
+sentiment.corpus <- function(corpus){
+  if(!julia_exists("textanalysisSentiment"))
+    julia_eval("textanalysisSentiment = SentimentAnalyzer()")
+  L <- length(corpus)
+  scores <- c()
+  for(i in seq_along(1:L)){
+    score <- call_julia("textanalysisSentiment", corpus[[i]])
+    scores <- append(scores, score)
+  }
+  return(scores)
+}
