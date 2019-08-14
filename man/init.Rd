@@ -16,3 +16,12 @@ setup_textanalysis(...)
 \description{
 Initialise a session, installs TextAnalysis Juia dependency if needed.
 }
+\section{Packages}{
+
+Packages installed are:
+\itemize{
+  \item{\code{TextAnalysis}}
+  \item{\code{Languages}}
+}
+}
+

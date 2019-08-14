@@ -395,3 +395,49 @@ inverse_index <- function(corpus) UseMethod("inverse_index")
 inverse_index.corpus <- function(corpus){
   call_julia("index_size", corpus)
 }
+
+#' Convert Corpus
+#' 
+#' Convert a corpus to a \link[tibble]{tibble}.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' corpus <- corpus(doc1, doc2)
+#' 
+#' corpus_to_tibble(corpus)
+#' }
+#' 
+#' @name corpus_to_tibble
+#' @export
+corpus_to_tibble <- function(corpus) UseMethod("corpus_to_tibble")
+
+#' @rdname corpus_to_tibble
+#' @method corpus_to_tibble corpus
+#' @export
+corpus_to_tibble.corpus <- function(corpus){
+  L <- length(corpus)
+  df <- tibble::tibble()
+  for(i in seq_along(1:L)){
+    title <- title_(corpus[[i]])
+    author <- author_(corpus[[i]])
+    ts <- timestamp_(corpus[[i]])
+    lang <- language_(corpus[[i]]) %>% 
+      .clean_language()
+    txt <- get_text(corpus[[i]])
+    row <- tibble::tibble(
+      title = title,
+      author = author,
+      timestamp = ts,
+      language = lang,
+      text = txt
+    )
+    df <- dplyr::bind_rows(df, row)
+  }
+  return(df)
+}

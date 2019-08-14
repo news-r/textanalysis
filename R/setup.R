@@ -4,6 +4,13 @@
 #' 
 #' @param ... Arguments passed to \link[JuliaCall]{julia_setup}.
 #' 
+#' @section Packages:
+#' Packages installed are:
+#' \itemize{
+#'   \item{\code{TextAnalysis}}
+#'   \item{\code{Languages}}
+#' }
+#' 
 #' @import JuliaCall
 #' @import assertthat
 #' 

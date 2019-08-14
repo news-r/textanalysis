@@ -20,3 +20,10 @@ warning_in_place <- function(what){
     sep = ""
   )
 }
+
+.clean_language <- function(lang){
+  lang %>% 
+    as.character() %>% 
+    gsub("Languages\\.", "", .) %>% 
+    gsub("\\(\\)", "", .)
+}
