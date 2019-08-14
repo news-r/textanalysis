@@ -228,3 +228,22 @@ update_lexicon.corpus <- function(corpus) {
   call_julia("update_lexicon!", corpus)
   invisible()
 }
+
+#' Lexical Frequency
+#'
+#' How often a term occurs across all of the documents.
+#' 
+#' @inheritParams standardize
+#' @param word Word to check frequency.
+#' 
+#' @name lexical_frequency 
+#' @export
+lexical_frequency <- function(corpus, word) UseMethod("lexical_frequency")
+
+#' @rdname lexical_frequency
+#' @method lexical_frequency corpus
+#' @export
+lexical_frequency.corpus <- function(corpus, word){
+  assert_that(!missing(word), msg = "Missing `word`")
+  call_julia("lexical_frequency", corpus, word)
+}

@@ -38,7 +38,7 @@ remotes::install_github("news-r/textanalysis") # github
 You _must_ run `init_textanalysis` at the begining of every session, you will otherwise encounter errors and be prompted to do so.
 
 ```{r}
-textanalysis::init_textanalysis() # setup word2vec Julia dependency
+textanalysis::init_textanalysis() # setup textanalysis Julia dependency
 ```
 
 ## Example
@@ -68,9 +68,10 @@ corpus <- corpus(doc, doc2)
 standardize(corpus, "token_document")
 
 # prepare corpus
-corpus <- prepare(corpus, strip_html_tags = FALSE)
+prepare(corpus, strip_html_tags = FALSE)
 get_text(corpus[[1]])
 
 update_lexicon(corpus)
 lexicon(corpus)
+lexical_frequency(corpus, "document")
 ```
