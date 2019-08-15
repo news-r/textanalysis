@@ -3,7 +3,7 @@
 \name{corpus}
 \alias{corpus}
 \alias{corpus.document}
-\alias{corpus.list}
+\alias{corpus.documents}
 \alias{directory_corpus}
 \title{Corpus}
 \usage{
@@ -11,7 +11,7 @@ corpus(doc, ...)
 
 \method{corpus}{document}(doc, ...)
 
-\method{corpus}{list}(doc, ...)
+\method{corpus}{documents}(doc, ...)
 
 directory_corpus(directory)
 }

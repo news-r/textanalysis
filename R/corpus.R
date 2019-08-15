@@ -30,9 +30,9 @@ corpus.document <- function(doc, ...) {
 }
 
 #' @rdname corpus
-#' @method corpus list
+#' @method corpus documents
 #' @export
-corpus.list <- function(doc, ...) {
+corpus.documents <- function(doc, ...) {
   corpus <- call_julia("Corpus", JuliaObject(doc))
   .construct_corpus(corpus)
 }
