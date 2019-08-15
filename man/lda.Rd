@@ -5,9 +5,9 @@
 \alias{lda.dtm}
 \title{Latent Dirichlet Analysis}
 \usage{
-lda(dtm, topics = 2L, iter = 1000, alpha = 0.1, beta = 0.1)
+lda(dtm, topics = 2L, iter = 1000L, alpha = 0.1, beta = 0.1)
 
-\method{lda}{dtm}(dtm, topics = 2L, iter = 1000, alpha = 0.1,
+\method{lda}{dtm}(dtm, topics = 2L, iter = 1000L, alpha = 0.1,
   beta = 0.1)
 }
 \arguments{

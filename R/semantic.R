@@ -37,12 +37,12 @@
 #' 
 #' @name lda
 #' @export
-lda <- function(dtm, topics = 2L, iter = 1000, alpha = .1, beta = .1) UseMethod("lda")
+lda <- function(dtm, topics = 2L, iter = 1000L, alpha = .1, beta = .1) UseMethod("lda")
 
 #' @rdname lda
 #' @method lda dtm
 #' @export
-lda.dtm <- function(dtm, topics = 2L, iter = 1000, alpha = .1, beta = .1){
+lda.dtm <- function(dtm, topics = 2L, iter = 1000L, alpha = .1, beta = .1){
   lda <- call_julia("lda", dtm, topics, iter, alpha, beta)
   list(
     ntopics_nwords = lda[[1]],
