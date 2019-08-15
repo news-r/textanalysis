@@ -29,3 +29,12 @@ warning_in_place <- function(what){
     gsub("Languages\\.", "", .) %>% 
     gsub("\\(\\)", "", .)
 }
+
+.doc_by_type <- function(doc, type){
+  if(type == "token")
+    token_document(doc)
+  else if(type == "ngram")
+    ngram_document(doc)
+  else
+    string_document(doc)
+}
