@@ -282,7 +282,7 @@ lexical_frequency <- function(corpus, word) UseMethod("lexical_frequency")
 #' @method lexical_frequency corpus
 #' @export
 lexical_frequency.corpus <- function(corpus, word){
-  assert_that(!missing(word), msg = "Missing `word`")
+  assert_that(!is_missing(word))
   call_julia("lexical_frequency", corpus, word)
 }
 
@@ -354,8 +354,8 @@ update_inverse_index <- function(corpus) UseMethod("update_inverse_index")
 #' @export
 inverse_index.corpus <- function(corpus) {
   inv <- call_julia("inverse_index", corpus)
-  if(!length(inv))
-    stop("No inverse_index, see `inverse_index`")
+
+  assert_that(!length(inv), msg = "No inverse_index, see `inverse_index`")
   
   # tidy
   words <- names(inv)
