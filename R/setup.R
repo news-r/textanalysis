@@ -21,6 +21,7 @@ init_textanalysis <- function(...){
   JuliaCall::julia_install_package_if_needed("TextAnalysis")
   JuliaCall::julia_install_package_if_needed("Languages")
   JuliaCall::julia_library("TextAnalysis")
+  cat(crayon::green(cli::symbol$tick), "textanalysis initialised.\n")
 }
 
 #' @rdname init
