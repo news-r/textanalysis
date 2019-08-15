@@ -23,7 +23,7 @@
 #' @name documents
 #' @export 
 file_document <- function(path) {
-  assert_that(!is_missing(path))
+  assert_that(is_missing(path))
   assert_that(file.exists(path), msg = "File does not exist.")
   assert_that(length(path) == 1)
 
@@ -36,7 +36,7 @@ file_document <- function(path) {
 #' @rdname documents
 #' @export 
 string_document <- function(text) {
-  assert_that(!is_missing(text))
+  assert_that(is_missing(text))
   assert_that(length(text) == 1)
   doc <- call_julia("StringDocument", text)
   .construct_document(doc, "string_document")
@@ -45,7 +45,7 @@ string_document <- function(text) {
 #' @rdname documents
 #' @export
 token_document <- function(text) {
-  assert_that(!is_missing(text))
+  assert_that(is_missing(text))
   assert_that(length(text) == 1)
   doc <- call_julia("TokenDocument", text)
   .construct_document(doc, "token_document")
@@ -54,7 +54,7 @@ token_document <- function(text) {
 #' @rdname documents
 #' @export 
 ngram_document <- function(text, ...) {
-  assert_that(!is_missing(text))
+  assert_that(is_missing(text))
   assert_that(length(text) == 1)
   doc <- call_julia("NGramDocument", text, ...)
   .construct_document(doc, "ngram_document")
@@ -63,7 +63,7 @@ ngram_document <- function(text, ...) {
 #' @rdname documents
 #' @export 
 vector_to_documents <- function(text, type = c("string", "token", "ngram")){
-  assert_that(!is_missing(text))
+  assert_that(is_missing(text))
   assert_that(length(text) > 1, msg = "User other `*_document` functions for a single document.")
   type <- match.arg(type)
 
@@ -89,7 +89,7 @@ list_to_documents <- vector_to_documents
 #' @rdname documents
 #' @export 
 tibble_to_documents <- function(text, type = c("string", "token", "ngram")){
-  assert_that(!is_missing(text))
+  assert_that(is_missing(text))
 }
 
 #' Extract Text

@@ -99,7 +99,7 @@ document_term_vector <- function(corpus, document) UseMethod("document_term_vect
 #' @method document_term_vector corpus
 #' @export
 document_term_vector.corpus <- function(corpus, document){
-  assert_that(!is_missing(document))
+  assert_that(is_missing(document))
   assert_that(is.numeric(document))
 
   julia_assign("crps", corpus)
