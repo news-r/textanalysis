@@ -38,14 +38,14 @@ remotes::install_github("news-r/textanalysis") # github
 You _must_ run `init_textanalysis` at the begining of every session, you will otherwise encounter errors and be prompted to do so.
 
 ```{r}
-textanalysis::init_textanalysis() # setup textanalysis Julia dependency
+library(textanalysis) # laod the package
+
+init_textanalysis() # initialise
 ```
 
 ## Basic Examples
 
 ```{r}
-library(textanalysis)
-
 # build document
 str <- paste(
   "They <span>write</span>, it writes too!!!",
@@ -127,4 +127,23 @@ mat <- dtm_matrix(dtm, "dense")
 tfidf <- tf_idf(mat)
 
 kmeans(tfidf, centers = 2)
+```
+
+## Naive Bayes Classifier
+
+```{r}
+classes <- factor(c("financial", "legal"))
+model <- init_naive_classifer(classes)
+
+train <- tibble::tibble(
+  text = c("this is financial doc", "this is legal doc"),
+  labels = factor("financial", "legal")
+)
+
+train_naive_classifier(model, train, text, labels)
+
+test <- tibble::tibble(
+  text = "this should be predicted as a legal document"
+)
+predict_class(model, test, text)
 ```

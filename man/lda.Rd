@@ -32,7 +32,7 @@ A list containing.
 }
 }
 \description{
-Perform Latent Semantic Analysis or lda on a term-document matrix.
+Perform Latent Dirichlet Analysis or lda on a term-document matrix.
 }
 \examples{
 \dontrun{

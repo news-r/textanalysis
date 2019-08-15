@@ -15,3 +15,7 @@
 .construct_dtm <- function(x, ...) {
   structure(x, class = c("document_term_matrix", "dtm", ..., class(x)))
 }
+
+.construct_naive_bayes <- function(x, ...) {
+  structure(x, class = c("naive_bayes_model", ..., class(x)))
+}

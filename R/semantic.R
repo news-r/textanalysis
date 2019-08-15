@@ -1,6 +1,6 @@
 #' Latent Dirichlet Analysis
 #' 
-#' Perform Latent Semantic Analysis or lda on a term-document matrix.
+#' Perform Latent Dirichlet Analysis or lda on a term-document matrix.
 #' 
 #' @inheritParams dtm_matrix
 #' @param topics,iter Number of topics and iterations.
@@ -51,3 +51,41 @@ lda.dtm <- function(dtm, topics = 2L, iter = 1000L, alpha = .1, beta = .1){
     ntopics_ndocs = lda[[2]]
   )
 }
+
+#' Latent Semantic Analysis
+#' 
+#' Perform Latent Semantic Analysis or lda on a corpus.
+#' 
+#' @inheritParams standardize
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document. Another sentence")
+#' doc2 <- string_document("Some example written here.")
+#' doc3 <- string_document("This is a string document")
+#' doc4 <- string_document("Yet another document for the corpus.")
+#' 
+#' crps <- corpus(doc1, doc2, doc3, doc4)
+#' 
+#' lsa(crps)
+#' }
+#' 
+#' @name lsa
+#' @export
+lsa <- function(corpus) UseMethod("lsa")
+
+#' @rdname lsa
+#' @method lsa corpus
+#' @export
+lsa.corpus <- function(corpus){
+  cat(crayon::yellow(cli::symbol$warning), "\n")
+  lsa <- call_julia("lsa", corpus)
+}
+
+#' @rdname lsa
+#' @method lsa dtm
+#' @export
+lsa.dtm <- lsa.corpus
