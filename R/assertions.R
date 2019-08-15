@@ -29,3 +29,16 @@ on_failure(has_corrupt) <- function(call, env) {
     "`"
   )
 }
+
+# missing var pretty print
+is_missing <- function(x) {
+  !missing(x)
+}
+
+on_failure(is_missing) <- function(call, env) {
+  paste0(
+    "Missing `",
+    crayon::blue(call$x),
+    "`."
+  )
+}
