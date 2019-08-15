@@ -3,12 +3,15 @@
 \name{ngram_complexity}
 \alias{ngram_complexity}
 \alias{ngram_complexity.ngram_document}
+\alias{ngram_complexity.ngram_documents}
 \alias{ngram_complexity.JuliaObject}
 \title{Determine NGram Complexity}
 \usage{
 ngram_complexity(document)
 
 \method{ngram_complexity}{ngram_document}(document)
+
+\method{ngram_complexity}{ngram_documents}(document)
 
 \method{ngram_complexity}{JuliaObject}(document)
 }

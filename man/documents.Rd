@@ -6,7 +6,9 @@
 \alias{string_document}
 \alias{token_document}
 \alias{ngram_document}
-\alias{as_documents}
+\alias{vector_to_documents}
+\alias{list_to_documents}
+\alias{tibble_to_documents}
 \title{Document}
 \usage{
 file_document(path)
@@ -17,7 +19,11 @@ token_document(text)
 
 ngram_document(text, ...)
 
-as_documents(text, type = c("string", "token", "ngram"))
+vector_to_documents(text, type = c("string", "token", "ngram"))
+
+list_to_documents(text, type = c("string", "token", "ngram"))
+
+tibble_to_documents(text, type = c("string", "token", "ngram"))
 }
 \arguments{
 \item{path}{The path to the file.}

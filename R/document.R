@@ -23,8 +23,8 @@
 #' @name documents
 #' @export 
 file_document <- function(path) {
-  assert_that(!missing(path), msg = "Missing `path`")
-  assert_that(file.exists(path), msg = "File does not exist")
+  assert_that(!is_missing(path))
+  assert_that(file.exists(path), msg = "File does not exist.")
   assert_that(length(path) == 1)
 
   # Julia requires  normalized path
@@ -36,7 +36,7 @@ file_document <- function(path) {
 #' @rdname documents
 #' @export 
 string_document <- function(text) {
-  assert_that(!missing(text), msg = "Missing `text`")
+  assert_that(!is_missing(text))
   assert_that(length(text) == 1)
   doc <- call_julia("StringDocument", text)
   .construct_document(doc, "string_document")
@@ -45,7 +45,7 @@ string_document <- function(text) {
 #' @rdname documents
 #' @export
 token_document <- function(text) {
-  assert_that(!missing(text), msg = "Missing `text`")
+  assert_that(!is_missing(text))
   assert_that(length(text) == 1)
   doc <- call_julia("TokenDocument", text)
   .construct_document(doc, "token_document")
@@ -54,16 +54,16 @@ token_document <- function(text) {
 #' @rdname documents
 #' @export 
 ngram_document <- function(text, ...) {
-  assert_that(!missing(text), msg = "Missing `text`")
+  assert_that(!is_missing(text))
   assert_that(length(text) == 1)
   doc <- call_julia("NGramDocument", text, ...)
   .construct_document(doc, "ngram_document")
 }
 
-#' @name documents
+#' @rdname documents
 #' @export 
-as_documents <- function(text, type = c("string", "token", "ngram")){
-  assert_that(!missing(text), msg = "Missing `text`")
+vector_to_documents <- function(text, type = c("string", "token", "ngram")){
+  assert_that(!is_missing(text))
   assert_that(length(text) > 1, msg = "User other `*_document` functions for a single document.")
   type <- match.arg(type)
 
@@ -76,7 +76,20 @@ as_documents <- function(text, type = c("string", "token", "ngram")){
       string_document(doc)
   }, type = type)
 
-  .construct_documents(documents)
+  if(type == "ngram")
+    .construct_documents(documents, "ngram_documents")
+  else
+    .construct_documents(documents)
+}
+
+#' @rdname documents
+#' @export 
+list_to_documents <- vector_to_documents
+
+#' @rdname documents
+#' @export 
+tibble_to_documents <- function(text, type = c("string", "token", "ngram")){
+  assert_that(!is_missing(text))
 }
 
 #' Extract Text
@@ -106,6 +119,14 @@ get_text <- function(document) UseMethod("get_text")
 #' @export
 get_text.document <- function(document){
   call_julia("text", document)
+}
+
+#' @rdname get_text
+#' @method get_text documents
+#' @export
+get_text.documents <- function(document){
+  purrr::map(document, get_text) %>% 
+    unlist()
 }
 
 #' @rdname get_text
@@ -139,6 +160,14 @@ get_tokens <- function(document) UseMethod("get_tokens")
 #' @export
 get_tokens.document <- function(document){
   call_julia("tokens", document)
+}
+
+#' @rdname get_text
+#' @method get_text documents
+#' @export
+get_tokens.documents <- function(document){
+  purrr::map(document, get_tokens) %>% 
+    unlist()
 }
 
 #' @rdname get_tokens
@@ -182,6 +211,14 @@ get_ngrams.document <- function(document, ...){
   )
 }
 
+#' @rdname get_text
+#' @method get_text documents
+#' @export
+get_ngrams.documents <- function(document){
+  purrr::map(document, get_ngrams) %>% 
+    unlist()
+}
+
 #' @rdname get_ngrams
 #' @method get_ngrams JuliaObject
 #' @export
@@ -216,6 +253,14 @@ ngram_complexity <- function(document) UseMethod("ngram_complexity")
 #' @export
 ngram_complexity.ngram_document <- function(document){
   call_julia("ngram_complexity", document)
+}
+
+#' @rdname ngram_complexity
+#' @method ngram_complexity ngram_documents
+#' @export
+ngram_complexity.ngram_documents <- function(document){
+  purrr::map(document, ngram_complexity) %>% 
+    unlist()
 }
 
 #' @rdname ngram_complexity
