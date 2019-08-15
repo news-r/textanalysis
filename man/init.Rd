@@ -3,13 +3,10 @@
 \name{init}
 \alias{init}
 \alias{init_textanalysis}
-\alias{init_stats}
 \alias{setup_textanalysis}
 \title{Initialise Session}
 \usage{
 init_textanalysis(...)
-
-init_stats()
 
 setup_textanalysis(...)
 }
@@ -25,11 +22,6 @@ Packages installed by \code{init_textanalysis} are:
 \itemize{
   \item{\code{TextAnalysis}}
   \item{\code{Languages}}
-}
-Packages installed by \code{init_stats} are:
-\itemize{
-  \item{\code{MultivariateStats}}
-  \item{\code{Clustering}}
 }
 }
 
