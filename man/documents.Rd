@@ -6,9 +6,6 @@
 \alias{string_document}
 \alias{token_document}
 \alias{ngram_document}
-\alias{vector_to_documents}
-\alias{list_to_documents}
-\alias{tibble_to_documents}
 \title{Document}
 \usage{
 file_document(path)
@@ -18,21 +15,16 @@ string_document(text)
 token_document(text)
 
 ngram_document(text, ...)
-
-vector_to_documents(text, type = c("string", "token", "ngram"))
-
-list_to_documents(text, type = c("string", "token", "ngram"))
-
-tibble_to_documents(text, type = c("string", "token", "ngram"))
 }
 \arguments{
 \item{path}{The path to the file.}
 
-\item{text}{The text, tokens, or ngrams.}
+\item{text}{The text as a character string, or tokens, or ngrams as a list.}
 
 \item{...}{Other positonal arguments.}
-
-\item{type}{Type of \code{*_document} function to use.}
+}
+\value{
+An object of class \code{document}.
 }
 \description{
 The basic unit of text analysis is a document. 
@@ -50,5 +42,6 @@ ngram_document(doc, 2L)
 
 }
 \seealso{
-\code{\link{directory_corpus}} to read a dicrectory of files as corpus.
+\code{\link{directory_corpus}} to read a dicrectory of files as corpus, 
+and \code{\link{to_documents}} to parse a vector or data.frame to documents.
 }

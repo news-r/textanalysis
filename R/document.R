@@ -5,8 +5,7 @@
 #' stored in a variety of formats.
 #' 
 #' @param path The path to the file.
-#' @param text The text, tokens, or ngrams.
-#' @param type Type of \code{*_document} function to use.
+#' @param text The text as a character string, or tokens, or ngrams as a list.
 #' @param ... Other positonal arguments.
 #' 
 #' @examples
@@ -18,7 +17,10 @@
 #' ngram_document(doc, 2L)
 #' }
 #' 
-#' @seealso \code{\link{directory_corpus}} to read a dicrectory of files as corpus.
+#' @return An object of class \code{document}.
+#' 
+#' @seealso \code{\link{directory_corpus}} to read a dicrectory of files as corpus, 
+#' and \code{\link{to_documents}} to parse a vector or data.frame to documents.
 #' 
 #' @name documents
 #' @export 
@@ -60,21 +62,56 @@ ngram_document <- function(text, ...) {
   .construct_document(doc, "ngram_document")
 }
 
-#' @rdname documents
+#' Create Multiple Documents
+#' 
+#' Create multiple documents from a \code{data.frame}, 
+#' or \code{vector} of characters.
+#'
+#' @param documents A \code{data.frame}, or \code{vector} 
+#' containing documents.
+#' @param text Bare column name containing data.
+#' @param type Type of \code{*_document} function to use, see \code{\link{documents}}.
+#' @param title,language,author,timestamp Bare column name 
+#' to metadata to add to documents, see \code{\link{document_metadata}} .
+#' @param ... Not actually being used.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' docs <- c(
+#'   "This is a document.",
+#'   "This is another document."
+#' )
+#' to_documents(docs)
+#' 
+#' docs_df <- tibble::tibble(
+#'   txt = docs,
+#'   title = c("A", "B") 
+#' )
+#' to_documents(docs_df)
+#' title_(docs_df)
+#' }
+#'
+#' @seealso \code{\link{documents}} to read a single document.
+#' 
+#' @return An object of class \code{documents}.
+#' 
+#' @name to_documents
 #' @export 
-vector_to_documents <- function(text, type = c("string", "token", "ngram")){
-  assert_that(is_missing(text))
-  assert_that(length(text) > 1, msg = "User other `*_document` functions for a single document.")
+to_documents <- function(documents, ...) UseMethod("to_documents")
+
+#' @rdname to_documents
+#' @method to_documents character
+#' @export 
+to_documents.character <- function(documents, ..., type = c("string", "token", "ngram")){
+  assert_that(
+    length(documents) > 1, 
+    msg = "User other `*_document` functions for a single document."
+  )
   type <- match.arg(type)
 
-  documents <- purrr::map(text, function(doc, type){
-    if(type == "token")
-      token_document(doc)
-    else if(type == "ngram")
-      ngram_document(doc)
-    else
-      string_document(doc)
-  }, type = type)
+  documents <- purrr::map(documents, .doc_by_type, type = type)
 
   if(type == "ngram")
     .construct_documents(documents, "ngram_documents")
@@ -82,14 +119,52 @@ vector_to_documents <- function(text, type = c("string", "token", "ngram")){
     .construct_documents(documents)
 }
 
-#' @rdname documents
+#' @rdname to_documents
+#' @method to_documents data.frame
 #' @export 
-list_to_documents <- vector_to_documents
-
-#' @rdname documents
-#' @export 
-tibble_to_documents <- function(text, type = c("string", "token", "ngram")){
+to_documents.data.frame <- function(documents, ..., text, title = NULL, 
+  language = NULL, author = NULL, timestamp = NULL, 
+  type = c("string", "token", "ngram")){
   assert_that(is_missing(text))
+  type <- match.arg(type)
+
+  text_quo   <- dplyr::enquo(text)
+  title_quo  <- dplyr::enquo(title)
+  lang_quo   <- dplyr::enquo(language)
+  author_quo <- dplyr::enquo(author)
+  ts_quo     <- dplyr::enquo(timestamp)
+
+  documents <- documents %>% 
+    dplyr::select(
+      text      = !!text_quo,
+      title     = !!title_quo,
+      language  = !!lang_quo,
+      author    = !!author_quo,
+      timestamp = !!ts_quo
+    ) %>% 
+    as.data.frame()
+
+  vars <- names(documents)
+
+  new_docs <- list() 
+  for(i in 1:nrow(documents)){
+    # force character conversion as factor fails
+    txt <- as.character(documents$text[i])
+    doc <- .doc_by_type(txt, type)
+
+    if("title" %in% vars && !is.na(documents[i, "title"])) 
+      title_(doc, documents[i, "title"])
+    if("language" %in% vars && !is.na(documents[i, "language"])) 
+      language_(doc, documents[i, "language"])
+    if("author" %in% vars && !is.na(documents[i, "author"])) 
+      author_(doc, documents[i, "author"])
+    if("timestamp" %in% vars && !is.na(documents[i, "timestamp"])) 
+      timestamp_(doc, documents[i, "timestamp"])
+
+    new_docs <- append(new_docs, doc)
+  }
+
+  .construct_documents(new_docs)
 }
 
 #' Extract Text
@@ -310,6 +385,13 @@ title_.document <- function(document, ...){
 title_.JuliaObject <- title_.document
 
 #' @rdname document_metadata
+#' @method title_ documents
+#' @export
+title_.documents <- function(document, ...){
+  purrr::map(document, title_, ...) %>% unlist()
+}
+
+#' @rdname document_metadata
 #' @export
 language_ <- function(document, ...) UseMethod("language_")
 
@@ -327,6 +409,13 @@ language_.document <- function(document, ...){
     expr <- paste0("language!(sd, Languages.", lang,"())")
     julia_eval(expr)
   }
+}
+
+#' @rdname document_metadata
+#' @method language_ documents
+#' @export
+language_.documents <- function(document, ...){
+  purrr::map(document, language_, ...) %>% unlist()
 }
 
 #' @rdname document_metadata
@@ -348,6 +437,13 @@ author_.document <- function(document, ...){
 }
 
 #' @rdname document_metadata
+#' @method author_ documents
+#' @export
+author_.documents <- function(document, ...){
+  purrr::map(document, author_, ...) %>% unlist()
+}
+
+#' @rdname document_metadata
 #' @method author_ JuliaObject
 #' @export
 author_.JuliaObject <- author_.document
@@ -363,6 +459,13 @@ timestamp_.document <- function(document, ...){
   L <- length(list(...))
   func <- ifelse(L > 0, "timestamp!", "timestamp")
   call_julia(func, document, ...)
+}
+
+#' @rdname document_metadata
+#' @method timestamp_ documents
+#' @export
+timestamp_.documents <- function(document, ...){
+  purrr::map(document, timestamp_, ...) %>% unlist()
 }
 
 #' @rdname document_metadata

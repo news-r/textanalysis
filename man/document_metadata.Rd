@@ -5,14 +5,18 @@
 \alias{title_}
 \alias{title_.document}
 \alias{title_.JuliaObject}
+\alias{title_.documents}
 \alias{language_}
 \alias{language_.document}
+\alias{language_.documents}
 \alias{language_.JuliaObject}
 \alias{author_}
 \alias{author_.document}
+\alias{author_.documents}
 \alias{author_.JuliaObject}
 \alias{timestamp_}
 \alias{timestamp_.document}
+\alias{timestamp_.documents}
 \alias{timestamp_.JuliaObject}
 \title{Document Metadata}
 \usage{
@@ -22,9 +26,13 @@ title_(document, ...)
 
 \method{title_}{JuliaObject}(document, ...)
 
+\method{title_}{documents}(document, ...)
+
 language_(document, ...)
 
 \method{language_}{document}(document, ...)
+
+\method{language_}{documents}(document, ...)
 
 \method{language_}{JuliaObject}(document, ...)
 
@@ -32,11 +40,15 @@ author_(document, ...)
 
 \method{author_}{document}(document, ...)
 
+\method{author_}{documents}(document, ...)
+
 \method{author_}{JuliaObject}(document, ...)
 
 timestamp_(document, ...)
 
 \method{timestamp_}{document}(document, ...)
+
+\method{timestamp_}{documents}(document, ...)
 
 \method{timestamp_}{JuliaObject}(document, ...)
 }
