@@ -282,7 +282,7 @@ lexical_frequency <- function(corpus, word) UseMethod("lexical_frequency")
 #' @method lexical_frequency corpus
 #' @export
 lexical_frequency.corpus <- function(corpus, word){
-  assert_that(!is_missing(word))
+  assert_that(is_missing(word))
   call_julia("lexical_frequency", corpus, word)
 }
 
