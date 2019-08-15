@@ -41,9 +41,7 @@ You _must_ run `init_textanalysis` at the begining of every session, you will ot
 textanalysis::init_textanalysis() # setup textanalysis Julia dependency
 ```
 
-## Example
-
-Very basic.
+## Basic Examples
 
 ```{r}
 library(textanalysis)
@@ -103,13 +101,15 @@ sentiment(corpus)
 summarize(string_document(str), ns = 2L)
 ```
 
+## Latent Dirichlet Allocation
+
 fit LDA on the [gensimr](https://gensimr.news-r.org) data.
 
 ```{r}
 set.seed(42)
 
 data("corpus", package = "gensimr")
-documents <- as_documents(corpus) # convert vector to documents
+documents <- to_documents(corpus) # convert vector to documents
 
 crps <- corpus(documents)
 update_lexicon(crps)
@@ -126,9 +126,5 @@ mat <- dtm_matrix(dtm, "dense")
 
 tfidf <- tf_idf(mat)
 
-km <- kmeans(tfidf, centers = 2)
-
-km_data <- dplyr::bind_cols(as.data.frame(t(lda_data$ntopics_ndocs)), tibble::tibble(cluster = km$cluster))
-
-plot(jitter(km_data$V1), jitter(km_data$V2), col = km_data$cluster)
+kmeans(tfidf, centers = 2)
 ```

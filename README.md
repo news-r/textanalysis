@@ -33,11 +33,10 @@ textanalysis::init_textanalysis() # setup textanalysis Julia dependency
 #> Julia version 1.1.1 at location /Applications/Julia-1.1.app/Contents/Resources/julia/bin will be used.
 #> Loading setup script for JuliaCall...
 #> Finish loading setup script for JuliaCall.
+#> ✔ textanalysis initialised.
 ```
 
-## Example
-
-Very basic.
+## Basic Examples
 
 ``` r
 library(textanalysis)
@@ -124,13 +123,15 @@ summarize(string_document(str), ns = 2L)
 #> [2] "This is another sentence."
 ```
 
+## Latent Dirichlet Allocation
+
 fit LDA on the [gensimr](https://gensimr.news-r.org) data.
 
 ``` r
 set.seed(42)
 
 data("corpus", package = "gensimr")
-documents <- as_documents(corpus) # convert vector to documents
+documents <- to_documents(corpus) # convert vector to documents
 
 crps <- corpus(documents)
 update_lexicon(crps)
@@ -152,11 +153,45 @@ mat <- dtm_matrix(dtm, "dense")
 
 tfidf <- tf_idf(mat)
 
-km <- kmeans(tfidf, centers = 2)
-
-km_data <- dplyr::bind_cols(as.data.frame(t(lda_data$ntopics_ndocs)), tibble::tibble(cluster = km$cluster))
-
-plot(jitter(km_data$V1), jitter(km_data$V2), col = km_data$cluster)
+kmeans(tfidf, centers = 2)
+#> K-means clustering with 2 clusters of sizes 1, 8
+#> 
+#> Cluster means:
+#>         [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
+#> 1 0.37601935 0.00000000 0.37601935 0.00000000 0.00000000 0.00000000
+#> 2 0.01880097 0.05483616 0.01880097 0.03433163 0.02746531 0.03051701
+#>         [,7]       [,8]       [,9]      [,10]      [,11]      [,12]
+#> 1 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000
+#> 2 0.03433163 0.06212391 0.02746531 0.03433163 0.04230218 0.03433163
+#>        [,13]      [,14]      [,15]      [,16]      [,17]      [,18]
+#> 1 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000
+#> 2 0.03923615 0.04230218 0.03433163 0.03051701 0.03433163 0.03923615
+#>        [,19]      [,20]      [,21]      [,22]      [,23]      [,24]
+#> 1 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000
+#> 2 0.03923615 0.03433163 0.03923615 0.05483616 0.03923615 0.03433163
+#>        [,25]      [,26]      [,27]      [,28]      [,29]      [,30]
+#> 1 0.00000000 0.00000000 0.00000000 0.37601935 0.00000000 0.00000000
+#> 2 0.03433163 0.04577551 0.03051701 0.01880097 0.04165269 0.02746531
+#>        [,31]      [,32]      [,33]      [,34]      [,35]      [,36]
+#> 1 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000
+#> 2 0.02746531 0.03923615 0.03051701 0.02746531 0.03923615 0.03969093
+#>        [,37]      [,38]      [,39]      [,40]      [,41]      [,42]
+#> 1 0.37601935 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000
+#> 2 0.01880097 0.05378623 0.03433163 0.03969093 0.03051701 0.05296881
+#>        [,43]      [,44]      [,45]
+#> 1 0.00000000 0.00000000 0.00000000
+#> 2 0.03923615 0.05187891 0.02746531
+#> 
+#> Clustering vector:
+#> [1] 2 2 2 2 2 2 2 2 1
+#> 
+#> Within cluster sum of squares by cluster:
+#> [1] 0.000000 2.548672
+#>  (between_SS / total_SS =  16.6 %)
+#> 
+#> Available components:
+#> 
+#> [1] "cluster"      "centers"      "totss"        "withinss"    
+#> [5] "tot.withinss" "betweenss"    "size"         "iter"        
+#> [9] "ifault"
 ```
-
-<img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />
