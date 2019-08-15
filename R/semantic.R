@@ -43,6 +43,8 @@ lda <- function(dtm, topics = 2L, iter = 1000L, alpha = .1, beta = .1) UseMethod
 #' @method lda dtm
 #' @export
 lda.dtm <- function(dtm, topics = 2L, iter = 1000L, alpha = .1, beta = .1){
+  topics <- as.integer(topics)
+  iter <- as.integer(iter)
   lda <- call_julia("lda", dtm, topics, iter, alpha, beta)
   list(
     ntopics_nwords = lda[[1]],
