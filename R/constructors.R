@@ -3,7 +3,9 @@
 }
 
 .construct_documents <- function(x, ...) {
-  structure(x, class = c("documents", ..., class(x)))
+  x %>% 
+    purrr::map(.construct_document) %>% 
+    structure(class = c("documents", ..., class(x)))
 }
 
 .construct_corpus <- function(x, ...) {
