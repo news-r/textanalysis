@@ -276,3 +276,22 @@ summarize.corpus <- function(text, ns = 2L){
   }
   return(summarizations)
 }
+
+#' Hash Trick
+#' 
+#' @param cardinality Max index used for hashing (default 100).
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' hash_func <- create_hash_function(doc, ns = 2L)
+#' }
+#' 
+#' @export
+create_hash_function <- function(cardinality){
+  assert_that(is_missing(cardinality))
+  cardinality <- as.integer(cardinality)
+  func <- call_julia("TextHashFunction", cardinality)
+  .construct_hash_function(func)
+}

@@ -19,3 +19,7 @@
 .construct_naive_bayes <- function(x, ...) {
   structure(x, class = c("naive_bayes_model", ..., class(x)))
 }
+
+.construct_hash_function <- function(x, ...) {
+  structure(x, class = c("hash_function", ..., class(x)))
+}
