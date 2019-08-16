@@ -136,7 +136,7 @@ tf <- function(dtm) UseMethod("tf")
 #' @method tf dtm
 #' @export
 tf.dtm <- function(dtm){
-  call_julia("tf", dtm)
+  call_julia("tf", dtm) %>% t()
 }
 
 #' @rdname tf
@@ -173,7 +173,7 @@ tf_idf <- function(dtm) UseMethod("tf_idf")
 #' @method tf_idf dtm
 #' @export
 tf_idf.dtm <- function(dtm){
-  call_julia("tf_idf", dtm)
+  call_julia("tf_idf", dtm) %>% t()
 }
 
 #' @rdname tf_idf
@@ -429,7 +429,6 @@ coom.corpus <- function(corpus, window = 5L, normalize = TRUE){
 #' of documents to a given search query. 
 #'
 #' @param text A document-term martrix or a \code{corpus}.
-#' @param k,b Free hyperparameters \url{https://en.wikipedia.org/wiki/Okapi_BM25}.
 #' 
 #' @examples
 #' \dontrun{
@@ -446,21 +445,19 @@ coom.corpus <- function(corpus, window = 5L, normalize = TRUE){
 #' 
 #' @name bm_25
 #' @export
-bm_25 <- function(text, k = 2L, b = .75) UseMethod("bm_25")
+bm_25 <- function(text) UseMethod("bm_25")
 
 #' @rdname bm_25
 #' @method bm_25 dtm
 #' @export
-bm_25.dtm <- function(text, k = 2L, b = .75){
-  k <- as.integer(k)
-  call_julia("bm_25", text, k, b)
+bm_25.dtm <- function(text){
+  call_julia("bm_25", text) %>% t()
 }
 
 #' @rdname bm_25
 #' @method bm_25 corpus
 #' @export
-bm_25.corpus <- function(text, k = 2L, b = .75){
+bm_25.corpus <- function(text){
   dtm <- document_term_matrix(text)
-  k <- as.integer(k)
-  call_julia("bm_25", dtm, k, b)
+  call_julia("bm_25", text) %>% t()
 }

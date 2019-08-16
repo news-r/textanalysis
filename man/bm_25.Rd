@@ -6,16 +6,14 @@
 \alias{bm_25.corpus}
 \title{Okapi BM-25}
 \usage{
-bm_25(text, k = 2L, b = 0.75)
+bm_25(text)
 
-\method{bm_25}{dtm}(text, k = 2L, b = 0.75)
+\method{bm_25}{dtm}(text)
 
-\method{bm_25}{corpus}(text, k = 2L, b = 0.75)
+\method{bm_25}{corpus}(text)
 }
 \arguments{
 \item{text}{A document-term martrix or a \code{corpus}.}
-
-\item{k, b}{Free hyperparameters \url{https://en.wikipedia.org/wiki/Okapi_BM25}.}
 }
 \description{
 Okapi BM25 (BM stands for Best Matching) is a ranking 
