@@ -1,51 +1,48 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.org/news-r/textanalysis.svg?branch=master)](https://travis-ci.org/news-r/textanalysis) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) <!-- badges: end -->
 
-[![Travis build
-status](https://travis-ci.org/news-r/textanalysis.svg?branch=master)](https://travis-ci.org/news-r/textanalysis)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-<!-- badges: end -->
-
-# textanalysis
+textanalysis
+============
 
 Text Analysis in R via Julia.
 
-## Installation
+<img src="./man/figures/logo.png" height="200" align="right" />
 
-Being a wrapper to a [Julia](https://julialang.org/) package,
-textanalysis requires the latter to be installed.
+Installation
+------------
+
+Being a wrapper to a [Julia](https://julialang.org/) package, textanalysis requires the latter to be installed.
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("news-r/textanalysis") # github
 ```
 
-## Setup
+Setup
+-----
 
-You *must* run `init_textanalysis` at the begining of every session, you
-will otherwise encounter errors and be prompted to do so.
+You *must* run `init_textanalysis` at the begining of every session, you will otherwise encounter errors and be prompted to do so.
 
 ``` r
 library(textanalysis) # load the package
 
 init_textanalysis() # initialise
-#> Julia version 1.1.1 at location /Applications/Julia-1.1.app/Contents/Resources/julia/bin will be used.
+#> Julia version 1.1.1 at location /home/jp/Downloads/julia-1.1.1-linux-x86_64/julia-1.1.1/bin will be used.
 #> Loading setup script for JuliaCall...
 #> Finish loading setup script for JuliaCall.
 #> ✔ textanalysis initialised.
 ```
 
-Some funtions depend on the development version of the Julia package, to
-install it run:
+Some funtions depend on the development version of the Julia package, to install it run:
 
 ``` r
 install_textanalysis(version = "latest")
 ```
 
-## Basic Examples
+Basic Examples
+--------------
 
 ``` r
 # build document
@@ -166,7 +163,8 @@ summarize(string_document(str), ns = 2L)
 #> [2] "This is another sentence."
 ```
 
-## Latent Dirichlet Allocation
+Latent Dirichlet Allocation
+---------------------------
 
 fit LDA on the [gensimr](https://gensimr.news-r.org) data.
 
@@ -205,7 +203,8 @@ tfidf <- tf_idf(mat)
 km <- kmeans(tfidf, centers = 2)
 ```
 
-## Hash trick
+Hash trick
+----------
 
 ``` r
 hash_func <- create_hash_function(10L)
@@ -232,7 +231,8 @@ hash(doc) # doc has built-in has
 #> [1,]     0     0     0     0     0     0     0     0     0      0
 ```
 
-## Naive Bayes Classifier
+Naive Bayes Classifier
+----------------------
 
 ``` r
 classes <- factor(c("financial", "legal"))
@@ -256,7 +256,8 @@ predict_class(model, test, text)
 #> 1 0.667     0.333
 ```
 
-## Co-occurence Matrix
+Co-occurence Matrix
+-------------------
 
 Plot method uses [echarts4r](https://echarts4r.john-coene.com)
 
