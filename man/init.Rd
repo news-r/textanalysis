@@ -4,20 +4,26 @@
 \alias{init}
 \alias{init_textanalysis}
 \alias{setup_textanalysis}
+\alias{install_textanalysis}
 \title{Initialise Session}
 \usage{
-init_textanalysis(..., type = c("stable", "latest"))
+init_textanalysis(..., version = c("stable", "latest"))
 
-setup_textanalysis(..., type = c("stable", "latest"))
+setup_textanalysis(..., version = c("stable", "latest"))
+
+install_textanalysis(version = c("stable", "latest"))
 }
 \arguments{
 \item{...}{Arguments passed to \link[JuliaCall]{julia_setup}.}
 
-\item{type}{Whether to install the stable version from the 
+\item{version}{Whether to install the stable version from the 
 registry (recommended) or the latest version from github.}
 }
 \description{
 Initialise a session, installs TextAnalysis Juia dependency if needed.
+}
+\details{
+Some functions currently require the \code{latest} Github version.
 }
 \section{Packages}{
 
