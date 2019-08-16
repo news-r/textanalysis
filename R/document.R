@@ -205,9 +205,16 @@ get_text.documents <- function(document){
 }
 
 #' @rdname get_text
-#' @method get_text JuliaObject
+#' @method get_text corpus
 #' @export
-get_text.JuliaObject <- get_text.document 
+get_text.corpus <- function(document){
+  text <- list()
+  for(i in 1:length(document)){
+    txt <- get_text(document[[i]])
+    text <- append(text, txt)
+  }
+  return(text)
+}
 
 #' Extract Tokens
 #' 
@@ -246,9 +253,16 @@ get_tokens.documents <- function(document){
 }
 
 #' @rdname get_tokens
-#' @method get_tokens JuliaObject
+#' @method get_tokens corpus
 #' @export
-get_tokens.JuliaObject <- get_tokens.document 
+get_tokens.corpus <- function(document){
+  text <- list()
+  for(i in 1:length(document)){
+    txt <- get_tokens(document[[i]])
+    text <- append(text, txt)
+  }
+  return(text)
+}
 
 #' Extract NGrams
 #' 
@@ -286,18 +300,24 @@ get_ngrams.document <- function(document, ...){
   )
 }
 
-#' @rdname get_text
-#' @method get_text documents
+#' @rdname get_ngrams
+#' @method get_ngrams documents
 #' @export
-get_ngrams.documents <- function(document){
-  purrr::map(document, get_ngrams) %>% 
-    unlist()
+get_ngrams.documents <- function(document, ...){
+  purrr::map(document, get_ngrams, ...) 
 }
 
 #' @rdname get_ngrams
-#' @method get_ngrams JuliaObject
+#' @method get_ngrams corpus
 #' @export
-get_ngrams.JuliaObject <- get_ngrams.document
+get_ngrams.corpus <- function(document, ...){
+  text <- list()
+  for(i in 1:length(document)){
+    txt <- get_ngrams(document[[i]], ...)
+    text <- append(text, txt)
+  }
+  return(text)
+}
 
 #' Determine NGram Complexity
 #' 
