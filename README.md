@@ -109,39 +109,42 @@ m <- document_term_matrix(corpus)
 bind_lexicon <- function(data){
   data %>% 
     as.data.frame() %>% 
-    dplyr::bind_cols(lexicon)
+    dplyr::bind_cols(
+      lexicon %>% 
+        dplyr::select(-n)
+    )
 }
 
 # term-frequency
 tf(m) %>% bind_lexicon()
-#>    V1  V2    words n
-#> 1 0.0 0.4    stuff 1
-#> 2 0.2 0.2 document 2
-#> 3 0.0 0.2    write 3
-#> 4 0.2 0.0      hey 1
-#> 5 0.2 0.0          2
-#> 6 0.4 0.2  sentenc 1
+#>    V1  V2    words
+#> 1 0.0 0.4    stuff
+#> 2 0.2 0.2 document
+#> 3 0.0 0.2    write
+#> 4 0.2 0.0      hey
+#> 5 0.2 0.0         
+#> 6 0.4 0.2  sentenc
 
 # tf-idf
 tf_idf(m) %>% bind_lexicon()
-#>          V1        V2    words n
-#> 1 0.0000000 0.2772589    stuff 1
-#> 2 0.0000000 0.0000000 document 2
-#> 3 0.0000000 0.1386294    write 3
-#> 4 0.1386294 0.0000000      hey 1
-#> 5 0.1386294 0.0000000          2
-#> 6 0.0000000 0.0000000  sentenc 1
+#>          V1        V2    words
+#> 1 0.0000000 0.2772589    stuff
+#> 2 0.0000000 0.0000000 document
+#> 3 0.0000000 0.1386294    write
+#> 4 0.1386294 0.0000000      hey
+#> 5 0.1386294 0.0000000         
+#> 6 0.0000000 0.0000000  sentenc
 
 # bm-25
 # https://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/
 bm_25(m) %>% bind_lexicon()
-#>          V1        V2    words n
-#> 1 0.0000000 1.0748378    stuff 1
-#> 2 0.8340518 0.8340518 document 2
-#> 3 0.0000000 1.4779019    write 3
-#> 4 1.4779019 0.0000000      hey 1
-#> 5 1.4779019 0.0000000          2
-#> 6 0.7210474 0.5421369  sentenc 1
+#>          V1        V2    words
+#> 1 0.0000000 1.0748378    stuff
+#> 2 0.8340518 0.8340518 document
+#> 3 0.0000000 1.4779019    write
+#> 4 1.4779019 0.0000000      hey
+#> 5 1.4779019 0.0000000         
+#> 6 0.7210474 0.5421369  sentenc
 
 # sentiment
 sentiment(corpus)

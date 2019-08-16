@@ -95,7 +95,10 @@ m <- document_term_matrix(corpus)
 bind_lexicon <- function(data){
   data %>% 
     as.data.frame() %>% 
-    dplyr::bind_cols(lexicon)
+    dplyr::bind_cols(
+      lexicon %>% 
+        dplyr::select(-n)
+    )
 }
 
 # term-frequency
