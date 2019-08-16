@@ -38,7 +38,7 @@ remotes::install_github("news-r/textanalysis") # github
 You _must_ run `init_textanalysis` at the begining of every session, you will otherwise encounter errors and be prompted to do so.
 
 ```{r}
-library(textanalysis) # laod the package
+library(textanalysis) # load the package
 
 init_textanalysis() # initialise
 ```
@@ -137,7 +137,7 @@ model <- init_naive_classifer(classes)
 
 train <- tibble::tibble(
   text = c("this is financial doc", "this is legal doc"),
-  labels = factor("financial", "legal")
+  labels = factor(c("financial", "legal"))
 )
 
 train_naive_classifier(model, train, text, labels)

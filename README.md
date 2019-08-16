@@ -29,18 +29,15 @@ You *must* run `init_textanalysis` at the begining of every session, you
 will otherwise encounter errors and be prompted to do so.
 
 ``` r
-textanalysis::init_textanalysis() # setup textanalysis Julia dependency
-#> Julia version 1.1.1 at location /Applications/Julia-1.1.app/Contents/Resources/julia/bin will be used.
-#> Loading setup script for JuliaCall...
-#> Finish loading setup script for JuliaCall.
+library(textanalysis) # load the package
+
+init_textanalysis() # initialise
 #> ✔ textanalysis initialised.
 ```
 
 ## Basic Examples
 
 ``` r
-library(textanalysis)
-
 # build document
 str <- paste(
   "They <span>write</span>, it writes too!!!",
@@ -53,7 +50,7 @@ doc <- string_document(str)
 prepare(doc)
 #> ⚠ This function changes `document` in place!
 get_text(doc)
-#> [1] "  write     writes         sentence    stuff     document"
+#> [1] " write  writes     sentence  stuff   document"
 
 # stem
 stem_words(doc)
@@ -194,4 +191,28 @@ kmeans(tfidf, centers = 2)
 #> [1] "cluster"      "centers"      "totss"        "withinss"    
 #> [5] "tot.withinss" "betweenss"    "size"         "iter"        
 #> [9] "ifault"
+```
+
+## Naive Bayes Classifier
+
+``` r
+classes <- factor(c("financial", "legal"))
+model <- init_naive_classifer(classes)
+
+train <- tibble::tibble(
+  text = c("this is financial doc", "this is legal doc"),
+  labels = factor(c("financial", "legal"))
+)
+
+train_naive_classifier(model, train, text, labels)
+#> ⚠ This function changes `model` in place!
+
+test <- tibble::tibble(
+  text = "this should be predicted as a legal document"
+)
+predict_class(model, test, text)
+#> # A tibble: 1 x 2
+#>   legal financial
+#>   <dbl>     <dbl>
+#> 1 0.667     0.333
 ```
