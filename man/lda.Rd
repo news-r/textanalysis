@@ -28,7 +28,7 @@ as returned by \code{document_term_matrix}.}
 A list containing.
 \itemize{
  \item{\code{ntopics_nwords} \code{ntopics * nwords} Sparse matrix of probabilities s.t. \eqn{sum(ntopics_nwords, 1) == 1}.}
- \item{\code{ntopics_ndocs} \code{ntopics * ndocs} Dense matrix of probabilities s.t. \eqn{sum(θ, 1) == 1}.}
+ \item{\code{ntopics_ndocs} \code{ntopics * ndocs} Dense matrix of probabilities s.t. \eqn{sum(theta, 1) == 1}.}
 }
 }
 \description{
