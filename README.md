@@ -258,7 +258,7 @@ predict_class(model, test, text)
 
 ``` r
 matrix <- coom(crps)
-plot(matrix, colors = c("#247BA0", "#70C1B3", "#B2DBBF"))
+plot(matrix, colors = c("#FF1654", "white", "#247BA0"), hc.order = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />

@@ -22,5 +22,5 @@ Imports:
     JuliaCall,
     assertthat
 Suggests:
-    ggcorrplot
+    echarts4r
 RoxygenNote: 6.1.1
