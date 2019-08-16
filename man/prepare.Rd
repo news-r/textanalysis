@@ -3,12 +3,22 @@
 \name{prepare}
 \alias{prepare}
 \alias{prepare.document}
+\alias{prepare.documents}
 \alias{prepare.corpus}
 \title{Preprocess Document}
 \usage{
 prepare(text, ...)
 
 \method{prepare}{document}(text, remove_corrupt_utf8 = TRUE,
+  remove_case = TRUE, strip_stopwords = TRUE, strip_numbers = TRUE,
+  strip_html_tags = TRUE, strip_punctuation = TRUE,
+  remove_words = NULL, strip_non_letters = FALSE,
+  strip_spares_terms = FALSE, strip_frequent_terms = FALSE,
+  strip_articles = FALSE, strip_indefinite_articles = FALSE,
+  strip_definite_articles = FALSE, strip_preposition = FALSE,
+  strip_pronouns = FALSE, ...)
+
+\method{prepare}{documents}(text, remove_corrupt_utf8 = TRUE,
   remove_case = TRUE, strip_stopwords = TRUE, strip_numbers = TRUE,
   strip_html_tags = TRUE, strip_punctuation = TRUE,
   remove_words = NULL, strip_non_letters = FALSE,

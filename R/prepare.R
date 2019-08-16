@@ -92,6 +92,23 @@ prepare.document <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRU
 }
 
 #' @rdname prepare
+#' @method prepare documents
+#' @export
+prepare.documents <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE, strip_stopwords = TRUE, 
+  strip_numbers = TRUE, strip_html_tags = TRUE, strip_punctuation = TRUE, remove_words = NULL, strip_non_letters = FALSE, 
+  strip_spares_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
+  strip_indefinite_articles = FALSE, strip_definite_articles = FALSE, strip_preposition = FALSE, 
+  strip_pronouns = FALSE, ...){
+
+  purrr::map(text, prepare,  remove_corrupt_utf8 = remove_corrupt_utf8, remove_case = remove_case, strip_stopwords = strip_stopwords, 
+    strip_numbers = strip_numbers, strip_html_tags = strip_html_tags, strip_punctuation = strip_punctuation, remove_words = remove_words,
+    strip_non_letters = strip_non_letters, strip_spares_terms = strip_spares_terms, strip_frequent_terms = strip_frequent_terms, 
+    strip_articles = strip_articles, strip_indefinite_articles = strip_indefinite_articles, strip_definite_articles = strip_definite_articles,
+    strip_preposition = strip_preposition, strip_pronouns = strip_pronouns, ...)
+  invisible()
+}
+
+#' @rdname prepare
 #' @method prepare corpus
 #' @export
 prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE, strip_stopwords = TRUE, 
@@ -141,6 +158,48 @@ prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE,
   if(update_inverse_index) update_inverse_index(text)
   invisible(text)
 }
+
+#' Remove Corrupt UTF8
+#' 
+#' Remove corrupt UTF8 characters that might cause issues, recommended.
+#' 
+#' @param text A \code{document}, a \code{corpus}, or \code{documents}.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("this document is clean")
+#' 
+#' # replaces in place!
+#' remove_corrupt_utf8(doc)
+#' }
+#' 
+#' @name remove_corrupt_utf8
+#' @export
+remove_corrupt_utf8 <- function(text) UseMethod("remove_corrupt_utf8")
+
+#' @rdname remove_corrupt_utf8
+#' @method remove_corrupt_utf8 corpus
+#' @export
+remove_corrupt_utf8.corpus <- function(text){
+  call_julia("remove_corrupt_utf8!", text)
+  invisible()
+} 
+
+#' @rdname remove_corrupt_utf8
+#' @method remove_corrupt_utf8 documents
+#' @export
+remove_corrupt_utf8.documents <- function(text){
+  purrr::map(text, remove_corrupt_utf8)
+  invisible()
+} 
+
+#' @rdname remove_corrupt_utf8
+#' @method remove_corrupt_utf8 document
+#' @export
+remove_corrupt_utf8.document <- remove_corrupt_utf8.corpus
 
 #' Stem
 #' 
