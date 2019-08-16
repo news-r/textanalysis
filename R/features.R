@@ -279,6 +279,9 @@ summarize.corpus <- function(text, ns = 2L){
 
 #' Hash Trick
 #' 
+#' Replace terms with their hashed valued using a hash 
+#' function that outputs integers from 1 to N.
+#' 
 #' @param cardinality Max index used for hashing (default 100).
 #' @param text A \code{corpus}, \code{character} string, a \code{document},
 #' or a \code{document_term_matrix}.
@@ -297,7 +300,7 @@ summarize.corpus <- function(text, ns = 2L){
 #' 
 #' @name create_hash_function
 #' @export
-create_hash_function <- function(cardinality){
+create_hash_function <- function(cardinality = 100L){
   assert_that(is_missing(cardinality))
   cardinality <- as.integer(cardinality)
   func <- call_julia("TextHashFunction", cardinality)
@@ -363,4 +366,48 @@ hash.corpus <- function(text, hash_func = NULL){
     call_julia("hash_dtm", text, hash_func)
   else
     call_julia("hash_dtm", text)
+}
+
+#' Co-occurrence Matrix
+#' 
+#' The elements of the Co occurrence matrix indicate how many 
+#' times two words co-occur in a (sliding) word window of a given size. 
+#' 
+#' @param corpus A \code{corpus} as returned by \code{\link{corpus}}.
+#' @param window Size of the sliding word window.
+#' @param normalize Whether to normalize the counts by the 
+#' distance between word positions.
+#' 
+#' @section Plot:
+#' The plot method passes all arguments to \link[ggcorrplot]{ggcorrplot}.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # create corpus
+#' doc <- string_document("A simple document.")
+#' doc2 <- string_document("Another simple document.")
+#' crps <- corpus(doc, doc2)
+#' 
+#' # matrix & plot
+#' matrix <- coom(crps)
+#' plot(matrix)
+#' }
+#' 
+#' @name coom
+#' @export
+coom <- function(corpus, window = 5L, normalize = TRUE) UseMethod("coom")
+
+#' @rdname coom
+#' @method coom corpus
+#' @export
+coom.corpus <- function(corpus, window = 5L, normalize = TRUE){
+  julia_assign("crps", corpus)
+  expr <- paste0('CooMatrix(crps, window=', window, ', normalize=', tolower(normalize),')')
+  coom <- julia_eval(expr)
+  matrix <- call_julia("coom", coom)
+  colnames(matrix) <- coom$terms
+  row.names(matrix) <- coom$terms
+  .construct_coom(matrix)
 }

@@ -32,7 +32,17 @@ will otherwise encounter errors and be prompted to do so.
 library(textanalysis) # load the package
 
 init_textanalysis() # initialise
+#> Julia version 1.1.1 at location /Applications/Julia-1.1.app/Contents/Resources/julia/bin will be used.
+#> Loading setup script for JuliaCall...
+#> Finish loading setup script for JuliaCall.
 #> ✔ textanalysis initialised.
+```
+
+Some funtions depend on the development version of the Julia package, to
+install it run:
+
+``` r
+install_textanalysis(version = "latest")
 ```
 
 ## Basic Examples
@@ -193,6 +203,33 @@ kmeans(tfidf, centers = 2)
 #> [9] "ifault"
 ```
 
+## Hash trick
+
+``` r
+hash_func <- create_hash_function(10L)
+hash("a", hash_func)
+#> [1] 8
+hash(doc)
+#>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+#> [1,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+#>      [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24]
+#> [1,]     0     0     0     0     1     0     0     0     1     0     0
+#>      [,25] [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35]
+#> [1,]     0     0     0     0     0     0     1     0     0     0     0
+#>      [,36] [,37] [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46]
+#> [1,]     0     0     0     0     0     0     0     0     0     0     0
+#>      [,47] [,48] [,49] [,50] [,51] [,52] [,53] [,54] [,55] [,56] [,57]
+#> [1,]     0     0     0     0     2     0     0     0     0     0     0
+#>      [,58] [,59] [,60] [,61] [,62] [,63] [,64] [,65] [,66] [,67] [,68]
+#> [1,]     0     0     0     0     0     0     0     0     0     0     0
+#>      [,69] [,70] [,71] [,72] [,73] [,74] [,75] [,76] [,77] [,78] [,79]
+#> [1,]     0     0     0     0     0     0     0     0     0     0     0
+#>      [,80] [,81] [,82] [,83] [,84] [,85] [,86] [,87] [,88] [,89] [,90]
+#> [1,]     0     0     0     0     0     0     0     0     0     0     0
+#>      [,91] [,92] [,93] [,94] [,95] [,96] [,97] [,98] [,99] [,100]
+#> [1,]     0     0     0     0     0     0     0     0     0      0
+```
+
 ## Naive Bayes Classifier
 
 ``` r
@@ -216,3 +253,12 @@ predict_class(model, test, text)
 #>   <dbl>     <dbl>
 #> 1 0.667     0.333
 ```
+
+## Co-occurence Matrix
+
+``` r
+matrix <- coom(crps)
+plot(matrix, colors = c("#247BA0", "#70C1B3", "#B2DBBF"))
+```
+
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />

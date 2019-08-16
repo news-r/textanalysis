@@ -23,3 +23,7 @@
 .construct_hash_function <- function(x, ...) {
   structure(x, class = c("hash_function", ..., class(x)))
 }
+
+.construct_coom <- function(x, ...) {
+  structure(x, class = c("co_occurence_matrix", "coom", ..., class(x)))
+}

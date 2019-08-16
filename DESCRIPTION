@@ -21,4 +21,6 @@ Imports:
     magrittr,
     JuliaCall,
     assertthat
+Suggests:
+    ggcorrplot
 RoxygenNote: 6.1.1

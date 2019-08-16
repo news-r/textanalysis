@@ -10,7 +10,7 @@
 \alias{hash.corpus}
 \title{Hash Trick}
 \usage{
-create_hash_function(cardinality)
+create_hash_function(cardinality = 100L)
 
 hash(text, hash_func)
 
@@ -33,7 +33,8 @@ or a \code{document_term_matrix}.}
 \item{hash_func}{A hash function as returned by \code{create_hash_function}.}
 }
 \description{
-Hash Trick
+Replace terms with their hashed valued using a hash 
+function that outputs integers from 1 to N.
 }
 \examples{
 \dontrun{
