@@ -116,15 +116,14 @@ data("corpus", package = "gensimr")
 documents <- to_documents(corpus) # convert vector to documents
 
 crps <- corpus(documents)
-update_lexicon(crps)
 dtm <- document_term_matrix(crps)
 
-# 50 topics
-# 10K iterations
+# 2 topics
+# 1K iterations
 lda_data <- lda(dtm, 2L, 1000L)
 
-# visualise topics
-plot(t(lda_data$ntopics_ndocs))
+# correctly classified documents!
+t(lda_data$ntopics_ndocs)
 
 mat <- dtm_matrix(dtm, "dense")
 

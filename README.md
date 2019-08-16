@@ -32,9 +32,6 @@ will otherwise encounter errors and be prompted to do so.
 library(textanalysis) # load the package
 
 init_textanalysis() # initialise
-#> Julia version 1.1.1 at location /Applications/Julia-1.1.app/Contents/Resources/julia/bin will be used.
-#> Loading setup script for JuliaCall...
-#> Finish loading setup script for JuliaCall.
 #> ✔ textanalysis initialised.
 ```
 
@@ -139,20 +136,24 @@ data("corpus", package = "gensimr")
 documents <- to_documents(corpus) # convert vector to documents
 
 crps <- corpus(documents)
-update_lexicon(crps)
 dtm <- document_term_matrix(crps)
 
-# 50 topics
-# 10K iterations
+# 2 topics
+# 1K iterations
 lda_data <- lda(dtm, 2L, 1000L)
 
-# visualise topics
-plot(t(lda_data$ntopics_ndocs))
-```
-
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
-
-``` r
+# correctly classified documents!
+t(lda_data$ntopics_ndocs)
+#>       [,1] [,2]
+#>  [1,]  0.0  1.0
+#>  [2,]  0.5  0.5
+#>  [3,]  0.5  0.5
+#>  [4,]  1.0  0.0
+#>  [5,]  0.0  1.0
+#>  [6,]  1.0  0.0
+#>  [7,]  1.0  0.0
+#>  [8,]  1.0  0.0
+#>  [9,]  1.0  0.0
 
 mat <- dtm_matrix(dtm, "dense")
 
