@@ -47,8 +47,8 @@ lda.dtm <- function(dtm, topics = 2L, iter = 1000L, alpha = .1, beta = .1){
   iter <- as.integer(iter)
   lda <- call_julia("lda", dtm, topics, iter, alpha, beta)
   list(
-    ntopics_nwords = lda[[1]],
-    ntopics_ndocs = lda[[2]]
+    ntopics_nwords = t(lda[[1]]),
+    ntopics_ndocs = t(lda[[2]])
   )
 }
 
