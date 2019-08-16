@@ -3,12 +3,15 @@
 \name{sentiment}
 \alias{sentiment}
 \alias{sentiment.document}
+\alias{sentiment.documents}
 \alias{sentiment.corpus}
 \title{Sentiment Analyzer}
 \usage{
 sentiment(text)
 
 \method{sentiment}{document}(text)
+
+\method{sentiment}{documents}(text)
 
 \method{sentiment}{corpus}(text)
 }
