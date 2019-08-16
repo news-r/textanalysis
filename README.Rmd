@@ -97,7 +97,8 @@ bind_lexicon <- function(data){
     as.data.frame() %>% 
     dplyr::bind_cols(
       lexicon %>% 
-        dplyr::select(-n)
+        dplyr::select(-n),
+      .
     )
 }
 
