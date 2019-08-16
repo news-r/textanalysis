@@ -24,6 +24,8 @@ knitr::opts_chunk$set(
 
 Text Analysis in R via Julia.
 
+<img src="./man/figures/logo.png" height="200" align="right" />
+
 ## Installation
 
 Being a wrapper to a [Julia](https://julialang.org/) package, textanalysis requires the latter to be installed.

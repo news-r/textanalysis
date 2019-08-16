@@ -4,3 +4,6 @@
 ^data-raw$
 ^_pkgdown\.yml$
 ^index\.Rmd$
+docs
+pkgdown
+vignettes

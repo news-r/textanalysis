@@ -1,0 +1,23 @@
+template:
+  package: newsrdown
+
+navbar:
+  title: "textanalysis"
+  left:
+    - text: "Reference"
+      href: "reference/"
+    - text: "Guide"
+      menu:
+        - text: "Preprocessing"
+          href: "articles/prepare.html"
+  right:
+    - icon: fa-balance-scale
+      href: LICENSE.html
+    - icon: fa-newspaper-o
+      href: news/index.html
+    - icon: fa-github fa-lg
+      href: "https://github.com/news-r/textanalysis"
+
+authors:
+  John Coene:
+    href: http://john-coene.com
