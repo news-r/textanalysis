@@ -70,7 +70,6 @@ get_text(doc)
 
 # corpus
 doc2 <- token_document("Hey write another document.")
-get_text(doc2)
 
 # combine
 corpus <- corpus(doc, doc2)
@@ -80,7 +79,7 @@ standardize(corpus, "token_document")
 
 # prepare corpus
 prepare(corpus, strip_html_tags = FALSE)
-get_text(corpus[[1]])
+get_text(corpus)
 
 # lexicon + lexical stats
 lexicon(corpus)
@@ -120,7 +119,7 @@ dtm <- document_term_matrix(crps)
 
 # 2 topics
 # 1K iterations
-lda_data <- lda(dtm, 2L, 1000L)
+lda_data <- lda(dtm, 2L, 100L)
 
 # correctly classified documents!
 t(lda_data$ntopics_ndocs)
@@ -129,7 +128,7 @@ mat <- dtm_matrix(dtm, "dense")
 
 tfidf <- tf_idf(mat)
 
-kmeans(tfidf, centers = 2)
+km <- kmeans(tfidf, centers = 2)
 ```
 
 ## Hash trick

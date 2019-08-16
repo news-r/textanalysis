@@ -200,18 +200,26 @@ get_text.document <- function(document){
 #' @method get_text documents
 #' @export
 get_text.documents <- function(document){
-  purrr::map(document, get_text) %>% 
+  text <- purrr::map(document, get_text) %>% 
     unlist()
+  tibble::tibble(
+    text = text,
+    document = seq_along(1:length(text))
+  )
 }
 
 #' @rdname get_text
 #' @method get_text corpus
 #' @export
 get_text.corpus <- function(document){
-  text <- list()
+  text <- tibble::tibble()
   for(i in 1:length(document)){
-    txt <- get_text(document[[i]])
-    text <- append(text, txt)
+    txt <- call_julia("text", document[[i]])
+    txt <- tibble::tibble(
+      text = txt,
+      document = i
+    )
+    text <- dplyr::bind_rows(text, txt)
   }
   return(text)
 }
@@ -248,18 +256,27 @@ get_tokens.document <- function(document){
 #' @method get_text documents
 #' @export
 get_tokens.documents <- function(document){
-  purrr::map(document, get_tokens) %>% 
+  tks <- purrr::map(document, get_tokens) %>% 
     unlist()
+
+  tibble::tibble(
+    text = tks,
+    document = seq_along(1:length(tks))
+  )
 }
 
 #' @rdname get_tokens
 #' @method get_tokens corpus
 #' @export
 get_tokens.corpus <- function(document){
-  text <- list()
+  text <- tibble::tibble()
   for(i in 1:length(document)){
-    txt <- get_tokens(document[[i]])
-    text <- append(text, txt)
+    txt <- call_julia("tokens", document[[i]])
+    tib <- tibble::tibble(
+      tokens = txt,
+      document = i
+    )
+    text <- dplyr::bind_rows(text, tib)
   }
   return(text)
 }
@@ -304,17 +321,22 @@ get_ngrams.document <- function(document, ...){
 #' @method get_ngrams documents
 #' @export
 get_ngrams.documents <- function(document, ...){
-  purrr::map(document, get_ngrams, ...) 
+  purrr::map_dfr(document, get_ngrams, ...) 
 }
 
 #' @rdname get_ngrams
 #' @method get_ngrams corpus
 #' @export
 get_ngrams.corpus <- function(document, ...){
-  text <- list()
+  text <- tibble::tibble()
   for(i in 1:length(document)){
-    txt <- get_ngrams(document[[i]], ...)
-    text <- append(text, txt)
+    x <- call_julia("ngrams", document[[i]], ...)
+    txt <- tibble::tibble(
+      document = i,
+      ngrams = names(x),
+      n = unname(unlist(x))
+    )
+    text <- dplyr::bind_rows(text, txt)
   }
   return(text)
 }
