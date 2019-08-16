@@ -97,6 +97,10 @@ tf(m)
 # tf-idf
 tf_idf(m)
 
+# bm-25
+# https://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/
+bm_25(m)
+
 # sentiment
 sentiment(corpus)
 
@@ -109,7 +113,7 @@ summarize(string_document(str), ns = 2L)
 fit LDA on the [gensimr](https://gensimr.news-r.org) data.
 
 ```{r}
-set.seed(42)
+set_seed(42L)
 
 data("corpus", package = "gensimr")
 documents <- to_documents(corpus) # convert vector to documents
@@ -119,10 +123,10 @@ dtm <- document_term_matrix(crps)
 
 # 2 topics
 # 1K iterations
-lda_data <- lda(dtm, 2L, 100L)
+lda_data <- lda(dtm, 2L, 1000L)
 
-# correctly classified documents!
-t(lda_data$ntopics_ndocs)
+# classification
+lda_data$ntopics_ndocs
 
 mat <- dtm_matrix(dtm, "dense")
 
