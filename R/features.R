@@ -379,7 +379,7 @@ hash.corpus <- function(text, hash_func = NULL){
 #' distance between word positions.
 #' 
 #' @section Plot:
-#' The plot method passes all arguments to \link[ggcorrplot]{ggcorrplot}.
+#' The plot method returns an object of class \code{echarts4r}.
 #' 
 #' @examples
 #' \dontrun{

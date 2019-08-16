@@ -23,7 +23,7 @@ times two words co-occur in a (sliding) word window of a given size.
 }
 \section{Plot}{
 
-The plot method passes all arguments to \link[ggcorrplot]{ggcorrplot}.
+The plot method returns an object of class \code{echarts4r}.
 }
 
 \examples{
