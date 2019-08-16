@@ -69,7 +69,7 @@ Preprocess the document, note that this replaces the object in place.
 init_textanalysis()
 
 # build document
-doc <- string_document("This <span>is</span> a very short document!!!")
+doc <- string_document("This <span>is</span> a very short document!.!")
 
 # replaces in place!
 prepare(doc)

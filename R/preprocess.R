@@ -25,7 +25,7 @@
 #' init_textanalysis()
 #' 
 #' # build document
-#' doc <- string_document("This <span>is</span> a very short document!!!")
+#' doc <- string_document("This <span>is</span> a very short document!.!")
 #' 
 #' # replaces in place!
 #' prepare(doc)
