@@ -43,6 +43,12 @@ library(textanalysis) # load the package
 init_textanalysis() # initialise
 ```
 
+Some funtions depend on the development version of the Julia package, to install it run:
+
+```r
+install_textanalysis(version = "latest")
+```
+
 ## Basic Examples
 
 ```{r}

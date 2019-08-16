@@ -20,12 +20,9 @@
 #' 
 #' @name init
 #' @export
-init_textanalysis <- function(..., version = c("stable", "latest")){
+init_textanalysis <- function(...){
   julia <- JuliaCall::julia_setup(...)
-  version <- match.arg(version)
-  pkg <- "TextAnalysis"
-  if(version == "latest") pkg <- "https://github.com/JuliaText/TextAnalysis.jl"
-  julia_install_package_if_needed(pkg)
+  julia_install_package_if_needed("TextAnalysis")
   julia_install_package_if_needed("Languages")
   julia_library("TextAnalysis")
   cat(crayon::green(cli::symbol$tick), "textanalysis initialised.\n")
