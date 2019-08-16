@@ -2,12 +2,35 @@
 % Please edit documentation in R/features.R
 \name{create_hash_function}
 \alias{create_hash_function}
+\alias{hash}
+\alias{hash.character}
+\alias{hash.document}
+\alias{hash.documents}
+\alias{hash.dtm}
+\alias{hash.corpus}
 \title{Hash Trick}
 \usage{
 create_hash_function(cardinality)
+
+hash(text, hash_func)
+
+\method{hash}{character}(text, hash_func)
+
+\method{hash}{document}(text, hash_func = NULL)
+
+\method{hash}{documents}(text, hash_func = NULL)
+
+\method{hash}{dtm}(text, hash_func = NULL)
+
+\method{hash}{corpus}(text, hash_func = NULL)
 }
 \arguments{
 \item{cardinality}{Max index used for hashing (default 100).}
+
+\item{text}{A \code{corpus}, \code{character} string, a \code{document},
+or a \code{document_term_matrix}.}
+
+\item{hash_func}{A hash function as returned by \code{create_hash_function}.}
 }
 \description{
 Hash Trick
@@ -16,7 +39,11 @@ Hash Trick
 \dontrun{
 init_textanalysis()
 
-hash_func <- create_hash_function(doc, ns = 2L)
+hash_func <- create_hash_function(10L)
+hash("a", hash_func)
+
+doc <- string_document("A simple document.")
+hash(doc, hash_func)
 }
 
 }

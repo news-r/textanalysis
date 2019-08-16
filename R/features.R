@@ -280,18 +280,87 @@ summarize.corpus <- function(text, ns = 2L){
 #' Hash Trick
 #' 
 #' @param cardinality Max index used for hashing (default 100).
+#' @param text A \code{corpus}, \code{character} string, a \code{document},
+#' or a \code{document_term_matrix}.
+#' @param hash_func A hash function as returned by \code{create_hash_function}.
 #' 
 #' @examples
 #' \dontrun{
 #' init_textanalysis()
 #' 
-#' hash_func <- create_hash_function(doc, ns = 2L)
+#' hash_func <- create_hash_function(10L)
+#' hash("a", hash_func)
+#' 
+#' doc <- string_document("A simple document.")
+#' hash(doc, hash_func)
 #' }
 #' 
+#' @name create_hash_function
 #' @export
 create_hash_function <- function(cardinality){
   assert_that(is_missing(cardinality))
   cardinality <- as.integer(cardinality)
   func <- call_julia("TextHashFunction", cardinality)
   .construct_hash_function(func)
+}
+
+#' @rdname create_hash_function
+#' @export
+hash <- function(text, hash_func) UseMethod("hash")
+
+#' @rdname create_hash_function
+#' @method hash character
+#' @export
+hash.character <- function(text, hash_func){
+  assert_that(is_missing(hash_func))
+
+  purrr::map(text, function(x, hash_func){
+    call_julia("index_hash", x, hash_func)
+  }, hash_func = hash_func)  %>% 
+    unlist()
+}
+
+#' @rdname create_hash_function
+#' @method hash document
+#' @export
+hash.document <- function(text, hash_func = NULL){
+  assert_that(is_missing(hash_func))
+
+  if(!is.null(hash_func))
+    call_julia("hash_dtv", text, hash_func)
+  else
+    call_julia("hash_dtv", text)
+}
+
+#' @rdname create_hash_function
+#' @method hash documents
+#' @export
+hash.documents <- function(text, hash_func = NULL){
+  assert_that(is_missing(hash_func))
+
+  purrr::map(text, hash, hash_func) 
+}
+
+#' @rdname create_hash_function
+#' @method hash dtm
+#' @export
+hash.dtm <- function(text, hash_func = NULL){
+  assert_that(is_missing(hash_func))
+
+  if(!is.null(hash_func))
+    call_julia("hash_dtm", text, hash_func)
+  else
+    call_julia("hash_dtm", text)
+}
+
+#' @rdname create_hash_function
+#' @method hash corpus
+#' @export
+hash.corpus <- function(text, hash_func = NULL){
+  assert_that(is_missing(hash_func))
+
+  if(!is.null(hash_func))
+    call_julia("hash_dtm", text, hash_func)
+  else
+    call_julia("hash_dtm", text)
 }

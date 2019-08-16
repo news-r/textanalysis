@@ -129,6 +129,14 @@ tfidf <- tf_idf(mat)
 kmeans(tfidf, centers = 2)
 ```
 
+## Hash trick
+
+```{r}
+hash_func <- create_hash_function(10L)
+hash("a", hash_func)
+hash(doc)
+```
+
 ## Naive Bayes Classifier
 
 ```{r}
