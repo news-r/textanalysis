@@ -7,3 +7,13 @@ print.documents <- function(x, ...){
     ...
   )
 }
+
+#' @export
+print.corpus <- function(x, ...){
+  cat(
+    crayon::blue(cli::symbol$info), 
+    length(x),
+    "documents in corpus. \n",
+    ...
+  )
+}
