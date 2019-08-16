@@ -37,7 +37,8 @@ init_textanalysis()
 doc1 <- string_document("First document.")
 doc2 <- string_document("Second document.")
 
-corpus <- corpus(doc1, doc2)
+# do not automatically update
+corpus <- corpus(doc1, doc2, update_lexicon = FALSE)
 
 update_lexicon(corpus)
 lexicon(corpus)

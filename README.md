@@ -32,6 +32,9 @@ will otherwise encounter errors and be prompted to do so.
 library(textanalysis) # load the package
 
 init_textanalysis() # initialise
+#> Julia version 1.1.1 at location /Applications/Julia-1.1.app/Contents/Resources/julia/bin will be used.
+#> Loading setup script for JuliaCall...
+#> Finish loading setup script for JuliaCall.
 #> ✔ textanalysis initialised.
 ```
 
@@ -83,7 +86,6 @@ get_text(corpus[[1]])
 #> [1] "write write sentenc stuff document"
 
 # lexicon + lexical stats
-update_lexicon(corpus)
 lexicon(corpus)
 #> # A tibble: 6 x 2
 #>   words        n
@@ -98,7 +100,6 @@ lexical_frequency(corpus, "document")
 #> [1] 0.2
 
 # inverse index
-update_inverse_index(corpus)
 inverse_index(corpus)
 #> [1] 6
 
@@ -253,7 +254,7 @@ predict_class(model, test, text)
 
 ## Co-occurence Matrix
 
-PLot method uses [echarts4r](https://echarts4r.john-coene.com)
+Plot method uses [echarts4r](https://echarts4r.john-coene.com)
 
 ``` r
 matrix <- coom(crps)

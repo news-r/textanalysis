@@ -24,7 +24,8 @@ prepare(text, ...)
   strip_spares_terms = FALSE, strip_frequent_terms = FALSE,
   strip_articles = FALSE, strip_indefinite_articles = FALSE,
   strip_definite_articles = FALSE, strip_preposition = FALSE,
-  strip_pronouns = FALSE, ...)
+  strip_pronouns = FALSE, ..., update_lexicon = TRUE,
+  update_inverse_index = TRUE)
 }
 \arguments{
 \item{text}{An object inheriting of class \code{document} or \code{corpus}.}
@@ -60,6 +61,12 @@ prepare(text, ...)
 \item{strip_preposition}{Remove preprositions, i.e.: "across", "around", "before".}
 
 \item{strip_pronouns}{Remove pronounces, i.e.: "I", "you", "he", "she".}
+
+\item{update_lexicon}{Whether to update the lexicon of the corpus, 
+see \code{\link{update_lexicon}}.}
+
+\item{update_inverse_index}{Whether to update the inverse index of the corpus, 
+see \code{\link{update_inverse_index}}.}
 }
 \description{
 Preprocess the document, note that this replaces the object in place.

@@ -28,7 +28,6 @@ doc2 <- string_document("Second document.")
 # build corpus
 corpus <- corpus(doc1, doc2)
 
-update_lexicon(corpus)
 lexical_frequency(corpus, "document")
 }
 

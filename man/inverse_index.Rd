@@ -36,8 +36,10 @@ init_textanalysis()
 doc1 <- string_document("First document.")
 doc2 <- string_document("Second document.")
 
-corpus <- corpus(doc1, doc2)
+# do not update automatically
+corpus <- corpus(doc1, doc2, update_inverse_index = FALSE)
 
+# update manually
 update_inverse_index(corpus)
 inverse_index(corpus)
 }

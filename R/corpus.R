@@ -5,6 +5,8 @@
 #' @param doc First \code{document}, a \code{list}, or a \code{vector} of documents.
 #' @param ... Objects inheriting of class \code{document} to build a corpus.
 #' @param directory Path to a directory of text files.
+#' @param update_lexicon Whether to update the lexicon, see \code{\link{update_lexicon}}.
+#' @param update_inverse_index Whether to update the inverse index, see \code{\link{update_inverse_index}}.
 #' 
 #' @examples
 #' \dontrun{
@@ -19,31 +21,40 @@
 #' 
 #' @name corpus
 #' @export
-corpus <- function(doc, ...) UseMethod("corpus")
+corpus <- function(doc, ..., update_lexicon = TRUE, update_inverse_index = TRUE) UseMethod("corpus")
 
 #' @rdname corpus
 #' @method corpus document
 #' @export
-corpus.document <- function(doc, ...) {
+corpus.document <- function(doc, ..., update_lexicon = TRUE, update_inverse_index = TRUE) {
   corpus <- call_julia("Corpus", JuliaObject(list(doc, ...)))
-  .construct_corpus(corpus)
+  corpus <- .construct_corpus(corpus)
+  if(update_lexicon) update_lexicon(corpus)
+  if(update_inverse_index) update_inverse_index(corpus)
+  return(corpus)
 }
 
 #' @rdname corpus
 #' @method corpus documents
 #' @export
-corpus.documents <- function(doc, ...) {
+corpus.documents <- function(doc, ..., update_lexicon = TRUE, update_inverse_index = TRUE) {
   corpus <- call_julia("Corpus", JuliaObject(doc))
-  .construct_corpus(corpus)
+  corpus <- .construct_corpus(corpus)
+  if(update_lexicon) update_lexicon(corpus)
+  if(update_inverse_index) update_inverse_index(corpus)
+  return(corpus)
 }
 
 #' @rdname corpus
 #' @export
-directory_corpus <- function(directory) {
+directory_corpus <- function(directory, update_lexicon = TRUE, update_inverse_index = TRUE) {
   assert_that(dir.exists(directory), msg = "`directory` does not exist")
   directory <- normalizePath(directory)
   corpus <- call_julia("DirectoryCorpus", directory)
-  .construct_corpus(corpus)
+  corpus <- .construct_corpus(corpus)
+  if(update_lexicon) update_lexicon(corpus)
+  if(update_inverse_index) update_inverse_index(corpus)
+  return(corpus)
 }
 
 #' Standardize
@@ -216,7 +227,8 @@ timestamps_.JuliaObject <- timestamps_.corpus
 #' doc1 <- string_document("First document.")
 #' doc2 <- string_document("Second document.")
 #' 
-#' corpus <- corpus(doc1, doc2)
+#' # do not automatically update
+#' corpus <- corpus(doc1, doc2, update_lexicon = FALSE)
 #' 
 #' update_lexicon(corpus)
 #' lexicon(corpus)
@@ -270,7 +282,6 @@ update_lexicon.corpus <- function(corpus) {
 #' # build corpus
 #' corpus <- corpus(doc1, doc2)
 #' 
-#' update_lexicon(corpus)
 #' lexical_frequency(corpus, "document")
 #' }
 #' 
@@ -335,8 +346,10 @@ lexicon_size.corpus <- function(corpus){
 #' doc1 <- string_document("First document.")
 #' doc2 <- string_document("Second document.")
 #' 
-#' corpus <- corpus(doc1, doc2)
+#' # do not update automatically
+#' corpus <- corpus(doc1, doc2, update_inverse_index = FALSE)
 #' 
+#' # update manually
 #' update_inverse_index(corpus)
 #' inverse_index(corpus)
 #' }

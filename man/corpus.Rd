@@ -7,18 +7,25 @@
 \alias{directory_corpus}
 \title{Corpus}
 \usage{
-corpus(doc, ...)
+corpus(doc, ..., update_lexicon = TRUE, update_inverse_index = TRUE)
 
-\method{corpus}{document}(doc, ...)
+\method{corpus}{document}(doc, ..., update_lexicon = TRUE,
+  update_inverse_index = TRUE)
 
-\method{corpus}{documents}(doc, ...)
+\method{corpus}{documents}(doc, ..., update_lexicon = TRUE,
+  update_inverse_index = TRUE)
 
-directory_corpus(directory)
+directory_corpus(directory, update_lexicon = TRUE,
+  update_inverse_index = TRUE)
 }
 \arguments{
 \item{doc}{First \code{document}, a \code{list}, or a \code{vector} of documents.}
 
 \item{...}{Objects inheriting of class \code{document} to build a corpus.}
+
+\item{update_lexicon}{Whether to update the lexicon, see \code{\link{update_lexicon}}.}
+
+\item{update_inverse_index}{Whether to update the inverse index, see \code{\link{update_inverse_index}}.}
 
 \item{directory}{Path to a directory of text files.}
 }

@@ -19,6 +19,10 @@
 #' @param strip_preposition Remove preprositions, i.e.: "across", "around", "before".
 #' @param strip_pronouns Remove pronounces, i.e.: "I", "you", "he", "she".
 #' @param ... Other special classes
+#' @param update_lexicon Whether to update the lexicon of the corpus, 
+#' see \code{\link{update_lexicon}}.
+#' @param update_inverse_index Whether to update the inverse index of the corpus, 
+#' see \code{\link{update_inverse_index}}.
 #' 
 #' @examples
 #' \dontrun{
@@ -94,7 +98,7 @@ prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE,
   strip_numbers = TRUE, strip_html_tags = TRUE, strip_punctuation = TRUE, remove_words = NULL, strip_non_letters = FALSE, 
   strip_spares_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
   strip_indefinite_articles = FALSE, strip_definite_articles = FALSE, strip_preposition = FALSE, 
-  strip_pronouns = FALSE, ...){
+  strip_pronouns = FALSE, ..., update_lexicon = TRUE, update_inverse_index = TRUE){
 
   warning_in_place("cropus")
   
@@ -133,6 +137,8 @@ prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE,
 
   text <- julia_eval("sd")
   text <- structure(text, class = keep_class)
+  if(update_lexicon) update_lexicon(text)
+  if(update_inverse_index) update_inverse_index(text)
   invisible(text)
 }
 
