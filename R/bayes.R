@@ -22,7 +22,7 @@ init_naive_classifer.factor <- function(labels){
   assert_that(length(labels) > 1)
   labels <- paste0(":", labels, collapse = ", ")
   expr <- paste0("NaiveBayesClassifier([", labels, "])")
-  nb <- julia_eval(exp)
+  nb <- julia_eval(expr)
   .construct_naive_bayes(nb)
 }
 
