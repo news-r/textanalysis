@@ -257,8 +257,7 @@ PLot method uses [echarts4r](https://echarts4r.john-coene.com)
 
 ``` r
 matrix <- coom(crps)
-plot(matrix) %>% 
-  echarts4r::e_animation(FALSE)
+plot(matrix)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+![](man/figures/coom.png)
