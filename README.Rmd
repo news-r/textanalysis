@@ -82,7 +82,7 @@ prepare(corpus, strip_html_tags = FALSE)
 get_text(corpus)
 
 # lexicon + lexical stats
-lexicon(corpus)
+(lexicon <- lexicon(corpus))
 lexical_frequency(corpus, "document")
 
 # inverse index
@@ -91,15 +91,22 @@ inverse_index(corpus)
 # dtm
 m <- document_term_matrix(corpus)
 
+# create func to easily add lexicon
+bind_lexicon <- function(data){
+  data %>% 
+    as.data.frame() %>% 
+    dplyr::bind_cols(lexicon)
+}
+
 # term-frequency
-tf(m)
+tf(m) %>% bind_lexicon()
 
 # tf-idf
-tf_idf(m)
+tf_idf(m) %>% bind_lexicon()
 
 # bm-25
 # https://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/
-bm_25(m)
+bm_25(m) %>% bind_lexicon()
 
 # sentiment
 sentiment(corpus)
