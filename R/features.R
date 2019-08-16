@@ -216,6 +216,15 @@ sentiment.document <- function(text){
 }
 
 #' @rdname sentiment
+#' @method sentiment documents
+#' @export
+sentiment.documents <- function(text){
+  if(!julia_exists("textanalysisSentiment"))
+    julia_eval("textanalysisSentiment = SentimentAnalyzer()")
+  purrr::map(text, sentiment)
+}
+
+#' @rdname sentiment
 #' @method sentiment corpus
 #' @export
 sentiment.corpus <- function(text){
@@ -410,4 +419,48 @@ coom.corpus <- function(corpus, window = 5L, normalize = TRUE){
   colnames(matrix) <- coom$terms
   row.names(matrix) <- coom$terms
   .construct_coom(matrix)
+}
+
+
+#' Okapi BM-25
+#'
+#' Okapi BM25 (BM stands for Best Matching) is a ranking 
+#' function used by search engines to estimate the relevance 
+#' of documents to a given search query. 
+#'
+#' @param text A document-term martrix or a \code{corpus}.
+#' @param k,b Free hyperparameters \url{https://en.wikipedia.org/wiki/Okapi_BM25}.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # create corpus
+#' doc <- string_document("A simple document.")
+#' doc2 <- string_document("Another simple document.")
+#' crps <- corpus(doc, doc2)
+#' 
+#' # matrix & plot
+#' bm_25(crps)
+#' }
+#' 
+#' @name bm_25
+#' @export
+bm_25 <- function(text, k = 2L, b = .75) UseMethod("bm_25")
+
+#' @rdname bm_25
+#' @method bm_25 dtm
+#' @export
+bm_25.dtm <- function(text, k = 2L, b = .75){
+  k <- as.integer(k)
+  call_julia("bm_25", text, k, b)
+}
+
+#' @rdname bm_25
+#' @method bm_25 corpus
+#' @export
+bm_25.corpus <- function(text, k = 2L, b = .75){
+  dtm <- document_term_matrix(text)
+  k <- as.integer(k)
+  call_julia("bm_25", dtm, k, b)
 }

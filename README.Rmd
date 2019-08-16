@@ -137,7 +137,7 @@ kmeans(tfidf, centers = 2)
 ```{r}
 hash_func <- create_hash_function(10L)
 hash("a", hash_func)
-hash(doc)
+hash(doc) # doc has built-in has
 ```
 
 ## Naive Bayes Classifier
