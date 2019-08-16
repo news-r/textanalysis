@@ -32,9 +32,6 @@ will otherwise encounter errors and be prompted to do so.
 library(textanalysis) # load the package
 
 init_textanalysis() # initialise
-#> Julia version 1.1.1 at location /Applications/Julia-1.1.app/Contents/Resources/julia/bin will be used.
-#> Loading setup script for JuliaCall...
-#> Finish loading setup script for JuliaCall.
 #> ✔ textanalysis initialised.
 ```
 
@@ -256,9 +253,12 @@ predict_class(model, test, text)
 
 ## Co-occurence Matrix
 
+PLot method uses [echarts4r](https://echarts4r.john-coene.com)
+
 ``` r
 matrix <- coom(crps)
-plot(matrix, colors = c("#FF1654", "white", "#247BA0"), hc.order = TRUE)
+plot(matrix) %>% 
+  echarts4r::e_animation(FALSE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />

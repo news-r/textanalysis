@@ -164,7 +164,10 @@ predict_class(model, test, text)
 
 ## Co-occurence Matrix
 
+PLot method uses [echarts4r](https://echarts4r.john-coene.com)
+
 ```{r}
 matrix <- coom(crps)
-plot(matrix, colors = c("#FF1654", "white", "#247BA0"), hc.order = TRUE)
+plot(matrix) %>% 
+  echarts4r::e_animation(FALSE)
 ```
