@@ -19,14 +19,15 @@ strip_pronouns(text)
 \item{text}{An object inheriting of class \code{document} or \code{corpus}.}
 }
 \description{
-Remove pronouns, or the words such as  "I", "you", "he", "she", (and many more).
+Remove pronouns, or the words such as "I", "you", "he", "she", (and many more).
 }
 \examples{
 \dontrun{
 init_textanalysis()
 
 # build document
-doc <- string_document("She is the pronoun.")
+# must be lowercase
+doc <- string_document("she is the pronoun.")
 
 # replaces in place!
 strip_pronouns(doc)

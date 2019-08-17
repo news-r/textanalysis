@@ -493,7 +493,7 @@ strip_preprositions.document <- strip_preprositions.corpus
 
 #' Strip Pronouns
 #' 
-#' Remove pronouns, or the words such as  "I", "you", "he", "she", (and many more).
+#' Remove pronouns, or the words such as "I", "you", "he", "she", (and many more).
 #' 
 #' @inheritParams prepare
 #' 
@@ -534,3 +534,47 @@ strip_pronouns.documents <- function(text){
 #' @method strip_pronouns document
 #' @export
 strip_pronouns.document <- strip_pronouns.corpus
+
+#' Strip Stopwords
+#' 
+#' Remove stopwords, or the words such as "all", "almost", "alone", (and many more).
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' # must be lowercase
+#' doc <- string_document("The document has a stop word.")
+#' 
+#' # replaces in place!
+#' strip_stopwords(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_stopwords
+#' @export
+strip_stopwords <- function(text) UseMethod("strip_stopwords")
+
+#' @rdname strip_stopwords
+#' @method strip_stopwords corpus
+#' @export
+strip_stopwords.corpus <- function(text){
+  .strip("stopwords", text)
+  invisible()
+} 
+
+#' @rdname strip_stopwords
+#' @method strip_stopwords documents
+#' @export
+strip_stopwords.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_stopwords
+#' @method strip_stopwords document
+#' @export
+strip_stopwords.document <- strip_stopwords.corpus
