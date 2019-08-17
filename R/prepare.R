@@ -447,3 +447,46 @@ strip_definite_articles.documents <- function(text){
 #' @method strip_definite_articles document
 #' @export
 strip_definite_articles.document <- strip_definite_articles.corpus
+
+#' Strip Preprositions
+#' 
+#' Remove articles, or the words such as "across", "around", "before" (and many more).
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("A preprosition is in the document.")
+#' 
+#' # replaces in place!
+#' strip_preprositions(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_preprositions
+#' @export
+strip_preprositions <- function(text) UseMethod("strip_preprositions")
+
+#' @rdname strip_preprositions
+#' @method strip_preprositions corpus
+#' @export
+strip_preprositions.corpus <- function(text){
+  .strip("prepositions", text)
+  invisible()
+} 
+
+#' @rdname strip_preprositions
+#' @method strip_preprositions documents
+#' @export
+strip_preprositions.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_preprositions
+#' @method strip_preprositions document
+#' @export
+strip_preprositions.document <- strip_preprositions.corpus

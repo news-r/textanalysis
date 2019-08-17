@@ -26,7 +26,7 @@ Remove articles, or the word "the".
 init_textanalysis()
 
 # build document
-doc <- string_document("This document has an article.")
+doc <- string_document("This document has the article.")
 
 # replaces in place!
 strip_definite_articles(doc)
