@@ -13,7 +13,7 @@ prepare(text, ...)
   remove_case = TRUE, strip_stopwords = TRUE, strip_numbers = TRUE,
   strip_html_tags = TRUE, strip_punctuation = TRUE,
   remove_words = NULL, strip_non_letters = FALSE,
-  strip_spares_terms = FALSE, strip_frequent_terms = FALSE,
+  strip_sparse_terms = FALSE, strip_frequent_terms = FALSE,
   strip_articles = FALSE, strip_indefinite_articles = FALSE,
   strip_definite_articles = FALSE, strip_preposition = FALSE,
   strip_pronouns = FALSE, ...)
@@ -22,7 +22,7 @@ prepare(text, ...)
   remove_case = TRUE, strip_stopwords = TRUE, strip_numbers = TRUE,
   strip_html_tags = TRUE, strip_punctuation = TRUE,
   remove_words = NULL, strip_non_letters = FALSE,
-  strip_spares_terms = FALSE, strip_frequent_terms = FALSE,
+  strip_sparse_terms = FALSE, strip_frequent_terms = FALSE,
   strip_articles = FALSE, strip_indefinite_articles = FALSE,
   strip_definite_articles = FALSE, strip_preposition = FALSE,
   strip_pronouns = FALSE, ...)
@@ -31,7 +31,7 @@ prepare(text, ...)
   remove_case = TRUE, strip_stopwords = TRUE, strip_numbers = TRUE,
   strip_html_tags = TRUE, strip_punctuation = TRUE,
   remove_words = NULL, strip_non_letters = FALSE,
-  strip_spares_terms = FALSE, strip_frequent_terms = FALSE,
+  strip_sparse_terms = FALSE, strip_frequent_terms = FALSE,
   strip_articles = FALSE, strip_indefinite_articles = FALSE,
   strip_definite_articles = FALSE, strip_preposition = FALSE,
   strip_pronouns = FALSE, ..., update_lexicon = TRUE,
@@ -58,7 +58,7 @@ prepare(text, ...)
 
 \item{strip_non_letters}{Remove anything non-numeric.}
 
-\item{strip_spares_terms}{Remove sparse terms.}
+\item{strip_sparse_terms}{Remove sparse terms.}
 
 \item{strip_frequent_terms}{Remove frequent terms.}
 

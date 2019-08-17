@@ -11,7 +11,7 @@
 #' @param strip_non_letters Remove anything non-numeric.
 #' @param strip_html_tags Remove html tags, including the style and script tags.
 #' @param remove_words Remove the occurences of words from `doc`.
-#' @param strip_spares_terms Remove sparse terms.
+#' @param strip_sparse_terms Remove sparse terms.
 #' @param strip_frequent_terms Remove frequent terms.
 #' @param strip_articles Remove articles: "a", "an", "the".
 #' @param strip_indefinite_articles Removes indefinite articles:  "a", "an".
@@ -47,7 +47,7 @@ prepare <- function(text, ...) UseMethod("prepare")
 #' @export
 prepare.document <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE, strip_stopwords = TRUE, 
   strip_numbers = TRUE, strip_html_tags = TRUE, strip_punctuation = TRUE, remove_words = NULL, strip_non_letters = FALSE, 
-  strip_spares_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
+  strip_sparse_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
   strip_indefinite_articles = FALSE, strip_definite_articles = FALSE, strip_preposition = FALSE, 
   strip_pronouns = FALSE, ...){
 
@@ -70,7 +70,7 @@ prepare.document <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRU
   if(strip_stopwords) classes <- append(classes, "strip_stopwords")
   if(strip_numbers) classes <- append(classes, "strip_numbers")
   if(strip_non_letters) classes <- append(classes, "strip_non_letters")
-  if(strip_spares_terms) classes <- append(classes, "strip_spares_terms")
+  if(strip_sparse_terms) classes <- append(classes, "strip_sparse_terms")
   if(strip_frequent_terms) classes <- append(classes, "strip_frequent_terms")
   if(strip_html_tags) classes <- append(classes, "strip_html_tags")
   if(strip_punctuation) classes <- append(classes, "strip_punctuation")
@@ -97,13 +97,13 @@ prepare.document <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRU
 #' @export
 prepare.documents <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE, strip_stopwords = TRUE, 
   strip_numbers = TRUE, strip_html_tags = TRUE, strip_punctuation = TRUE, remove_words = NULL, strip_non_letters = FALSE, 
-  strip_spares_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
+  strip_sparse_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
   strip_indefinite_articles = FALSE, strip_definite_articles = FALSE, strip_preposition = FALSE, 
   strip_pronouns = FALSE, ...){
 
   purrr::map(text, prepare,  remove_corrupt_utf8 = remove_corrupt_utf8, remove_case = remove_case, strip_stopwords = strip_stopwords, 
     strip_numbers = strip_numbers, strip_html_tags = strip_html_tags, strip_punctuation = strip_punctuation, remove_words = remove_words,
-    strip_non_letters = strip_non_letters, strip_spares_terms = strip_spares_terms, strip_frequent_terms = strip_frequent_terms, 
+    strip_non_letters = strip_non_letters, strip_sparse_terms = strip_sparse_terms, strip_frequent_terms = strip_frequent_terms, 
     strip_articles = strip_articles, strip_indefinite_articles = strip_indefinite_articles, strip_definite_articles = strip_definite_articles,
     strip_preposition = strip_preposition, strip_pronouns = strip_pronouns, ...)
   invisible()
@@ -114,7 +114,7 @@ prepare.documents <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TR
 #' @export
 prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE, strip_stopwords = TRUE, 
   strip_numbers = TRUE, strip_html_tags = TRUE, strip_punctuation = TRUE, remove_words = NULL, strip_non_letters = FALSE, 
-  strip_spares_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
+  strip_sparse_terms = FALSE, strip_frequent_terms = FALSE, strip_articles = FALSE, 
   strip_indefinite_articles = FALSE, strip_definite_articles = FALSE, strip_preposition = FALSE, 
   strip_pronouns = FALSE, ..., update_lexicon = TRUE, update_inverse_index = TRUE){
 
@@ -136,7 +136,8 @@ prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE,
   if(strip_pronouns) classes <- append(classes, "strip_pronouns")
   if(strip_stopwords) classes <- append(classes, "strip_stopwords")
   if(strip_non_letters) classes <- append(classes, "strip_non_letters")
-  if(strip_spares_terms) classes <- append(classes, "strip_spares_terms")
+  if(strip_numbers) classes <- append(classes, "strip_numbers")
+  if(strip_sparse_terms) classes <- append(classes, "strip_sparse_terms")
   if(strip_frequent_terms) classes <- append(classes, "strip_frequent_terms")
   if(strip_html_tags) classes <- append(classes, "strip_html_tags")
   if(strip_punctuation) classes <- append(classes, "strip_punctuation")
