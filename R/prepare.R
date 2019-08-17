@@ -161,9 +161,9 @@ prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE,
 
 #' Remove Upper case
 #' 
-#' Remove upper case.
+#' Turn everything to lowercase.
 #' 
-#' @inheritParams remove_corrupt_utf8
+#' @inheritParams prepare
 #' 
 #' @examples
 #' \dontrun{
@@ -206,7 +206,7 @@ remove_case.document <- remove_case.corpus
 #' 
 #' Remove corrupt UTF8 characters that might cause issues, recommended.
 #' 
-#' @param text A \code{document}, a \code{corpus}, or \code{documents}.
+#' @inheritParams prepare
 #' 
 #' @examples
 #' \dontrun{
@@ -244,6 +244,50 @@ remove_corrupt_utf8.documents <- function(text){
 #' @export
 remove_corrupt_utf8.document <- remove_corrupt_utf8.corpus
 
+#' Remove Specific Words
+#' 
+#' Remove specific words.
+#' 
+#' @inheritParams prepare
+#' @param words Word to remove.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("this woops is not woop correct")
+#' 
+#' # replaces in place!
+#' errors <- c("woops", "woop")
+#' remove_words(doc, words = errors)
+#' get_text(doc)
+#' }
+#' 
+#' @name remove_words
+#' @export
+remove_words <- function(text, words) UseMethod("remove_words")
+
+#' @rdname remove_words
+#' @method remove_words corpus
+#' @export
+remove_words.corpus <- function(text, words){
+  call_julia("remove_words!", text, words)
+  invisible()
+} 
+
+#' @rdname remove_words
+#' @method remove_words documents
+#' @export
+remove_words.documents <- function(text, words){
+  purrr::map(text, remove_words, words)
+  invisible()
+} 
+
+#' @rdname remove_words
+#' @method remove_words document
+#' @export
+remove_words.document <- remove_words.corpus
 
 #' Stem
 #' 

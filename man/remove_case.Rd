@@ -16,10 +16,10 @@ remove_case(text)
 \method{remove_case}{document}(text)
 }
 \arguments{
-\item{text}{A \code{document}, a \code{corpus}, or \code{documents}.}
+\item{text}{An object inheriting of class \code{document} or \code{corpus}.}
 }
 \description{
-Remove upper case.
+Turn everything to lowercase.
 }
 \examples{
 \dontrun{
@@ -30,6 +30,7 @@ doc <- string_document("ThIs DoCuMENT HAs UppERCase")
 
 # replaces in place!
 remove_case(doc)
+get_text(doc)
 }
 
 }

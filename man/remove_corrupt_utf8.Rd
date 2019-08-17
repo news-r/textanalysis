@@ -16,7 +16,7 @@ remove_corrupt_utf8(text)
 \method{remove_corrupt_utf8}{document}(text)
 }
 \arguments{
-\item{text}{A \code{document}, a \code{corpus}, or \code{documents}.}
+\item{text}{An object inheriting of class \code{document} or \code{corpus}.}
 }
 \description{
 Remove corrupt UTF8 characters that might cause issues, recommended.
