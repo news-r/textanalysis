@@ -578,3 +578,47 @@ strip_stopwords.documents <- function(text){
 #' @method strip_stopwords document
 #' @export
 strip_stopwords.document <- strip_stopwords.corpus
+
+#' Strip Stopwords
+#' 
+#' Remove stopwords, or the words such as "all", "almost", "alone", (and many more).
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' # must be lowercase
+#' doc <- string_document("This is 1 document.")
+#' 
+#' # replaces in place!
+#' strip_non_letters(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_non_letters
+#' @export
+strip_non_letters <- function(text) UseMethod("strip_non_letters")
+
+#' @rdname strip_non_letters
+#' @method strip_non_letters corpus
+#' @export
+strip_non_letters.corpus <- function(text){
+  .strip("non_letters", text)
+  invisible()
+} 
+
+#' @rdname strip_non_letters
+#' @method strip_non_letters documents
+#' @export
+strip_non_letters.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_non_letters
+#' @method strip_non_letters document
+#' @export
+strip_non_letters.document <- strip_non_letters.corpus
