@@ -19,7 +19,7 @@ strip_preprositions(text)
 \item{text}{An object inheriting of class \code{document} or \code{corpus}.}
 }
 \description{
-Remove articles, or the words such as "across", "around", "before" (and many more).
+Remove preprositions, or the words such as "across", "around", "before" (and many more).
 }
 \examples{
 \dontrun{

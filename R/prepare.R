@@ -450,7 +450,7 @@ strip_definite_articles.document <- strip_definite_articles.corpus
 
 #' Strip Preprositions
 #' 
-#' Remove articles, or the words such as "across", "around", "before" (and many more).
+#' Remove preprositions, or the words such as "across", "around", "before" (and many more).
 #' 
 #' @inheritParams prepare
 #' 
@@ -490,3 +490,47 @@ strip_preprositions.documents <- function(text){
 #' @method strip_preprositions document
 #' @export
 strip_preprositions.document <- strip_preprositions.corpus
+
+#' Strip Pronouns
+#' 
+#' Remove pronouns, or the words such as  "I", "you", "he", "she", (and many more).
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' # must be lowercase
+#' doc <- string_document("she is the pronoun.")
+#' 
+#' # replaces in place!
+#' strip_pronouns(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_pronouns
+#' @export
+strip_pronouns <- function(text) UseMethod("strip_pronouns")
+
+#' @rdname strip_pronouns
+#' @method strip_pronouns corpus
+#' @export
+strip_pronouns.corpus <- function(text){
+  .strip("pronouns", text)
+  invisible()
+} 
+
+#' @rdname strip_pronouns
+#' @method strip_pronouns documents
+#' @export
+strip_pronouns.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_pronouns
+#' @method strip_pronouns document
+#' @export
+strip_pronouns.document <- strip_pronouns.corpus
