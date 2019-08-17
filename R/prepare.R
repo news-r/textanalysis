@@ -159,6 +159,49 @@ prepare.corpus <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRUE,
   invisible(text)
 }
 
+#' Remove Upper case
+#' 
+#' Remove upper case.
+#' 
+#' @inheritParams remove_corrupt_utf8
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("ThIs DoCuMENT HAs UppERCase")
+#' 
+#' # replaces in place!
+#' remove_case(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name remove_case
+#' @export
+remove_case <- function(text) UseMethod("remove_case")
+
+#' @rdname remove_case
+#' @method remove_case corpus
+#' @export
+remove_case.corpus <- function(text){
+  call_julia("remove_case!", text)
+  invisible()
+} 
+
+#' @rdname remove_case
+#' @method remove_case documents
+#' @export
+remove_case.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname remove_case
+#' @method remove_case document
+#' @export
+remove_case.document <- remove_case.corpus
+
 #' Remove Corrupt UTF8
 #' 
 #' Remove corrupt UTF8 characters that might cause issues, recommended.
@@ -200,6 +243,7 @@ remove_corrupt_utf8.documents <- function(text){
 #' @method remove_corrupt_utf8 document
 #' @export
 remove_corrupt_utf8.document <- remove_corrupt_utf8.corpus
+
 
 #' Stem
 #' 
