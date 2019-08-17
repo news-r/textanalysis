@@ -245,6 +245,49 @@ strip_articles.documents <- function(text){
 #' @export
 strip_articles.document <- strip_articles.corpus
 
+#' Strip Indefinite Articles
+#' 
+#' Remove articles, or the words "a", "an".
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("This is an indifite article.")
+#' 
+#' # replaces in place!
+#' strip_indefinite_articles(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_indefinite_articles
+#' @export
+strip_indefinite_articles <- function(text) UseMethod("strip_indefinite_articles")
+
+#' @rdname strip_indefinite_articles
+#' @method strip_indefinite_articles corpus
+#' @export
+strip_indefinite_articles.corpus <- function(text){
+  .strip("indefinite_articles", text)
+  invisible()
+} 
+
+#' @rdname strip_indefinite_articles
+#' @method strip_indefinite_articles documents
+#' @export
+strip_indefinite_articles.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_indefinite_articles
+#' @method strip_indefinite_articles document
+#' @export
+strip_indefinite_articles.document <- strip_indefinite_articles.corpus
+
 #' Remove Corrupt UTF8
 #' 
 #' Remove corrupt UTF8 characters that might cause issues, recommended.
