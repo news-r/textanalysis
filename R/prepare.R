@@ -68,6 +68,7 @@ prepare.document <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TRU
   if(strip_preposition) classes <- append(classes, "strip_preposition")
   if(strip_pronouns) classes <- append(classes, "strip_pronouns")
   if(strip_stopwords) classes <- append(classes, "strip_stopwords")
+  if(strip_numbers) classes <- append(classes, "strip_numbers")
   if(strip_non_letters) classes <- append(classes, "strip_non_letters")
   if(strip_spares_terms) classes <- append(classes, "strip_spares_terms")
   if(strip_frequent_terms) classes <- append(classes, "strip_frequent_terms")
