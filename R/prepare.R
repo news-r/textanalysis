@@ -623,3 +623,47 @@ strip_non_letters.documents <- function(text){
 #' @method strip_non_letters document
 #' @export
 strip_non_letters.document <- strip_non_letters.corpus
+
+#' Strip Numbers
+#' 
+#' Remove numbers.
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' # must be lowercase
+#' doc <- string_document("This is 1 document.")
+#' 
+#' # replaces in place!
+#' strip_numbers(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_numbers
+#' @export
+strip_numbers <- function(text) UseMethod("strip_numbers")
+
+#' @rdname strip_numbers
+#' @method strip_numbers corpus
+#' @export
+strip_numbers.corpus <- function(text){
+  .strip("numbers", text)
+  invisible()
+} 
+
+#' @rdname strip_numbers
+#' @method strip_numbers documents
+#' @export
+strip_numbers.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_numbers
+#' @method strip_numbers document
+#' @export
+strip_numbers.document <- strip_numbers.corpus
