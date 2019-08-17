@@ -404,3 +404,46 @@ stem_words.document <- function(document){
   call_julia("stem!", document)
   invisible()
 }
+
+#' Strip Definite Articles
+#' 
+#' Remove articles, or the word "the".
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("This document has the article.")
+#' 
+#' # replaces in place!
+#' strip_definite_articles(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_definite_articles
+#' @export
+strip_definite_articles <- function(text) UseMethod("strip_definite_articles")
+
+#' @rdname strip_definite_articles
+#' @method strip_definite_articles corpus
+#' @export
+strip_definite_articles.corpus <- function(text){
+  .strip("definite_articles", text)
+  invisible()
+} 
+
+#' @rdname strip_definite_articles
+#' @method strip_definite_articles documents
+#' @export
+strip_definite_articles.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_definite_articles
+#' @method strip_definite_articles document
+#' @export
+strip_definite_articles.document <- strip_definite_articles.corpus
