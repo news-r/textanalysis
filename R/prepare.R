@@ -202,6 +202,49 @@ remove_case.documents <- function(text){
 #' @export
 remove_case.document <- remove_case.corpus
 
+#' Strip Articles
+#' 
+#' Remove articles, or the words "a", "an", "the".
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc <- string_document("This document has an article.")
+#' 
+#' # replaces in place!
+#' strip_articles(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_articles
+#' @export
+strip_articles <- function(text) UseMethod("strip_articles")
+
+#' @rdname strip_articles
+#' @method strip_articles corpus
+#' @export
+strip_articles.corpus <- function(text){
+  .strip("articles", text)
+  invisible()
+} 
+
+#' @rdname strip_articles
+#' @method strip_articles documents
+#' @export
+strip_articles.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_articles
+#' @method strip_articles document
+#' @export
+strip_articles.document <- strip_articles.corpus
+
 #' Remove Corrupt UTF8
 #' 
 #' Remove corrupt UTF8 characters that might cause issues, recommended.

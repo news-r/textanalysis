@@ -38,3 +38,10 @@ warning_in_place <- function(what){
   else
     string_document(doc)
 }
+
+.strip <- function(func, document){
+  func <- paste0("strip_", func)
+  julia_assign("sd", document)
+  expr <- paste0("sd, ", func)
+  julia_eval(paste0("prepare!(", expr, ")"))
+}
