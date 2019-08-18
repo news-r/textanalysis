@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Corpus — corpus • textanalysis</title>
+<title>Hamlet — hamlet • textanalysis</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,9 +41,9 @@
 
 
 
-<meta property="og:title" content="Corpus — corpus" />
+<meta property="og:title" content="Hamlet — hamlet" />
 
-<meta property="og:description" content="Build a corpus from documents or a directory of text files." />
+<meta property="og:description" content="Hamlet by William Shakespeare." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,75 +132,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Corpus</h1>
+    <h1>Hamlet</h1>
     
-    <div class="hidden name"><code>corpus.Rd</code></div>
+    <div class="hidden name"><code>hamlet.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Build a corpus from documents or a directory of text files.</p>
+    <p>Hamlet by William Shakespeare.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>corpus</span>(<span class='no'>doc</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='no'>hamlet</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-<span class='co'># S3 method for document</span>
-<span class='fu'>corpus</span>(<span class='no'>doc</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='co'># S3 method for documents</span>
-<span class='fu'>corpus</span>(<span class='no'>doc</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>directory_corpus</span>(<span class='no'>directory</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <p>A character string (<code>vector</code> of length 1).</p>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>doc</th>
-      <td><p>First <code>document</code>, a <code>list</code>, or a <code>vector</code> of documents.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Objects inheriting of class <code>document</code> to build a corpus.</p></td>
-    </tr>
-    <tr>
-      <th>update_lexicon</th>
-      <td><p>Whether to update the lexicon, see <code><a href='lexicon.html'>update_lexicon</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>update_inverse_index</th>
-      <td><p>Whether to update the inverse index, see <code><a href='inverse_index.html'>update_inverse_index</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>directory</th>
-      <td><p>Path to a directory of text files.</p></td>
-    </tr>
-    </table>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href='http://www.gutenberg.org/ebooks/1524'>http://www.gutenberg.org/ebooks/1524</a></p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='init.html'>init_textanalysis</a></span>()
-
-<span class='co'># build document</span>
-<span class='no'>doc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"First document."</span>)
-<span class='no'>doc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"Second document."</span>)
-
-<span class='no'>corpus</span> <span class='kw'>&lt;-</span> <span class='fu'>corpus</span>(<span class='no'>doc1</span>, <span class='no'>doc2</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#source">Source</a></li>
+          </ul>
 
   </div>
 </div>

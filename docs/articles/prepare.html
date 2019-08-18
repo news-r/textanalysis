@@ -105,7 +105,35 @@
 
     
     
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(textanalysis)</code></pre></div>
+<p>Text is inherently dirty and removes extensive cleaning, thankfully textanalysis has all the functions you need to obtain clean text ready to model. The core function to preprocess data is <code>prepare</code> as it always efficiently applying multiple <code>strip_*</code> functions.</p>
+<ul>
+<li><code>prepare</code></li>
+<li><code>remove_case</code></li>
+<li><code>remove_corrupt_utf8</code></li>
+<li><code>remove_words</code></li>
+<li><code>strip_articles</code></li>
+<li><code>strip_indefinite_articles</code></li>
+<li><code>strip_definite_articles</code></li>
+<li><code>strip_preposition</code></li>
+<li><code>strip_pronouns</code></li>
+<li><code>strip_stopwords</code></li>
+<li><code>strip_numbers</code></li>
+<li><code>strip_non_letters</code></li>
+<li><code>strip_spares_terms</code></li>
+<li><code>strip_frequent_terms</code></li>
+<li><code>strip_html_tags</code></li>
+</ul>
+<p>The functions listed above apply to objects of class <code>document</code>, <code>documents</code>, and <code>corpus</code>, so we’ll create a dirty document to clean.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">str &lt;-<span class="st"> "ThIs Is SoMe &lt;span&gt;vEry&lt;/span&gt; Dirty TeXT!.!!"</span>
+
+(doc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/documents.html">string_document</a></span>(str))
+<span class="co">#&gt; ℹ A document.</span></code></pre></div>
+<p>Now we can apply the <code>prepare</code> function to the document.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(doc)
+<span class="co">#&gt; ⚠ This function changes `document` in place!</span>
+<span class="kw"><a href="../reference/get_text.html">get_text</a></span>(doc)
+<span class="co">#&gt; [1] "    dirty text"</span></code></pre></div>
+<p>Notice something important, the document (<code>doc</code> object in our case) is cleanded <em>in place</em>. This means the function <code>prepare</code> does not return the cleaned input and rather cleans the object in the environment. This is useful when dealing with large amount of text as these <em>are not</em> copied.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -12,11 +12,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(textanalysis)
+init_textanalysis()
 ```
 
-```{r setup}
-library(textanalysis)
-```
+Text is inherently dirty and removes extensive cleaning, thankfully textanalysis has all the functions you need to obtain clean text ready to model. The core function to preprocess data is `prepare` as it always efficiently applying multiple `strip_*` functions.
 
 - `prepare`
 - `remove_case`
@@ -33,3 +34,20 @@ library(textanalysis)
 - `strip_spares_terms`
 - `strip_frequent_terms`
 - `strip_html_tags`
+
+The functions listed above apply to objects of class `document`, `documents`, and `corpus`, so we'll create a dirty document to clean.
+
+```{r}
+str <- "ThIs Is SoMe <span>vEry</span> Dirty TeXT!.!!"
+
+(doc <- string_document(str))
+```
+
+Now we can apply the `prepare` function to the document.
+
+```{r}
+prepare(doc)
+get_text(doc)
+```
+
+Notice something important, the document (`doc` object in our case) is cleanded _in place_. This means the function `prepare` does not return the cleaned input and rather cleans the object in the environment. This is useful when dealing with large amount of text as these _are not_ copied.
