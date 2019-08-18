@@ -14,11 +14,21 @@ strip_sparse_terms(text)
 \method{strip_sparse_terms}{documents}(text)
 
 \method{strip_sparse_terms}{document}(text)
+
+strip_sparse_terms(text)
+
+\method{strip_sparse_terms}{corpus}(text)
+
+\method{strip_sparse_terms}{documents}(text)
+
+\method{strip_sparse_terms}{document}(text)
 }
 \arguments{
 \item{text}{An object inheriting of class \code{document} or \code{corpus}.}
 }
 \description{
+Remove sparse words.
+
 Remove sparse words.
 }
 \examples{
@@ -28,6 +38,21 @@ init_textanalysis()
 # build document
 # must be lowercase
 doc <- string_document("This is 1 document.")
+
+# replaces in place!
+strip_sparse_terms(doc)
+get_text(doc)
+}
+
+\dontrun{
+init_textanalysis()
+
+# build document
+str <- paste0(
+  "This is a sentence.",
+  "This is another sentence."
+)
+doc <- string_document(str)
 
 # replaces in place!
 strip_sparse_terms(doc)

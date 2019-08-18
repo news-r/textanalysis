@@ -712,3 +712,94 @@ strip_sparse_terms.documents <- function(text){
 #' @method strip_sparse_terms document
 #' @export
 strip_sparse_terms.document <- strip_sparse_terms.corpus
+
+#' Strip Sparse Terms
+#' 
+#' Remove sparse words.
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' str <- paste0(
+#'   "This is a sentence.",
+#'   "This is another sentence."
+#' )
+#' doc <- string_document(str)
+#' 
+#' # replaces in place!
+#' strip_sparse_terms(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_sparse_terms
+#' @export
+strip_sparse_terms <- function(text) UseMethod("strip_sparse_terms")
+
+#' @rdname strip_sparse_terms
+#' @method strip_sparse_terms corpus
+#' @export
+strip_sparse_terms.corpus <- function(text){
+  .strip("sparse_terms", text)
+  invisible()
+} 
+
+#' @rdname strip_sparse_terms
+#' @method strip_sparse_terms documents
+#' @export
+strip_sparse_terms.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_sparse_terms
+#' @method strip_sparse_terms document
+#' @export
+strip_sparse_terms.document <- strip_sparse_terms.corpus
+
+#' Strip Sparse Terms
+#' 
+#' Remove sparse words.
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' # must be lowercase
+#' doc <- string_document("This is 1 document.")
+#' 
+#' # replaces in place!
+#' strip_frequent_terms(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_frequent_terms
+#' @export
+strip_frequent_terms <- function(text) UseMethod("strip_frequent_terms")
+
+#' @rdname strip_frequent_terms
+#' @method strip_frequent_terms corpus
+#' @export
+strip_frequent_terms.corpus <- function(text){
+  .strip("frequent_terms", text)
+  invisible()
+} 
+
+#' @rdname strip_frequent_terms
+#' @method strip_frequent_terms documents
+#' @export
+strip_frequent_terms.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_frequent_terms
+#' @method strip_frequent_terms document
+#' @export
+strip_frequent_terms.document <- strip_frequent_terms.corpus
