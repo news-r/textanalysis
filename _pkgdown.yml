@@ -30,11 +30,24 @@ reference:
     desc: >
       Create documents and corpora.
     contents: 
-      - ends_with("document")
+      - documents
+      - remove_case
+      - remove_corrupt_utf8
+      - remove_words
       - corpus
       - directory_corpus
       - to_documents
       - standardize
+      - inverse_index
+      - update_inverse_index
+      - inverse_index
+      - lexicon
+      - update_lexicon
+      - update_inverse_index
+  - title: "Metadata"
+    desc: >
+      Get metadata on documents and corpora.
+    contents: 
       - title_
       - language_
       - author_
@@ -43,17 +56,12 @@ reference:
       - languages_
       - authors_
       - timestamps_
-      - inverse_index
-      - update_inverse_index
-      - inverse_index
-      - lexicon
-      - update_lexicon
-      - update_inverse_index
+      - starts_with("get_")
   - title: "Preprocessing"
     desc: >
       Clean documents and corpora.
     contents: 
-      - matches("prepare")
+      - prepare
       - starts_with("strip")
       - stem_words
   - title: "Term Frequency"
@@ -88,7 +96,6 @@ reference:
     desc: >
       Utility function.
     contents: 
-      - starts_with("get_")
       - corpus_to_tibble
       - set_seed
 
