@@ -17,3 +17,19 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(textanalysis)
 ```
+
+- `prepare`
+- `remove_case`
+- `remove_corrupt_utf8`
+- `remove_words`
+- `strip_articles`
+- `strip_indefinite_articles`
+- `strip_definite_articles`
+- `strip_preposition`
+- `strip_pronouns`
+- `strip_stopwords`
+- `strip_numbers`
+- `strip_non_letters`
+- `strip_spares_terms`
+- `strip_frequent_terms`
+- `strip_html_tags`

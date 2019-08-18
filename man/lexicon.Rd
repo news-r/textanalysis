@@ -5,7 +5,6 @@
 \alias{update_lexicon}
 \alias{lexicon.corpus}
 \alias{update_lexicon.corpus}
-\alias{update_inverse_index}
 \title{Lexicon}
 \usage{
 lexicon(corpus)
@@ -15,8 +14,6 @@ update_lexicon(corpus)
 \method{lexicon}{corpus}(corpus)
 
 \method{update_lexicon}{corpus}(corpus)
-
-update_inverse_index(corpus)
 }
 \arguments{
 \item{corpus}{A corpus, as returned vy \code{\link{corpus}}.}

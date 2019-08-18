@@ -144,40 +144,30 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-setup" class="hasAnchor"><a href="#section-setup" class="anchor"></a>Setup</h2>
+          <p class="section-desc"><p>initialisation functions.</p></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="bm_25.html">bm_25()</a></code> </p>
+          <p><code><a href="init.html">init_textanalysis()</a></code> <code><a href="init.html">setup_textanalysis()</a></code> <code><a href="init.html">install_textanalysis()</a></code> </p>
         </td>
-        <td><p>Okapi BM-25</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coom.html">coom()</a></code> </p>
-        </td>
-        <td><p>Co-occurrence Matrix</p></td>
-      </tr><tr>
+        <td><p>Initialise Session</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-objects" class="hasAnchor"><a href="#section-objects" class="anchor"></a>Objects</h2>
+          <p class="section-desc"><p>Create documents and corpora.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="corpus.html">corpus()</a></code> <code><a href="corpus.html">directory_corpus()</a></code> </p>
         </td>
         <td><p>Corpus</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="corpus_metadata.html">titles_()</a></code> <code><a href="corpus_metadata.html">languages_()</a></code> <code><a href="corpus_metadata.html">authors_()</a></code> <code><a href="corpus_metadata.html">timestamps_()</a></code> </p>
-        </td>
-        <td><p>Corpus Metadata</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="corpus_to_tibble.html">corpus_to_tibble()</a></code> </p>
-        </td>
-        <td><p>Convert Corpus</p></td>
       </tr><tr>
         
         <td>
@@ -193,27 +183,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="document_term_matrix.html">document_term_matrix()</a></code> </p>
-        </td>
-        <td><p>DocumentTermMatrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="document_term_vector.html">document_term_vector()</a></code> </p>
-        </td>
-        <td><p>Document Term Vector</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="documents.html">file_document()</a></code> <code><a href="documents.html">string_document()</a></code> <code><a href="documents.html">token_document()</a></code> <code><a href="documents.html">ngram_document()</a></code> </p>
         </td>
         <td><p>Document</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dtm_matrix.html">dtm_matrix()</a></code> </p>
-        </td>
-        <td><p>Sparse Matrix</p></td>
       </tr><tr>
         
         <td>
@@ -235,63 +207,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="init.html">init_textanalysis()</a></code> <code><a href="init.html">setup_textanalysis()</a></code> <code><a href="init.html">install_textanalysis()</a></code> </p>
-        </td>
-        <td><p>Initialise Session</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="init_naive_classifer.html">init_naive_classifer()</a></code> </p>
-        </td>
-        <td><p>Naive Bayes Classifier</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="inverse_index.html">inverse_index()</a></code> <code><a href="inverse_index.html">update_inverse_index(<i>&lt;corpus&gt;</i>)</a></code> <code><a href="inverse_index.html">inverse_index()</a></code> </p>
-        </td>
-        <td><p>Inverse Index</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lda.html">lda()</a></code> </p>
-        </td>
-        <td><p>Latent Dirichlet Analysis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lexical_frequency.html">lexical_frequency()</a></code> </p>
-        </td>
-        <td><p>Lexical Frequency</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lexicon.html">lexicon()</a></code> <code><a href="lexicon.html">update_lexicon()</a></code> <code><a href="lexicon.html">update_inverse_index()</a></code> </p>
-        </td>
-        <td><p>Lexicon</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lexicon_size.html">lexicon_size()</a></code> </p>
-        </td>
-        <td><p>Lexicon Size</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lsa.html">lsa()</a></code> </p>
-        </td>
-        <td><p>Latent Semantic Analysis</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="ngram_complexity.html">ngram_complexity()</a></code> </p>
         </td>
         <td><p>Determine NGram Complexity</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predict_class.html">predict_class()</a></code> </p>
-        </td>
-        <td><p>Predict Class</p></td>
       </tr><tr>
         
         <td>
@@ -301,21 +219,27 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="remove_case.html">remove_case()</a></code> </p>
+        </td>
+        <td><p>Remove Upper case</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="remove_corrupt_utf8.html">remove_corrupt_utf8()</a></code> </p>
+        </td>
+        <td><p>Remove Corrupt UTF8</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="remove_words.html">remove_words()</a></code> </p>
+        </td>
+        <td><p>Remove Specific Words</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="sentiment.html">sentiment()</a></code> </p>
         </td>
         <td><p>Sentiment Analyzer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="set_seed.html">set_seed()</a></code> </p>
-        </td>
-        <td><p>Set Seed in Julia</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="standardize.html">standardize()</a></code> </p>
-        </td>
-        <td><p>Standardize</p></td>
       </tr><tr>
         
         <td>
@@ -325,10 +249,212 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="summarize.html">summarize()</a></code> </p>
+          <p><code><a href="strip_articles.html">strip_articles()</a></code> </p>
+        </td>
+        <td><p>Strip Articles</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_definite_articles.html">strip_definite_articles()</a></code> </p>
+        </td>
+        <td><p>Strip Definite Articles</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_frequent_terms.html">strip_frequent_terms()</a></code> </p>
+        </td>
+        <td><p>Strip Frequent Terms</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_html_tags.html">strip_html_tags()</a></code> </p>
+        </td>
+        <td><p>Strip HTML Tags</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_indefinite_articles.html">strip_indefinite_articles()</a></code> </p>
+        </td>
+        <td><p>Strip Indefinite Articles</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_non_letters.html">strip_non_letters()</a></code> </p>
+        </td>
+        <td><p>Strip Stopwords</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_numbers.html">strip_numbers()</a></code> </p>
+        </td>
+        <td><p>Strip Numbers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_preprositions.html">strip_preprositions()</a></code> </p>
+        </td>
+        <td><p>Strip Preprositions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_pronouns.html">strip_pronouns()</a></code> </p>
+        </td>
+        <td><p>Strip Pronouns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_punctuation.html">strip_punctuation()</a></code> </p>
+        </td>
+        <td><p>Strip Punctuation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_sparse_terms.html">strip_sparse_terms()</a></code> <code><a href="strip_sparse_terms.html">strip_sparse_terms()</a></code> </p>
+        </td>
+        <td><p>Strip Sparse Terms</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_stopwords.html">strip_stopwords()</a></code> </p>
+        </td>
+        <td><p>Strip Stopwords</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summarizer.html">summarizer()</a></code> </p>
         </td>
         <td><p>Summarize</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="to_documents.html">to_documents()</a></code> </p>
+        </td>
+        <td><p>Create Multiple Documents</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="standardize.html">standardize()</a></code> </p>
+        </td>
+        <td><p>Standardize</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="corpus_metadata.html">titles_()</a></code> <code><a href="corpus_metadata.html">languages_()</a></code> <code><a href="corpus_metadata.html">authors_()</a></code> <code><a href="corpus_metadata.html">timestamps_()</a></code> </p>
+        </td>
+        <td><p>Corpus Metadata</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="inverse_index.html">inverse_index()</a></code> <code><a href="inverse_index.html">update_inverse_index()</a></code> <code><a href="inverse_index.html">inverse_index()</a></code> </p>
+        </td>
+        <td><p>Inverse Index</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lexicon.html">lexicon()</a></code> <code><a href="lexicon.html">update_lexicon()</a></code> </p>
+        </td>
+        <td><p>Lexicon</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-preprocessing" class="hasAnchor"><a href="#section-preprocessing" class="anchor"></a>Preprocessing</h2>
+          <p class="section-desc"><p>Clean documents and corpora.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="prepare.html">prepare()</a></code> </p>
+        </td>
+        <td><p>Preprocess Document</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_articles.html">strip_articles()</a></code> </p>
+        </td>
+        <td><p>Strip Articles</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_definite_articles.html">strip_definite_articles()</a></code> </p>
+        </td>
+        <td><p>Strip Definite Articles</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_frequent_terms.html">strip_frequent_terms()</a></code> </p>
+        </td>
+        <td><p>Strip Frequent Terms</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_html_tags.html">strip_html_tags()</a></code> </p>
+        </td>
+        <td><p>Strip HTML Tags</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_indefinite_articles.html">strip_indefinite_articles()</a></code> </p>
+        </td>
+        <td><p>Strip Indefinite Articles</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_non_letters.html">strip_non_letters()</a></code> </p>
+        </td>
+        <td><p>Strip Stopwords</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_numbers.html">strip_numbers()</a></code> </p>
+        </td>
+        <td><p>Strip Numbers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_preprositions.html">strip_preprositions()</a></code> </p>
+        </td>
+        <td><p>Strip Preprositions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_pronouns.html">strip_pronouns()</a></code> </p>
+        </td>
+        <td><p>Strip Pronouns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_punctuation.html">strip_punctuation()</a></code> </p>
+        </td>
+        <td><p>Strip Punctuation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_sparse_terms.html">strip_sparse_terms()</a></code> <code><a href="strip_sparse_terms.html">strip_sparse_terms()</a></code> </p>
+        </td>
+        <td><p>Strip Sparse Terms</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strip_stopwords.html">strip_stopwords()</a></code> </p>
+        </td>
+        <td><p>Strip Stopwords</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stem_words.html">stem_words()</a></code> </p>
+        </td>
+        <td><p>Stem</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-term-frequency" class="hasAnchor"><a href="#section-term-frequency" class="anchor"></a>Term Frequency</h2>
+          <p class="section-desc"><p>Term frequency-related function.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="tf.html">tf()</a></code> </p>
@@ -343,15 +469,145 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="to_documents.html">to_documents()</a></code> </p>
+          <p><code><a href="bm_25.html">bm_25()</a></code> </p>
         </td>
-        <td><p>Create Multiple Documents</p></td>
+        <td><p>Okapi BM-25</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="document_term_matrix.html">document_term_matrix()</a></code> </p>
+        </td>
+        <td><p>DocumentTermMatrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="document_term_vector.html">document_term_vector()</a></code> </p>
+        </td>
+        <td><p>Document Term Vector</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="dtm_matrix.html">dtm_matrix()</a></code> </p>
+        </td>
+        <td><p>Sparse Matrix</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-features" class="hasAnchor"><a href="#section-features" class="anchor"></a>Features</h2>
+          <p class="section-desc"><p>Models and text metrics.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="coom.html">coom()</a></code> </p>
+        </td>
+        <td><p>Co-occurrence Matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="create_hash_function.html">create_hash_function()</a></code> <code><a href="create_hash_function.html">hash()</a></code> </p>
+        </td>
+        <td><p>Hash Trick</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="init_naive_classifer.html">init_naive_classifer()</a></code> </p>
+        </td>
+        <td><p>Naive Bayes Classifier</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lda.html">lda()</a></code> </p>
+        </td>
+        <td><p>Latent Dirichlet Analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lsa.html">lsa()</a></code> </p>
+        </td>
+        <td><p>Latent Semantic Analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lexical_frequency.html">lexical_frequency()</a></code> </p>
+        </td>
+        <td><p>Lexical Frequency</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lexicon_size.html">lexicon_size()</a></code> </p>
+        </td>
+        <td><p>Lexicon Size</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ngram_complexity.html">ngram_complexity()</a></code> </p>
+        </td>
+        <td><p>Determine NGram Complexity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sentiment.html">sentiment()</a></code> </p>
+        </td>
+        <td><p>Sentiment Analyzer</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summarizer.html">summarizer()</a></code> </p>
+        </td>
+        <td><p>Summarize</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="train_naive_classifier.html">train_naive_classifier()</a></code> </p>
         </td>
         <td><p>Train Naive Bayes Classifier</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="predict_class.html">predict_class()</a></code> </p>
+        </td>
+        <td><p>Predict Class</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-misclellaneous" class="hasAnchor"><a href="#section-misclellaneous" class="anchor"></a>Misclellaneous</h2>
+          <p class="section-desc"><p>Utility function.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="get_ngrams.html">get_ngrams()</a></code> </p>
+        </td>
+        <td><p>Extract NGrams</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_text.html">get_text()</a></code> </p>
+        </td>
+        <td><p>Extract Text</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_tokens.html">get_tokens()</a></code> </p>
+        </td>
+        <td><p>Extract Tokens</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="corpus_to_tibble.html">corpus_to_tibble()</a></code> </p>
+        </td>
+        <td><p>Convert Corpus</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="set_seed.html">set_seed()</a></code> </p>
+        </td>
+        <td><p>Set Seed in Julia</p></td>
       </tr>
     </tbody>
     </table>
@@ -360,7 +616,12 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-setup">Setup</a></li>
+      <li><a href="#section-objects">Objects</a></li>
+      <li><a href="#section-preprocessing">Preprocessing</a></li>
+      <li><a href="#section-term-frequency">Term Frequency</a></li>
+      <li><a href="#section-features">Features</a></li>
+      <li><a href="#section-misclellaneous">Misclellaneous</a></li>
     </ul>
   </div>
 </div>

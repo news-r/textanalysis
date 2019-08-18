@@ -18,6 +18,80 @@ navbar:
     - icon: fa-github fa-lg
       href: "https://github.com/news-r/textanalysis"
 
+reference:
+  - title: "Setup"
+    desc: >
+      initialisation functions.
+    contents: 
+      - init_textanalysis
+      - setup_textanalysis
+      - install_textanalysis
+  - title: "Objects"
+    desc: >
+      Create documents and corpora.
+    contents: 
+      - ends_with("document")
+      - corpus
+      - directory_corpus
+      - to_documents
+      - standardize
+      - title_
+      - language_
+      - author_
+      - timestamp_
+      - titles_
+      - languages_
+      - authors_
+      - timestamps_
+      - inverse_index
+      - update_inverse_index
+      - inverse_index
+      - lexicon
+      - update_lexicon
+      - update_inverse_index
+  - title: "Preprocessing"
+    desc: >
+      Clean documents and corpora.
+    contents: 
+      - matches("prepare")
+      - starts_with("strip")
+      - stem_words
+  - title: "Term Frequency"
+    desc: >
+      Term frequency-related function.
+    contents:
+      - tf
+      - tf_idf 
+      - bm_25
+      - document_term_matrix
+      - document_term_vector
+      - dtm_matrix
+  - title: "Features"
+    desc: >
+      Models and text metrics.
+    contents:
+      - coom
+      - create_hash_function
+      - hash
+      - init_naive_classifer
+      - lda
+      - lsa
+      - lexical_frequency
+      - lexicon_size
+      - ngram_complexity
+      - sentiment
+      - summarizer
+      - init_naive_classifer
+      - train_naive_classifier
+      - predict_class
+  - title: "Misclellaneous"
+    desc: >
+      Utility function.
+    contents: 
+      - starts_with("get_")
+      - corpus_to_tibble
+      - set_seed
+
 authors:
   John Coene:
     href: http://john-coene.com

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Inverse Index — inverse_index • textanalysis</title>
+<title>Strip HTML Tags — strip_html_tags • textanalysis</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,14 +41,9 @@
 
 
 
-<meta property="og:title" content="Inverse Index — inverse_index" />
+<meta property="og:title" content="Strip HTML Tags — strip_html_tags" />
 
-<meta property="og:description" content="If we are interested in a specific term, we often 
-want to know which documents in a corpus contain 
-that term. The inverse index tells us this and 
-therefore provides a simplistic sort of search 
-algorithm.
-Tells the size of the inverse index." />
+<meta property="og:description" content="Remove html tags." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -137,43 +132,34 @@ Tells the size of the inverse index." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Inverse Index</h1>
+    <h1>Strip HTML Tags</h1>
     
-    <div class="hidden name"><code>inverse_index.Rd</code></div>
+    <div class="hidden name"><code>strip_html_tags.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>If we are interested in a specific term, we often 
-want to know which documents in a corpus contain 
-that term. The inverse index tells us this and 
-therefore provides a simplistic sort of search 
-algorithm.</p>
-<p>Tells the size of the inverse index.</p>
+    <p>Remove html tags.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>inverse_index</span>(<span class='no'>corpus</span>)
-
-<span class='fu'>update_inverse_index</span>(<span class='no'>corpus</span>)
+    <pre class="usage"><span class='fu'>strip_html_tags</span>(<span class='no'>text</span>)
 
 <span class='co'># S3 method for corpus</span>
-<span class='fu'>inverse_index</span>(<span class='no'>corpus</span>)
+<span class='fu'>strip_html_tags</span>(<span class='no'>text</span>)
 
-<span class='co'># S3 method for corpus</span>
-<span class='fu'>update_inverse_index</span>(<span class='no'>corpus</span>)
+<span class='co'># S3 method for documents</span>
+<span class='fu'>strip_html_tags</span>(<span class='no'>text</span>)
 
-<span class='fu'>inverse_index</span>(<span class='no'>corpus</span>)
-
-<span class='co'># S3 method for corpus</span>
-<span class='fu'>inverse_index</span>(<span class='no'>corpus</span>)</pre>
+<span class='co'># S3 method for document</span>
+<span class='fu'>strip_html_tags</span>(<span class='no'>text</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>corpus</th>
-      <td><p>A corpus, as returned vy <code><a href='corpus.html'>corpus</a></code>.</p></td>
+      <th>text</th>
+      <td><p>An object inheriting of class <code>document</code> or <code>corpus</code>.</p></td>
     </tr>
     </table>
     
@@ -183,27 +169,12 @@ algorithm.</p>
 <span class='fu'><a href='init.html'>init_textanalysis</a></span>()
 
 <span class='co'># build document</span>
-<span class='no'>doc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"First document."</span>)
-<span class='no'>doc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"Second document."</span>)
+<span class='co'># must be lowercase</span>
+<span class='no'>doc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"This is a &lt;span&gt;document&lt;/span&gt;."</span>)
 
-<span class='co'># do not update automatically</span>
-<span class='no'>corpus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='corpus.html'>corpus</a></span>(<span class='no'>doc1</span>, <span class='no'>doc2</span>, <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># update manually</span>
-<span class='fu'>update_inverse_index</span>(<span class='no'>corpus</span>)
-<span class='fu'>inverse_index</span>(<span class='no'>corpus</span>)
-<span class='co'># }</span><div class='input'>
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='init.html'>init_textanalysis</a></span>()
-
-<span class='co'># build document</span>
-<span class='no'>doc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"First document."</span>)
-<span class='no'>doc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"Second document."</span>)
-
-<span class='no'>corpus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='corpus.html'>corpus</a></span>(<span class='no'>doc1</span>, <span class='no'>doc2</span>)
-
-<span class='fu'>update_inverse_index</span>(<span class='no'>corpus</span>)
-<span class='fu'>inverse_index</span>(<span class='no'>corpus</span>)
+<span class='co'># replaces in place!</span>
+<span class='fu'>strip_html_tags</span>(<span class='no'>doc</span>)
+<span class='fu'><a href='get_text.html'>get_text</a></span>(<span class='no'>doc</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

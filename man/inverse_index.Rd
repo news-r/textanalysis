@@ -2,11 +2,14 @@
 % Please edit documentation in R/corpus.R
 \name{inverse_index}
 \alias{inverse_index}
+\alias{update_inverse_index}
 \alias{inverse_index.corpus}
 \alias{update_inverse_index.corpus}
 \title{Inverse Index}
 \usage{
 inverse_index(corpus)
+
+update_inverse_index(corpus)
 
 \method{inverse_index}{corpus}(corpus)
 

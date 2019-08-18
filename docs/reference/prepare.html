@@ -150,7 +150,17 @@
   <span class='kw'>remove_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_stopwords</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>strip_html_tags</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_punctuation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>remove_words</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>strip_non_letters</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>strip_spares_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_frequent_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>strip_sparse_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_frequent_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>strip_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_indefinite_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>strip_definite_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_preposition</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>strip_pronouns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for documents</span>
+<span class='fu'>prepare</span>(<span class='no'>text</span>, <span class='kw'>remove_corrupt_utf8</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>remove_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_stopwords</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>strip_html_tags</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_punctuation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>remove_words</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>strip_non_letters</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>strip_sparse_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_frequent_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>strip_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_indefinite_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>strip_definite_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_preposition</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>strip_pronouns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
@@ -160,7 +170,7 @@
   <span class='kw'>remove_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_stopwords</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>strip_html_tags</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip_punctuation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>remove_words</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>strip_non_letters</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>strip_spares_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_frequent_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>strip_sparse_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_frequent_terms</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>strip_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_indefinite_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>strip_definite_articles</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>strip_preposition</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>strip_pronouns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -210,7 +220,7 @@
       <td><p>Remove anything non-numeric.</p></td>
     </tr>
     <tr>
-      <th>strip_spares_terms</th>
+      <th>strip_sparse_terms</th>
       <td><p>Remove sparse terms.</p></td>
     </tr>
     <tr>
@@ -245,7 +255,7 @@ see <code><a href='lexicon.html'>update_lexicon</a></code>.</p></td>
     <tr>
       <th>update_inverse_index</th>
       <td><p>Whether to update the inverse index of the corpus, 
-see <code><a href='lexicon.html'>update_inverse_index</a></code>.</p></td>
+see <code><a href='inverse_index.html'>update_inverse_index</a></code>.</p></td>
     </tr>
     </table>
     

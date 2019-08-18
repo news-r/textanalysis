@@ -358,7 +358,7 @@ lexicon_size.corpus <- function(corpus){
 #' @export
 inverse_index <- function(corpus) UseMethod("inverse_index")
 
-#' @rdname lexicon
+#' @rdname inverse_index
 #' @export
 update_inverse_index <- function(corpus) UseMethod("update_inverse_index")
 

@@ -259,24 +259,24 @@ sentiment.corpus <- function(text){
 #'   )
 #' )
 #' 
-#' summarize(doc, ns = 2L)
+#' summarizer(doc, ns = 2L)
 #' }
 #' 
-#' @name summarize
+#' @name summarizer
 #' @export
-summarize <- function(text, ns = 2L) UseMethod("summarize")
+summarizer <- function(text, ns = 2L) UseMethod("summarizer")
 
-#' @rdname summarize
-#' @method summarize document
+#' @rdname summarizer
+#' @method summarizer document
 #' @export
-summarize.document <- function(text, ns = 2L){
+summarizer.document <- function(text, ns = 2L){
   call_julia("summarize", text, ns = ns)
 }
 
-#' @rdname summarize
-#' @method summarize corpus
+#' @rdname summarizer
+#' @method summarizer corpus
 #' @export
-summarize.corpus <- function(text, ns = 2L){
+summarizer.corpus <- function(text, ns = 2L){
   L <- length(text)
   summarizations <- c()
   for(i in seq_along(1:L)){
