@@ -164,7 +164,10 @@ to_documents.data.frame <- function(documents, ..., text, title = NULL,
     new_docs <- append(new_docs, doc)
   }
 
-  .construct_documents(new_docs)
+  if(type == "ngram")
+    .construct_documents(documents, "ngram_documents")
+  else
+    .construct_documents(documents)
 }
 
 #' Extract Text
