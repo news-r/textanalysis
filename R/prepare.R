@@ -847,3 +847,47 @@ strip_html_tags.documents <- function(text){
 #' @method strip_html_tags document
 #' @export
 strip_html_tags.document <- strip_html_tags.corpus
+
+#' Strip Punctuation
+#' 
+#' Remove punctuation marks.
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' # must be lowercase
+#' doc <- string_document(".This is a document!!")
+#' 
+#' # replaces in place!
+#' strip_punctuation(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_punctuation
+#' @export
+strip_punctuation <- function(text) UseMethod("strip_punctuation")
+
+#' @rdname strip_punctuation
+#' @method strip_punctuation corpus
+#' @export
+strip_punctuation.corpus <- function(text){
+  .strip("punctuation", text)
+  invisible()
+} 
+
+#' @rdname strip_punctuation
+#' @method strip_punctuation documents
+#' @export
+strip_punctuation.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_punctuation
+#' @method strip_punctuation document
+#' @export
+strip_punctuation.document <- strip_punctuation.corpus
