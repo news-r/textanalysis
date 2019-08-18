@@ -5,7 +5,7 @@
 \alias{strip_frequent_terms.corpus}
 \alias{strip_frequent_terms.documents}
 \alias{strip_frequent_terms.document}
-\title{Strip Sparse Terms}
+\title{Strip Frequent Terms}
 \usage{
 strip_frequent_terms(text)
 
@@ -19,7 +19,7 @@ strip_frequent_terms(text)
 \item{text}{An object inheriting of class \code{document} or \code{corpus}.}
 }
 \description{
-Remove sparse words.
+Remove frequently occuring words.
 }
 \examples{
 \dontrun{

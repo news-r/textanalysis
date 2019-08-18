@@ -760,9 +760,9 @@ strip_sparse_terms.documents <- function(text){
 #' @export
 strip_sparse_terms.document <- strip_sparse_terms.corpus
 
-#' Strip Sparse Terms
+#' Strip Frequent Terms
 #' 
-#' Remove sparse words.
+#' Remove frequently occuring words.
 #' 
 #' @inheritParams prepare
 #' 
@@ -803,3 +803,47 @@ strip_frequent_terms.documents <- function(text){
 #' @method strip_frequent_terms document
 #' @export
 strip_frequent_terms.document <- strip_frequent_terms.corpus
+
+#' Strip HTML Tags
+#' 
+#' Remove html tags.
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' # must be lowercase
+#' doc <- string_document("This is a <span>document</span>.")
+#' 
+#' # replaces in place!
+#' strip_html_tags(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_html_tags
+#' @export
+strip_html_tags <- function(text) UseMethod("strip_html_tags")
+
+#' @rdname strip_html_tags
+#' @method strip_html_tags corpus
+#' @export
+strip_html_tags.corpus <- function(text){
+  .strip("html_tags", text)
+  invisible()
+} 
+
+#' @rdname strip_html_tags
+#' @method strip_html_tags documents
+#' @export
+strip_html_tags.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_html_tags
+#' @method strip_html_tags document
+#' @export
+strip_html_tags.document <- strip_html_tags.corpus
