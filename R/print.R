@@ -12,7 +12,7 @@ print.documents <- function(x, ...){
 print.document <- function(x, ...){
   cat(
     crayon::blue(cli::symbol$info), 
-    "A document.\n",
+    "A single document.\n",
     ...
   )
 }

@@ -24,5 +24,8 @@ Imports:
     JuliaCall,
     assertthat
 Suggests:
-    echarts4r
+    echarts4r,
+    knitr,
+    rmarkdown
 RoxygenNote: 6.1.1
+VignetteBuilder: knitr

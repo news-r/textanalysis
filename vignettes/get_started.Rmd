@@ -1,0 +1,69 @@
+---
+title: "Get Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Setup
+
+This document will walk you through the general concepts of textanalysis and demonstrate the broad workflow of the package. First you will need to have the package installed of course; instructions are on the [homepage](https://textanalysis.news-r.org). Once installed, the package can be loaded.
+
+```{r}
+library(textanalysis)
+```
+
+Because the package depends on Julia we must initialise the session.
+
+```{r}
+init_textanalysis()
+```
+
+## Document
+
+Once the pacakges, installed, loaded, and the session initialised we can start using the package. The most basic object type in textanalysis is the document, it can be created with any of the `*_document` functions, though you will likely only need `string_document` to create a document from a character string.
+
+```{r}
+str <- "This is a very simple document!"
+(doc <- string_document(str))
+```
+
+You can always get the content of the document with `get_text`.
+
+```{r}
+get_text(doc)
+```
+
+Turning a character string into a `document` allows to easily clean it, or `prepare` it in textanalysis jargon. There are multitude of ways to clean text in textanalysis, they are further detailed in the [preprocessing vignettes](articles/prepare.html). Here we use the straightforward `prepare` function with leaving all arguments on default.
+
+```{r}
+prepare(doc)
+```
+
+Notice the warning, the prepare function changes the object `doc` _in place_; we did not assign the (inexistent) output of `prepare` to a new object and the object `doc` changed. Let's demonstrate.
+
+```{r}
+get_text(doc) # see the document changed!
+```
+
+This is somewhat puzzling for us R users but it actually happens for good reasons: textanalysis does not need to make a copy of the object, this allows processing more data.
+
+However, you will not use the package in this manner as you have multiple documents to process at once, you can do so with the `to_documents` function which will process multiple documents from a vector or data.frame
+
+```{r}
+texts <- c(
+  str,
+  "This is another document"
+)
+
+(docs <- to_documents(texts))
+```

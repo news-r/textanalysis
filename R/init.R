@@ -15,6 +15,8 @@
 #'   \item{\code{Languages}}
 #' }
 #' 
+#' @return Invisibly returns \code{TRUE} is successful.
+#' 
 #' @import JuliaCall
 #' @import assertthat
 #' 
@@ -26,6 +28,7 @@ init_textanalysis <- function(...){
   julia_install_package_if_needed("Languages")
   julia_library("TextAnalysis")
   cat(crayon::green(cli::symbol$tick), "textanalysis initialised.\n")
+  invisible(TRUE)
 }
 
 #' @rdname init

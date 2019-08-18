@@ -32,11 +32,11 @@ div(
     ),
     p(
       tags$a(
-        tags$i(class = "fa fa-broom"),
+        tags$i(class = "fa fa-rocket"),
         class = "btn btn-primary",
-        href = "articles/prepare.html",
+        href = "articles/get_started.html",
         style = "margin-bottom: 5px;",
-        "Pre-process"
+        "Get Started"
       ),
       tags$a(
         tags$i(class = "fa fa-github"),
