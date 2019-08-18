@@ -668,3 +668,47 @@ strip_numbers.documents <- function(text){
 #' @method strip_numbers document
 #' @export
 strip_numbers.document <- strip_numbers.corpus
+
+#' Strip Sparse Terms
+#' 
+#' Remove sparse words.
+#' 
+#' @inheritParams prepare
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' # must be lowercase
+#' doc <- string_document("This is 1 document.")
+#' 
+#' # replaces in place!
+#' strip_sparse_terms(doc)
+#' get_text(doc)
+#' }
+#' 
+#' @name strip_sparse_terms
+#' @export
+strip_sparse_terms <- function(text) UseMethod("strip_sparse_terms")
+
+#' @rdname strip_sparse_terms
+#' @method strip_sparse_terms corpus
+#' @export
+strip_sparse_terms.corpus <- function(text){
+  .strip("sparse_terms", text)
+  invisible()
+} 
+
+#' @rdname strip_sparse_terms
+#' @method strip_sparse_terms documents
+#' @export
+strip_sparse_terms.documents <- function(text){
+  purrr::map(text, remove_case)
+  invisible()
+} 
+
+#' @rdname strip_sparse_terms
+#' @method strip_sparse_terms document
+#' @export
+strip_sparse_terms.document <- strip_sparse_terms.corpus
