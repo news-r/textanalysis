@@ -6,6 +6,8 @@ navbar:
   left:
     - text: "Reference"
       href: "reference/"
+    - text: "Get Started"
+      href: "articles/get-started"
     - text: "Guide"
       menu:
         - text: "Preprocessing"

@@ -88,6 +88,9 @@
         <li>
   <a href="../reference/">Reference</a>
 </li>
+<li>
+  <a href="../articles/get-started">Get Started</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Guide
@@ -143,14 +146,15 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>corpus</span>(<span class='no'>doc</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>corpus</span>(<span class='no'>document</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S3 method for document</span>
-<span class='fu'>corpus</span>(<span class='no'>doc</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'>corpus</span>(<span class='no'>document</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S3 method for documents</span>
-<span class='fu'>corpus</span>(<span class='no'>doc</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'>corpus</span>(<span class='no'>document</span>, <span class='no'>...</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>update_inverse_index</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>directory_corpus</span>(<span class='no'>directory</span>, <span class='kw'>update_lexicon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -160,7 +164,7 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>doc</th>
+      <th>document</th>
       <td><p>First <code>document</code>, a <code>list</code>, or a <code>vector</code> of documents.</p></td>
     </tr>
     <tr>

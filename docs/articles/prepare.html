@@ -51,6 +51,9 @@
 <li>
   <a href="../reference/">Reference</a>
 </li>
+<li>
+  <a href="../articles/get-started">Get Started</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Guide
@@ -127,13 +130,28 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">str &lt;-<span class="st"> "ThIs Is SoMe &lt;span&gt;vEry&lt;/span&gt; Dirty TeXT!.!!"</span>
 
 (doc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/documents.html">string_document</a></span>(str))
-<span class="co">#&gt; ℹ A document.</span></code></pre></div>
+<span class="co">#&gt; ℹ A single document.</span></code></pre></div>
 <p>Now we can apply the <code>prepare</code> function to the document.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(doc)
 <span class="co">#&gt; ⚠ This function changes `document` in place!</span>
 <span class="kw"><a href="../reference/get_text.html">get_text</a></span>(doc)
 <span class="co">#&gt; [1] "    dirty text"</span></code></pre></div>
 <p>Notice something important, the document (<code>doc</code> object in our case) is cleanded <em>in place</em>. This means the function <code>prepare</code> does not return the cleaned input and rather cleans the object in the environment. This is useful when dealing with large amount of text as these <em>are not</em> copied.</p>
+<p>Though it may look like the document is now somewhat messed up with all the whitespaces inserted (as replacement to punctuation and other things) it is not, e.g.: textanalysis will still extract tokens correctly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_tokens.html">get_tokens</a></span>(doc)
+<span class="co">#&gt; [1] "dirty" "text"</span></code></pre></div>
+<p>Note that textanalysis also comes with a stemmer.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/stem_words.html">stem_words</a></span>(doc)
+<span class="kw"><a href="../reference/get_text.html">get_text</a></span>(doc)
+<span class="co">#&gt; [1] "dirti text"</span></code></pre></div>
+<p>Also, though there are numerous functions to clean text all can be applied efficiently using <code>prepare</code>: the corresponsding Julia function applies them much more efficiently than using individually. You will likely not see a difference when working with a small number of documents. If you do use them separately ensure you apply them in the correct order, i.g.: do not strip the punctuation before the html tags (see example below).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">str &lt;-<span class="st"> "This is &lt;span&gt;html&lt;/span&gt;."</span>
+doc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/documents.html">string_document</a></span>(str)
+
+<span class="co"># DONT DO THAT</span>
+<span class="kw"><a href="../reference/strip_punctuation.html">strip_punctuation</a></span>(doc)
+<span class="kw"><a href="../reference/get_text.html">get_text</a></span>(doc)
+<span class="co">#&gt; [1] "This is spanhtmlspan"</span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

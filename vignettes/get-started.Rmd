@@ -106,6 +106,8 @@ You could also fetch thse lexical frequency of a specific word.
 lexical_frequency(crps, "corn")
 ```
 
+## Document-term Matrix
+
 Now that we have a corpus we can compute the document-term matrix, which is the core of a multitude of computations and models.
 
 ```{r}

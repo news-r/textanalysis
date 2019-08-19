@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Okapi BM-25 — bm_25 • textanalysis</title>
+<title>Random Projection Model — rp_model • textanalysis</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,11 +41,24 @@
 
 
 
-<meta property="og:title" content="Okapi BM-25 — bm_25" />
+<meta property="og:title" content="Random Projection Model — rp_model" />
 
-<meta property="og:description" content="Okapi BM25 (BM stands for Best Matching) is a ranking 
-function used by search engines to estimate the relevance 
-of documents to a given search query." />
+<meta property="og:description" content="In mathematics and statistics, random projection 
+is a technique used to reduce the dimensionality 
+of a set of points which lie in Euclidean space. 
+Random projection methods are powerful methods 
+known for their simplicity and less erroneous 
+output compared with other methods. According to 
+experimental results, random projection preserve 
+distances well, but empirical results are sparse. 
+They have been applied to many natural language 
+tasks under the name of random indexing. The core 
+idea behind random projection is given in the 
+Johnson-Lindenstrauss lemma which states that if 
+points in a vector space are of sufficiently high 
+dimension, then they may be projected into a suitable 
+lower-dimensional space in a way which approximately 
+preserves the distances between the points." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -137,48 +150,67 @@ of documents to a given search query." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Okapi BM-25</h1>
+    <h1>Random Projection Model</h1>
     
-    <div class="hidden name"><code>bm_25.Rd</code></div>
+    <div class="hidden name"><code>rp_model.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Okapi BM25 (BM stands for Best Matching) is a ranking 
-function used by search engines to estimate the relevance 
-of documents to a given search query.</p>
+    <p>In mathematics and statistics, random projection 
+is a technique used to reduce the dimensionality 
+of a set of points which lie in Euclidean space. 
+Random projection methods are powerful methods 
+known for their simplicity and less erroneous 
+output compared with other methods. According to 
+experimental results, random projection preserve 
+distances well, but empirical results are sparse. 
+They have been applied to many natural language 
+tasks under the name of random indexing. The core 
+idea behind random projection is given in the 
+Johnson-Lindenstrauss lemma which states that if 
+points in a vector space are of sufficiently high 
+dimension, then they may be projected into a suitable 
+lower-dimensional space in a way which approximately 
+preserves the distances between the points.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>bm_25</span>(<span class='no'>text</span>)
+    <pre class="usage"><span class='fu'>rp_model</span>(<span class='no'>text</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for dtm</span>
-<span class='fu'>bm_25</span>(<span class='no'>text</span>)
+<span class='fu'>rp_model</span>(<span class='no'>text</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for corpus</span>
-<span class='fu'>bm_25</span>(<span class='no'>text</span>)</pre>
+<span class='fu'>rp_model</span>(<span class='no'>text</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>text</th>
-      <td><p>A document-term martrix or a <code>corpus</code>.</p></td>
+      <td><p>An object inheriting of class <code>document</code> or <code>corpus</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Any other options to pass to the model 
+<a href='https://zgornel.github.io/StringAnalysis.jl/dev/examples/#Dimensionality-reduction-1'>https://zgornel.github.io/StringAnalysis.jl/dev/examples/#Dimensionality-reduction-1</a>.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='init.html'>init_textanalysis</a></span>()
+<span class='co'># Use stringanalysis backend!</span>
+<span class='fu'><a href='init.html'>init_stringanalysis</a></span>()
 
-<span class='co'># create corpus</span>
-<span class='no'>doc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"A simple document."</span>)
-<span class='no'>doc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"Another simple document."</span>)
-<span class='no'>crps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='corpus.html'>corpus</a></span>(<span class='no'>doc</span>, <span class='no'>doc2</span>)
+<span class='co'># build document</span>
+<span class='no'>doc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"First document."</span>)
+<span class='no'>doc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"Second document."</span>)
 
-<span class='co'># matrix &amp; plot</span>
-<span class='fu'>bm_25</span>(<span class='no'>crps</span>)
+<span class='no'>crps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='corpus.html'>corpus</a></span>(<span class='no'>doc1</span>, <span class='no'>doc2</span>)
+<span class='no'>dtm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='document_term_matrix.html'>document_term_matrix</a></span>(<span class='no'>crps</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>rp_model</span>(<span class='no'>dtm</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

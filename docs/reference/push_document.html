@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Okapi BM-25 — bm_25 • textanalysis</title>
+<title>Add document — push_document • textanalysis</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,11 +41,9 @@
 
 
 
-<meta property="og:title" content="Okapi BM-25 — bm_25" />
+<meta property="og:title" content="Add document — push_document" />
 
-<meta property="og:description" content="Okapi BM25 (BM stands for Best Matching) is a ranking 
-function used by search engines to estimate the relevance 
-of documents to a given search query." />
+<meta property="og:description" content="Add a document to a corpus." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -137,33 +135,32 @@ of documents to a given search query." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Okapi BM-25</h1>
+    <h1>Add document</h1>
     
-    <div class="hidden name"><code>bm_25.Rd</code></div>
+    <div class="hidden name"><code>push_document.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Okapi BM25 (BM stands for Best Matching) is a ranking 
-function used by search engines to estimate the relevance 
-of documents to a given search query.</p>
+    <p>Add a document to a corpus.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>bm_25</span>(<span class='no'>text</span>)
-
-<span class='co'># S3 method for dtm</span>
-<span class='fu'>bm_25</span>(<span class='no'>text</span>)
+    <pre class="usage"><span class='fu'>push_document</span>(<span class='no'>corpus</span>, <span class='no'>document</span>)
 
 <span class='co'># S3 method for corpus</span>
-<span class='fu'>bm_25</span>(<span class='no'>text</span>)</pre>
+<span class='fu'>push_document</span>(<span class='no'>corpus</span>, <span class='no'>document</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>text</th>
-      <td><p>A document-term martrix or a <code>corpus</code>.</p></td>
+      <th>corpus</th>
+      <td><p>A corpus, as returned vy <code><a href='corpus.html'>corpus</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>document</th>
+      <td><p>An object of class <code>document</code>.</p></td>
     </tr>
     </table>
     
@@ -172,13 +169,16 @@ of documents to a given search query.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='init.html'>init_textanalysis</a></span>()
 
-<span class='co'># create corpus</span>
-<span class='no'>doc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"A simple document."</span>)
-<span class='no'>doc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"Another simple document."</span>)
-<span class='no'>crps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='corpus.html'>corpus</a></span>(<span class='no'>doc</span>, <span class='no'>doc2</span>)
+<span class='co'># build document</span>
+<span class='no'>doc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"First document."</span>)
+<span class='no'>doc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='documents.html'>string_document</a></span>(<span class='st'>"Second document."</span>)
 
-<span class='co'># matrix &amp; plot</span>
-<span class='fu'>bm_25</span>(<span class='no'>crps</span>)
+<span class='co'># length 1</span>
+(<span class='no'>corpus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='corpus.html'>corpus</a></span>(<span class='no'>doc1</span>))
+<span class='fu'>push_document</span>(<span class='no'>corpus</span>, <span class='no'>doc2</span>)
+
+<span class='co'># length 2</span>
+<span class='no'>corpus</span>
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

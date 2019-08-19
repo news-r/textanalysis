@@ -43,7 +43,8 @@
 
 <meta property="og:title" content="Initialise Session — init" />
 
-<meta property="og:description" content="Initialise a session, installs TextAnalysis Juia dependency if needed." />
+<meta property="og:description" content="Initialise a session, installs TextAnalysis or StringAnalysis
+Juia dependency if needed." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -87,6 +88,9 @@
       <ul class="nav navbar-nav navbar-left">
         <li>
   <a href="../reference/">Reference</a>
+</li>
+<li>
+  <a href="../articles/get-started">Get Started</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -139,15 +143,20 @@
 
     <div class="ref-description">
     
-    <p>Initialise a session, installs TextAnalysis Juia dependency if needed.</p>
+    <p>Initialise a session, installs TextAnalysis or StringAnalysis
+Juia dependency if needed.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>init_textanalysis</span>(<span class='no'>...</span>)
 
-<span class='fu'>setup_textanalysis</span>(<span class='no'>...</span>)
+<span class='fu'>init_stringanalysis</span>(<span class='no'>...</span>)
 
-<span class='fu'>install_textanalysis</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"stable"</span>, <span class='st'>"latest"</span>))</pre>
+<span class='fu'>switch_backend</span>(<span class='no'>...</span>)
+
+<span class='fu'>install_textanalysis</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"stable"</span>, <span class='st'>"latest"</span>))
+
+<span class='fu'>install_stringanalysis</span>(<span class='kw'>version</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"stable"</span>, <span class='st'>"latest"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,15 +172,32 @@ registry (recommended) or the latest version from github.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Invisibly returns <code>TRUE</code> is successful.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Some functions currently require the <code>latest</code> Github version.</p>
+    <p>Some functions might require the <code>latest</code> Github version.</p>
+    
+    <h2 class="hasAnchor" id="backends"><a class="anchor" href="#backends"></a>Backends</h2>
+
+    
+    <p>Two backends are available, 
+<a href='https://github.com/JuliaText/TextAnalysis.jl'>TextAnalysis</a> and 
+<a href='https://github.com/zgornel/StringAnalysis.jl'>StringAnalysis</a>. 
+The former is the original repository while the second is a hard-fork,
+of the former which is "designed to provide a richer, faster and orthogonal API."</p>
     
     <h2 class="hasAnchor" id="packages"><a class="anchor" href="#packages"></a>Packages</h2>
 
     
     <p>Packages installed by <code>init_textanalysis</code> are:</p><ul>
 <li><p><code>TextAnalysis</code></p></li>
+<li><p><code>Languages</code></p></li>
+</ul>
+    <p>Packages installed by <code>init_stringanalysis</code> are:</p><ul>
+<li><p><code>StringAnalysis</code></p></li>
 <li><p><code>Languages</code></p></li>
 </ul>
     
@@ -182,7 +208,11 @@ registry (recommended) or the latest version from github.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#backends">Backends</a></li>
 
       <li><a href="#packages">Packages</a></li>
           </ul>
