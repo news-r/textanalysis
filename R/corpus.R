@@ -2,7 +2,7 @@
 #' 
 #' Build a corpus from documents or a directory of text files.
 #' 
-#' @param doc First \code{document}, a \code{list}, or a \code{vector} of documents.
+#' @param document First \code{document}, a \code{list}, or a \code{vector} of documents.
 #' @param ... Objects inheriting of class \code{document} to build a corpus.
 #' @param directory Path to a directory of text files.
 #' @param update_lexicon Whether to update the lexicon, see \code{\link{update_lexicon}}.
@@ -21,13 +21,13 @@
 #' 
 #' @name corpus
 #' @export
-corpus <- function(doc, ..., update_lexicon = TRUE, update_inverse_index = TRUE) UseMethod("corpus")
+corpus <- function(document, ..., update_lexicon = TRUE, update_inverse_index = TRUE) UseMethod("corpus")
 
 #' @rdname corpus
 #' @method corpus document
 #' @export
-corpus.document <- function(doc, ..., update_lexicon = TRUE, update_inverse_index = TRUE) {
-  corpus <- call_julia("Corpus", JuliaObject(list(doc, ...)))
+corpus.document <- function(document, ..., update_lexicon = TRUE, update_inverse_index = TRUE) {
+  corpus <- call_julia("Corpus", JuliaObject(list(document, ...)))
   corpus <- .construct_corpus(corpus)
   if(update_lexicon) update_lexicon(corpus)
   if(update_inverse_index) update_inverse_index(corpus)
@@ -37,8 +37,8 @@ corpus.document <- function(doc, ..., update_lexicon = TRUE, update_inverse_inde
 #' @rdname corpus
 #' @method corpus documents
 #' @export
-corpus.documents <- function(doc, ..., update_lexicon = TRUE, update_inverse_index = TRUE) {
-  corpus <- call_julia("Corpus", JuliaObject(doc))
+corpus.documents <- function(document, ..., update_lexicon = TRUE, update_inverse_index = TRUE) {
+  corpus <- call_julia("Corpus", JuliaObject(document))
   corpus <- .construct_corpus(corpus)
   if(update_lexicon) update_lexicon(corpus)
   if(update_inverse_index) update_inverse_index(corpus)
@@ -55,6 +55,43 @@ directory_corpus <- function(directory, update_lexicon = TRUE, update_inverse_in
   if(update_lexicon) update_lexicon(corpus)
   if(update_inverse_index) update_inverse_index(corpus)
   return(corpus)
+}
+
+#' Add document
+#' 
+#' Add a document to a corpus.
+#' 
+#' @inheritParams standardize
+#' @param document An object of class \code{document}.
+#' 
+#' @examples
+#' \dontrun{
+#' init_textanalysis()
+#' 
+#' # build document
+#' doc1 <- string_document("First document.")
+#' doc2 <- string_document("Second document.")
+#' 
+#' # length 1
+#' (corpus <- corpus(doc1))
+#' push_document(corpus, doc2)
+#'
+#' # length 2
+#' corpus
+#' }
+#' 
+#' @name push_document
+#' @export
+push_document <- function(corpus, document) UseMethod("push_document")
+
+#' @rdname push_document
+#' @method push_document corpus
+#' @export
+push_document.corpus <- function(corpus, document){
+  assert_that(is_missing("document"))
+  warning_in_place("corpus")
+  call_julia("push!", corpus, document)
+  invisible()
 }
 
 #' Standardize

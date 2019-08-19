@@ -7,19 +7,20 @@
 \alias{directory_corpus}
 \title{Corpus}
 \usage{
-corpus(doc, ..., update_lexicon = TRUE, update_inverse_index = TRUE)
-
-\method{corpus}{document}(doc, ..., update_lexicon = TRUE,
+corpus(document, ..., update_lexicon = TRUE,
   update_inverse_index = TRUE)
 
-\method{corpus}{documents}(doc, ..., update_lexicon = TRUE,
+\method{corpus}{document}(document, ..., update_lexicon = TRUE,
+  update_inverse_index = TRUE)
+
+\method{corpus}{documents}(document, ..., update_lexicon = TRUE,
   update_inverse_index = TRUE)
 
 directory_corpus(directory, update_lexicon = TRUE,
   update_inverse_index = TRUE)
 }
 \arguments{
-\item{doc}{First \code{document}, a \code{list}, or a \code{vector} of documents.}
+\item{document}{First \code{document}, a \code{list}, or a \code{vector} of documents.}
 
 \item{...}{Objects inheriting of class \code{document} to build a corpus.}
 
