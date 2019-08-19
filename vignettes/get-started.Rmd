@@ -73,7 +73,7 @@ get_text(docs)
 
 ## Corpus
 
-With our documents constructed and clean we can build a corpus of our documents. You can do so with `corpus(docs)`, however we will do so with a dataset of the package: a set of 1,045 Reuters articles on 10 different commodities.
+With our documents constructed and clean we can build a corpus of our documents. You can do so with `corpus(docs)`, however we will do so with a sample of dataset of the package: a set of 1,045 Reuters articles on 10 different commodities.
 
 ```{r}
 data("reuters")
@@ -81,10 +81,12 @@ data("reuters")
 dplyr::count(reuters, category, sort = TRUE)
 ```
 
-Since we 
+We'll use the function `to_documents` which has methods for character vectors and data.frame, to build multiple documents at once, we'll just take 3 documents.
 
 ```{r}
-docs <- to_documents(reuters, text = text)
+docs <- reuters %>%
+  dplyr::slice(1:3) %>% 
+  to_documents(text = text)
 prepare(docs)
 (crps <- corpus(docs))
 ```
@@ -106,10 +108,43 @@ You could also fetch thse lexical frequency of a specific word.
 lexical_frequency(crps, "corn")
 ```
 
+You can even assess the sentiment of documents.
+
+```{r}
+sentiment(crps)
+```
+
 ## Document-term Matrix
 
 Now that we have a corpus we can compute the document-term matrix, which is the core of a multitude of computations and models.
 
 ```{r}
 (dtm <- document_term_matrix(crps))
+```
+
+A document-term matrix will enable you to compute various frequency-related matrices, like tf-idf (term-frequency inverse document frequency), or even Okapi BM-25.
+
+```{r}
+tf <- tf(dtm)
+tfidf <- tf_idf(dtm)
+okapi <- bm_25(dtm)
+```
+
+Note that the functions ran above do not return the words themselves, you can obtain these with the `lexicon` function. This could be done with a function such as `bind_lexicon` declared below: very straightforward, simply add a column for the words (lexicon).
+
+```{r}
+# function to bind the lexicon to our matrices
+bind_lexicon <- function(data){
+  data %>% 
+    as.data.frame() %>% 
+    dplyr::bind_cols(
+      lexicon %>% 
+        dplyr::select(-n),
+      .
+    )
+}
+
+bind_lexicon(tf)
+bind_lexicon(tfidf)
+bind_lexicon(okapi)
 ```

@@ -13,5 +13,5 @@ set_seed <- function(x) {
   x <- as.integer(x)
   julia_library("Random")
   expr <- paste0("Random.seed!(", x,")")
-  julia_eval(expr)
+  julia_command(expr)
 }

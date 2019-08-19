@@ -158,7 +158,7 @@
 <div id="corpus" class="section level2">
 <h2 class="hasAnchor">
 <a href="#corpus" class="anchor"></a>Corpus</h2>
-<p>With our documents constructed and clean we can build a corpus of our documents. You can do so with <code><a href="../reference/corpus.html">corpus(docs)</a></code>, however we will do so with a dataset of the package: a set of 1,045 Reuters articles on 10 different commodities.</p>
+<p>With our documents constructed and clean we can build a corpus of our documents. You can do so with <code><a href="../reference/corpus.html">corpus(docs)</a></code>, however we will do so with a sample of dataset of the package: a set of 1,045 Reuters articles on 10 different commodities.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"reuters"</span>)
 
 dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/tally.html">count</a></span>(reuters, category, <span class="dt">sort =</span> <span class="ot">TRUE</span>)
@@ -175,35 +175,105 @@ dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse
 <span class="co">#&gt;  8 gas         54</span>
 <span class="co">#&gt;  9 barley      51</span>
 <span class="co">#&gt; 10 rubber      49</span></code></pre></div>
-<p>Since we</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">docs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/to_documents.html">to_documents</a></span>(reuters, <span class="dt">text =</span> text)
+<p>We’ll use the function <code>to_documents</code> which has methods for character vectors and data.frame, to build multiple documents at once, we’ll just take 3 documents.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">docs &lt;-<span class="st"> </span>reuters <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/to_documents.html">to_documents</a></span>(<span class="dt">text =</span> text)
 <span class="kw"><a href="../reference/prepare.html">prepare</a></span>(docs)
 <span class="co">#&gt; ⚠ This function changes `documents` in place!</span>
 (crps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/corpus.html">corpus</a></span>(docs))
-<span class="co">#&gt; ℹ A corpus of 1045 documents.</span></code></pre></div>
+<span class="co">#&gt; ℹ A corpus of 3 documents.</span></code></pre></div>
 <p>We can already do a lot more with a corpus than mere documents, like extracting the lexicon, computing its size (number of unique words), and more.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lexicon_size.html">lexicon_size</a></span>(crps)
-<span class="co">#&gt; [1] 8461</span>
+<span class="co">#&gt; [1] 196</span>
 lexicon &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lexicon.html">lexicon</a></span>(crps)
 
 lexicon <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="op">-</span>n) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)
 <span class="co">#&gt; # A tibble: 5 x 2</span>
-<span class="co">#&gt;   words      n</span>
-<span class="co">#&gt;   &lt;chr&gt;  &lt;int&gt;</span>
-<span class="co">#&gt; 1 mln     1985</span>
-<span class="co">#&gt; 2 tonnes  1721</span>
-<span class="co">#&gt; 3 nil     1404</span>
-<span class="co">#&gt; 4 pct     1065</span>
-<span class="co">#&gt; 5 corn     840</span></code></pre></div>
+<span class="co">#&gt;   words        n</span>
+<span class="co">#&gt;   &lt;chr&gt;    &lt;int&gt;</span>
+<span class="co">#&gt; 1 exchange    13</span>
+<span class="co">#&gt; 2 coffee      12</span>
+<span class="co">#&gt; 3 rubber       8</span>
+<span class="co">#&gt; 4 trading      8</span>
+<span class="co">#&gt; 5 trade        5</span></code></pre></div>
 <p>You could also fetch thse lexical frequency of a specific word.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lexical_frequency.html">lexical_frequency</a></span>(crps, <span class="st">"corn"</span>)
-<span class="co">#&gt; [1] 0.007812209</span></code></pre></div>
+<span class="co">#&gt; [1] 0</span></code></pre></div>
+<p>You can even assess the sentiment of documents.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/sentiment.html">sentiment</a></span>(crps)
+<span class="co">#&gt; [1] 0.5596958 0.4871549 0.5085609</span></code></pre></div>
+</div>
+<div id="document-term-matrix" class="section level2">
+<h2 class="hasAnchor">
+<a href="#document-term-matrix" class="anchor"></a>Document-term Matrix</h2>
 <p>Now that we have a corpus we can compute the document-term matrix, which is the core of a multitude of computations and models.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dtm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/document_term_matrix.html">document_term_matrix</a></span>(crps))
 <span class="co">#&gt; Julia Object of type DocumentTermMatrix.</span>
 <span class="co">#&gt; A DocumentTermMatrix</span></code></pre></div>
+<p>A document-term matrix will enable you to compute various frequency-related matrices, like tf-idf (term-frequency inverse document frequency), or even Okapi BM-25.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tf.html">tf</a></span>(dtm)
+tfidf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tf_idf.html">tf_idf</a></span>(dtm)
+okapi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bm_25.html">bm_25</a></span>(dtm)</code></pre></div>
+<p>Note that the functions ran above do not return the words themselves, you can obtain these with the <code>lexicon</code> function. This could be done with a function such as <code>bind_lexicon</code> declared below: very straightforward, simply add a column for the words (lexicon).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># function to bind the lexicon to our matrices</span>
+bind_lexicon &lt;-<span class="st"> </span><span class="cf">function</span>(data){
+  data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span>(
+      lexicon <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>n),
+      .
+    )
+}
+
+<span class="kw">bind_lexicon</span>(tf)
+<span class="co">#&gt; # A tibble: 196 x 4</span>
+<span class="co">#&gt;    words           V1     V2     V3</span>
+<span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 introduced 0       0.0185 0     </span>
+<span class="co">#&gt;  2 producers  0       0.0185 0     </span>
+<span class="co">#&gt;  3 crude      0.00518 0      0     </span>
+<span class="co">#&gt;  4 move       0       0.0185 0     </span>
+<span class="co">#&gt;  5 indonesian 0       0      0.0244</span>
+<span class="co">#&gt;  6 korea      0.00518 0      0     </span>
+<span class="co">#&gt;  7 production 0       0.0185 0     </span>
+<span class="co">#&gt;  8 physicals  0.00518 0      0     </span>
+<span class="co">#&gt;  9 months     0.00518 0      0     </span>
+<span class="co">#&gt; 10 chairman   0.0104  0      0     </span>
+<span class="co">#&gt; # … with 186 more rows</span>
+<span class="kw">bind_lexicon</span>(tfidf)
+<span class="co">#&gt; # A tibble: 196 x 4</span>
+<span class="co">#&gt;    words           V1     V2     V3</span>
+<span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 introduced 0       0.0203 0     </span>
+<span class="co">#&gt;  2 producers  0       0.0203 0     </span>
+<span class="co">#&gt;  3 crude      0.00569 0      0     </span>
+<span class="co">#&gt;  4 move       0       0.0203 0     </span>
+<span class="co">#&gt;  5 indonesian 0       0      0.0268</span>
+<span class="co">#&gt;  6 korea      0.00569 0      0     </span>
+<span class="co">#&gt;  7 production 0       0.0203 0     </span>
+<span class="co">#&gt;  8 physicals  0.00569 0      0     </span>
+<span class="co">#&gt;  9 months     0.00569 0      0     </span>
+<span class="co">#&gt; 10 chairman   0.0114  0      0     </span>
+<span class="co">#&gt; # … with 186 more rows</span>
+<span class="kw">bind_lexicon</span>(okapi)
+<span class="co">#&gt; # A tibble: 196 x 4</span>
+<span class="co">#&gt;    words         V1    V2    V3</span>
+<span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 introduced  0     2.94  0   </span>
+<span class="co">#&gt;  2 producers   0     2.94  0   </span>
+<span class="co">#&gt;  3 crude       1.67  0     0   </span>
+<span class="co">#&gt;  4 move        0     2.94  0   </span>
+<span class="co">#&gt;  5 indonesian  0     0     3.24</span>
+<span class="co">#&gt;  6 korea       1.67  0     0   </span>
+<span class="co">#&gt;  7 production  0     2.94  0   </span>
+<span class="co">#&gt;  8 physicals   1.67  0     0   </span>
+<span class="co">#&gt;  9 months      1.67  0     0   </span>
+<span class="co">#&gt; 10 chairman    1.19  0     0   </span>
+<span class="co">#&gt; # … with 186 more rows</span></code></pre></div>
 </div>
   </div>
 
@@ -215,6 +285,7 @@ lexicon <span class="op">%&gt;%</span><span class="st"> </span>
 <li><a href="#setup">Setup</a></li>
       <li><a href="#document">Document</a></li>
       <li><a href="#corpus">Corpus</a></li>
+      <li><a href="#document-term-matrix">Document-term Matrix</a></li>
       </ul>
 </div>
       </div>
