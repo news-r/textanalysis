@@ -101,7 +101,11 @@ prepare.documents <- function(text, remove_corrupt_utf8 = TRUE, remove_case = TR
   strip_indefinite_articles = FALSE, strip_definite_articles = FALSE, strip_preposition = FALSE, 
   strip_pronouns = FALSE, ...){
 
-  purrr::map(text, prepare,  remove_corrupt_utf8 = remove_corrupt_utf8, remove_case = remove_case, strip_stopwords = strip_stopwords, 
+  warning_in_place("documents")
+
+  quiet_prepare <- purrr::quietly(prepare)
+
+  purrr::map(text, quiet_prepare,  remove_corrupt_utf8 = remove_corrupt_utf8, remove_case = remove_case, strip_stopwords = strip_stopwords, 
     strip_numbers = strip_numbers, strip_html_tags = strip_html_tags, strip_punctuation = strip_punctuation, remove_words = remove_words,
     strip_non_letters = strip_non_letters, strip_sparse_terms = strip_sparse_terms, strip_frequent_terms = strip_frequent_terms, 
     strip_articles = strip_articles, strip_indefinite_articles = strip_indefinite_articles, strip_definite_articles = strip_definite_articles,
