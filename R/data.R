@@ -1,8 +1,12 @@
-#' Hamlet
+#' Reuters
 #'
-#' Hamlet by William Shakespeare.
+#' Reuters articles on ten different commodities.
 #'
-#' @format A character string (\code{vector} of length 1).
+#' @format A data.frame of 1045 rows and 2 columns
+#' \describe{
+#'   \item{\code{text}}{ text of article}
+#'   \item{\code{category}}{ category, one of 10}
+#' }
 #' 
-#' @source \url{http://www.gutenberg.org/ebooks/1524}
-"hamlet"
+#' @source \url{https://github.com/news-r/nltk4r}
+"reuters"
