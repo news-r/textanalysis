@@ -22,7 +22,7 @@ This document will walk you through the general concepts of textanalysis and dem
 library(textanalysis)
 ```
 
-Because the package depends on Julia we must initialise the session.
+Because the package depends on Julia we _must_ initialise the session.
 
 ```{r}
 init_textanalysis()
@@ -57,7 +57,7 @@ get_text(doc) # see the document changed!
 
 This is somewhat puzzling for us R users but it actually happens for good reasons: textanalysis does not need to make a copy of the object, this allows processing more data.
 
-However, you will not use the package in this manner as you have multiple documents to process at once, you can do so with the `to_documents` function which will process multiple documents from a vector or data.frame
+However, you will not use the package in this manner as you have multiple documents to process at once, you can do so with the `to_documents` function which will process multiple documents from a vector or data.frame. All functions previously used also work on objects of class `documents`. 
 
 ```{r}
 texts <- c(
@@ -66,4 +66,48 @@ texts <- c(
 )
 
 (docs <- to_documents(texts))
+
+prepare(docs)
+get_text(docs)
+```
+
+## Corpus
+
+With our documents constructed and clean we can build a corpus of our documents. You can do so with `corpus(docs)`, however we will do so with a dataset of the package: a set of 1,045 Reuters articles on 10 different commodities.
+
+```{r}
+data("reuters")
+
+dplyr::count(reuters, category, sort = TRUE)
+```
+
+Since we 
+
+```{r}
+docs <- to_documents(reuters, text = text)
+prepare(docs)
+(crps <- corpus(docs))
+```
+
+We can already do a lot more with a corpus than mere documents, like extracting the lexicon, computing its size (number of unique words), and more.
+
+```{r}
+lexicon_size(crps)
+lexicon <- lexicon(crps)
+
+lexicon %>% 
+  dplyr::arrange(-n) %>% 
+  dplyr::slice(1:5)
+```
+
+You could also fetch thse lexical frequency of a specific word.
+
+```{r}
+lexical_frequency(crps, "corn")
+```
+
+Now that we have a corpus we can compute the document-term matrix, which is the core of a multitude of computations and models.
+
+```{r}
+(dtm <- document_term_matrix(crps))
 ```

@@ -51,3 +51,27 @@ get_text(doc)
 ```
 
 Notice something important, the document (`doc` object in our case) is cleanded _in place_. This means the function `prepare` does not return the cleaned input and rather cleans the object in the environment. This is useful when dealing with large amount of text as these _are not_ copied.
+
+Though it may look like the document is now somewhat messed up with all the whitespaces inserted (as replacement to punctuation and other things) it is not, e.g.: textanalysis will still extract tokens correctly.
+
+```{r}
+get_tokens(doc)
+```
+
+Note that textanalysis also comes with a stemmer.
+
+```{r}
+stem_words(doc)
+get_text(doc)
+```
+
+Also, though there are numerous functions to clean text all can be applied efficiently using `prepare`: the corresponsding Julia function applies them much more efficiently than using individually. You will likely not see a difference when working with a small number of documents. If you do use them separately ensure you apply them in the correct order, i.g.: do not strip the punctuation before the html tags (see example below).
+
+```{r}
+str <- "This is <span>html</span>."
+doc <- string_document(str)
+
+# DONT DO THAT
+strip_punctuation(doc)
+get_text(doc)
+```
