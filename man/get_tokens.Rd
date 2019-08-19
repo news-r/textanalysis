@@ -3,12 +3,15 @@
 \name{get_tokens}
 \alias{get_tokens}
 \alias{get_tokens.document}
+\alias{get_tokens.documents}
 \alias{get_tokens.corpus}
 \title{Extract Tokens}
 \usage{
 get_tokens(document)
 
 \method{get_tokens}{document}(document)
+
+\method{get_tokens}{documents}(document)
 
 \method{get_tokens}{corpus}(document)
 }

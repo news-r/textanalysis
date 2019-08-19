@@ -165,9 +165,9 @@ to_documents.data.frame <- function(documents, ..., text, title = NULL,
   }
 
   if(type == "ngram")
-    .construct_documents(documents, "ngram_documents")
+    .construct_documents(new_docs, "ngram_documents")
   else
-    .construct_documents(documents)
+    .construct_documents(new_docs)
 }
 
 #' Extract Text
@@ -255,17 +255,20 @@ get_tokens.document <- function(document){
   call_julia("tokens", document)
 }
 
-#' @rdname get_text
-#' @method get_text documents
+#' @rdname get_tokens
+#' @method get_tokens documents
 #' @export
 get_tokens.documents <- function(document){
-  tks <- purrr::map(document, get_tokens) %>% 
-    unlist()
-
-  tibble::tibble(
-    text = tks,
-    document = seq_along(1:length(tks))
-  )
+  text <- tibble::tibble()
+  for(i in 1:length(document)){
+    txt <- call_julia("tokens", document[[i]])
+    tib <- tibble::tibble(
+      tokens = txt,
+      document = i
+    )
+    text <- dplyr::bind_rows(text, tib)
+  }
+  return(text)
 }
 
 #' @rdname get_tokens

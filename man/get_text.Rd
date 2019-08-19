@@ -5,7 +5,6 @@
 \alias{get_text.document}
 \alias{get_text.documents}
 \alias{get_text.corpus}
-\alias{get_tokens.documents}
 \title{Extract Text}
 \usage{
 get_text(document)
@@ -15,8 +14,6 @@ get_text(document)
 \method{get_text}{documents}(document)
 
 \method{get_text}{corpus}(document)
-
-\method{get_text}{documents}(document)
 }
 \arguments{
 \item{document}{A document as returned by the \code{*_document} 
