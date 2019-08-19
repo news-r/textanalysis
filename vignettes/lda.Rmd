@@ -1,0 +1,47 @@
+---
+title: "Latent Dirichlet Allocation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Latent Dirichlet Allocation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+In this vignette we attempt to fit a Latent Dirichlet Allocation model (LDA) to the reuters dataset. The dataset contains Reuters articles that fall on 10 different commodities: let's see if we can build a model to correctly classify those articles. 
+
+> This is really to demonstrate how one would go about that. This example suffers from class imbalance, we do not split our dataset and simply train on the all documents.
+
+```{r}
+library(dplyr)
+library(textanalysis)
+
+init_textanalysis()
+
+data("reuters")
+
+count(reuters, category, sort = TRUE)
+
+docs <- to_documents(reuters, text = text)
+prepare(docs, strip_numbers = FALSE)
+crps <- corpus(docs)
+
+dtm <- document_term_matrix(crps)
+
+lda_data <- lda(dtm, 10L, 10000L)
+
+tfidf <- tf_idf(dtm)
+km <- kmeans(tfidf, centers = 10L)
+
+reuters %>% 
+  mutate(class = km$cluster) %>% 
+  count(class, category) %>% 
+  arrange(class) %>% 
+  filter(class == 3)
+```
