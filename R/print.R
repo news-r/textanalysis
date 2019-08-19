@@ -27,3 +27,12 @@ print.corpus <- function(x, ...){
     ...
   )
 }
+
+#' @export
+print.ddtm <- function(x, ...){
+  cat(
+    crayon::blue(cli::symbol$info), 
+    "A document-term matrix.\n",
+    ...
+  )
+}
