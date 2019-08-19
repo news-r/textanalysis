@@ -3,15 +3,18 @@
 \name{init}
 \alias{init}
 \alias{init_textanalysis}
-\alias{setup_textanalysis}
+\alias{init_stringanalysis}
 \alias{install_textanalysis}
+\alias{install_stringanalysis}
 \title{Initialise Session}
 \usage{
 init_textanalysis(...)
 
-setup_textanalysis(...)
+init_stringanalysis(...)
 
 install_textanalysis(version = c("stable", "latest"))
+
+install_stringanalysis(version = c("stable", "latest"))
 }
 \arguments{
 \item{...}{Arguments passed to \link[JuliaCall]{julia_setup}.}
@@ -19,17 +22,36 @@ install_textanalysis(version = c("stable", "latest"))
 \item{version}{Whether to install the stable version from the 
 registry (recommended) or the latest version from github.}
 }
+\value{
+Invisibly returns \code{TRUE} is successful.
+}
 \description{
-Initialise a session, installs TextAnalysis Juia dependency if needed.
+Initialise a session, installs TextAnalysis or StringAnalysis
+Juia dependency if needed.
 }
 \details{
-Some functions currently require the \code{latest} Github version.
+Some functions might require the \code{latest} Github version.
 }
+\section{Backends}{
+
+Two backends are available, 
+\href{https://github.com/JuliaText/TextAnalysis.jl}{TextAnalysis} and 
+\href{https://github.com/zgornel/StringAnalysis.jl}{StringAnalysis}. 
+The former is the original repository while the second is a hard-fork,
+of the former which is "designed to provide a richer, faster and orthogonal API."
+}
+
 \section{Packages}{
 
 Packages installed by \code{init_textanalysis} are:
 \itemize{
   \item{\code{TextAnalysis}}
+  \item{\code{Languages}}
+}
+
+Packages installed by \code{init_stringanalysis} are:
+\itemize{
+  \item{\code{StringAnalysis}}
   \item{\code{Languages}}
 }
 }
