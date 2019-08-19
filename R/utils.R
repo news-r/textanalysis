@@ -45,3 +45,7 @@ warning_in_place <- function(what){
   expr <- paste0("sd, ", func)
   julia_eval(paste0("prepare!(", expr, ")"))
 }
+
+.get_backend <- function(){
+  getOption("TEXTANALYSIS_BACKEND")
+}

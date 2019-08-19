@@ -4,6 +4,7 @@
 \alias{init}
 \alias{init_textanalysis}
 \alias{init_stringanalysis}
+\alias{switch_backend}
 \alias{install_textanalysis}
 \alias{install_stringanalysis}
 \title{Initialise Session}
@@ -11,6 +12,8 @@
 init_textanalysis(...)
 
 init_stringanalysis(...)
+
+switch_backend(...)
 
 install_textanalysis(version = c("stable", "latest"))
 

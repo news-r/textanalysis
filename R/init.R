@@ -42,6 +42,7 @@ init_textanalysis <- function(...){
   julia_install_package_if_needed("Languages")
   julia_library("TextAnalysis")
   cat(crayon::green(cli::symbol$tick), "textanalysis backend initialised.\n")
+  options("TEXTANALYSIS_BACKEND" = "textanalysis")
   invisible(TRUE)
 }
 
@@ -53,7 +54,21 @@ init_stringanalysis <- function(...){
   julia_install_package_if_needed("Languages")
   julia_library("StringAnalysis")
   cat(crayon::green(cli::symbol$tick), "stringanalysis backend initialised.\n")
+  options("TEXTANALYSIS_BACKEND" = "stringanalysis")
   invisible(TRUE)
+}
+
+#' @rdname init
+#' @export
+switch_backend <- function(...){
+  backend <- .get_backend()
+  assert_that(!is.null(backend), msg = "No backend setup, see `init_*` functions.")
+  cat(crayon::red(cli::symbol$cross), " Unloading ", backend, ".\n", sep = "")
+  switch(
+    backend,
+    textanalysis = init_stringanalysis(..., rebuild = TRUE),
+    stringanalysis = init_textanalysis(..., rebuild = TRUE)
+  )
 }
 
 #' @rdname init
