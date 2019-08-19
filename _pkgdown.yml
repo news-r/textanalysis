@@ -12,6 +12,8 @@ navbar:
       menu:
         - text: "Preprocessing"
           href: "articles/prepare.html"
+        - text: "Gender Classifier"
+          href: "articles/naive-bayes.html"
   right:
     - icon: fa-balance-scale
       href: LICENSE.html

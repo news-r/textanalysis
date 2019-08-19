@@ -3,5 +3,7 @@ pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
   get-started: get-started.html
+  lda: lda.html
+  naive-bayes: naive-bayes.html
   prepare: prepare.html
 

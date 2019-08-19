@@ -18,7 +18,7 @@ In this vignette we attempt to fit a Latent Dirichlet Allocation model (LDA) to 
 
 > This is really to demonstrate how one would go about that. This example suffers from class imbalance, we do not split our dataset and simply train on the all documents.
 
-```{r}
+```r
 library(dplyr)
 library(textanalysis)
 

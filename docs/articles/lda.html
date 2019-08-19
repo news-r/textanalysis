@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prepare • textanalysis</title>
+<title>Latent Dirichlet Allocation • textanalysis</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <link href="../news-r.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Prepare">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Latent Dirichlet Allocation">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -101,60 +101,45 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Prepare</h1>
+      <h1>Latent Dirichlet Allocation</h1>
             
       
       
-      <div class="hidden name"><code>prepare.Rmd</code></div>
+      <div class="hidden name"><code>lda.Rmd</code></div>
 
     </div>
 
     
     
-<p>Text is inherently dirty and removes extensive cleaning, thankfully textanalysis has all the functions you need to obtain clean text ready to model. The core function to preprocess data is <code>prepare</code> as it always efficiently applying multiple <code>strip_*</code> functions.</p>
-<ul>
-<li><code>prepare</code></li>
-<li><code>remove_case</code></li>
-<li><code>remove_corrupt_utf8</code></li>
-<li><code>remove_words</code></li>
-<li><code>strip_articles</code></li>
-<li><code>strip_indefinite_articles</code></li>
-<li><code>strip_definite_articles</code></li>
-<li><code>strip_preposition</code></li>
-<li><code>strip_pronouns</code></li>
-<li><code>strip_stopwords</code></li>
-<li><code>strip_numbers</code></li>
-<li><code>strip_non_letters</code></li>
-<li><code>strip_spares_terms</code></li>
-<li><code>strip_frequent_terms</code></li>
-<li><code>strip_html_tags</code></li>
-</ul>
-<p>The functions listed above apply to objects of class <code>document</code>, <code>documents</code>, and <code>corpus</code>, so we’ll create a dirty document to clean.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">str &lt;-<span class="st"> "ThIs Is SoMe &lt;span&gt;vEry&lt;/span&gt; Dirty TeXT!.!!"</span>
+<p>In this vignette we attempt to fit a Latent Dirichlet Allocation model (LDA) to the reuters dataset. The dataset contains Reuters articles that fall on 10 different commodities: let’s see if we can build a model to correctly classify those articles.</p>
+<blockquote>
+<p>This is really to demonstrate how one would go about that. This example suffers from class imbalance, we do not split our dataset and simply train on the all documents.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(textanalysis)
 
-(doc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/documents.html">string_document</a></span>(str))
-<span class="co">#&gt; ℹ A single document.</span></code></pre></div>
-<p>Now we can apply the <code>prepare</code> function to the document.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/prepare.html">prepare</a></span>(doc)
-<span class="co">#&gt; ⚠ This function changes `document` in place!</span>
-<span class="kw"><a href="../reference/get_text.html">get_text</a></span>(doc)
-<span class="co">#&gt; [1] "    dirty text"</span></code></pre></div>
-<p>Notice something important, the document (<code>doc</code> object in our case) is cleanded <em>in place</em>. This means the function <code>prepare</code> does not return the cleaned input and rather cleans the object in the environment. This is useful when dealing with large amount of text as these <em>are not</em> copied.</p>
-<p>Though it may look like the document is now somewhat messed up with all the whitespaces inserted (as replacement to punctuation and other things) it is not, e.g.: textanalysis will still extract tokens correctly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_tokens.html">get_tokens</a></span>(doc)
-<span class="co">#&gt; [1] "dirty" "text"</span></code></pre></div>
-<p>Note that textanalysis also comes with a stemmer.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/stem_words.html">stem_words</a></span>(doc)
-<span class="kw"><a href="../reference/get_text.html">get_text</a></span>(doc)
-<span class="co">#&gt; [1] "dirti text"</span></code></pre></div>
-<p>Also, though there are numerous functions to clean text all can be applied efficiently using <code>prepare</code>: the corresponsding Julia function applies them much more efficiently than using individually. You will likely not see a difference when working with a small number of documents. If you do use them separately ensure you apply them in the correct order, i.g.: do not strip the punctuation before the html tags (see example below).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">str &lt;-<span class="st"> "This is &lt;span&gt;html&lt;/span&gt;."</span>
-doc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/documents.html">string_document</a></span>(str)
+<span class="kw"><a href="../reference/init.html">init_textanalysis</a></span>()
 
-<span class="co"># DONT DO THAT</span>
-<span class="kw"><a href="../reference/strip_punctuation.html">strip_punctuation</a></span>(doc)
-<span class="kw"><a href="../reference/get_text.html">get_text</a></span>(doc)
-<span class="co">#&gt; [1] "This is spanhtmlspan"</span></code></pre></div>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"reuters"</span>)
+
+<span class="kw"><a href="https://dplyr.tidyverse.org/reference/tally.html">count</a></span>(reuters, category, <span class="dt">sort =</span> <span class="ot">TRUE</span>)
+
+docs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/to_documents.html">to_documents</a></span>(reuters, <span class="dt">text =</span> text)
+<span class="kw"><a href="../reference/prepare.html">prepare</a></span>(docs, <span class="dt">strip_numbers =</span> <span class="ot">FALSE</span>)
+crps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/corpus.html">corpus</a></span>(docs)
+
+dtm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/document_term_matrix.html">document_term_matrix</a></span>(crps)
+
+lda_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lda.html">lda</a></span>(dtm, 10L, 10000L)
+
+tfidf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tf_idf.html">tf_idf</a></span>(dtm)
+km &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/kmeans">kmeans</a></span>(tfidf, <span class="dt">centers =</span> 10L)
+
+reuters <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">class =</span> km<span class="op">$</span>cluster) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/tally.html">count</a></span>(class, category) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(class) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(class <span class="op">==</span><span class="st"> </span><span class="dv">3</span>)</code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

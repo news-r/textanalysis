@@ -1,0 +1,75 @@
+---
+title: "Naive Bayes Classifier"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Naive Bayes Classifier}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+In this example we use first names from NLTK to build a Naive Bayes classifier to predict gender. This is taken from the [NLTK book](https://www.nltk.org/book/ch06.html). This is a very basic example that only uses the last letter of the word to predict the gender but nonetheless achieves over 70% accuracy.
+
+First we simply load the data and extract the last letter of each first name.
+
+```{r}
+library(dplyr)
+library(textanalysis)
+
+init_textanalysis()
+
+classes <- factor(c("male", "female"))
+model <- init_naive_classifer(classes)
+
+# get data and shuffle
+first_names <- nltk4r::first_names(to_r = TRUE) %>% 
+  slice(sample(1:n())) %>% 
+  mutate(last_letter = substr(name, nchar(name), nchar(name)))
+
+head(first_names)
+```
+
+We can then split into training and testing data sets then initialise and train our model.
+
+```{r}
+# split
+split <- floor(0.7 * nrow(first_names))
+train <- first_names[1:split, ]
+test <- first_names[(split + 1):nrow(first_names), ]
+
+# train
+train_naive_classifier(model, train, last_letter, gender)
+```
+
+Now we can predict and measure accuracy.
+
+```{r}
+# predict test
+classes <- predict_class(model, test, last_letter)
+
+# bind test and predictions
+predicted <- test %>% 
+  bind_cols(classes) %>% 
+  mutate(
+    predicted_gender = case_when(
+      male > .5 ~ "male",
+      TRUE ~ "female"
+    ),
+    accuracy = case_when(
+      predicted_gender == gender ~ TRUE,
+      TRUE ~ FALSE
+    )
+  )
+
+# predictions
+head(predicted)
+
+# accuracy
+sum(predicted$accuracy) / nrow(predicted)
+```
