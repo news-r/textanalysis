@@ -47,7 +47,6 @@ init_textanalysis <- function(...){
 }
 
 #' @rdname init
-#' @export
 init_stringanalysis <- function(...){
   julia <- julia_setup(...)
   julia_install_package_if_needed("StringAnalysis")
@@ -59,7 +58,6 @@ init_stringanalysis <- function(...){
 }
 
 #' @rdname init
-#' @export
 switch_backend <- function(...){
   backend <- .get_backend()
   assert_that(!is.null(backend), msg = "No backend setup, see `init_*` functions.")
@@ -81,7 +79,6 @@ install_textanalysis <- function(version = c("stable", "latest")){
 }
 
 #' @rdname init
-#' @export
 install_stringanalysis <- function(version = c("stable", "latest")){
   version <- match.arg(version)
   pkg <- "StringAnalysis"
