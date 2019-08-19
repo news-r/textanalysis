@@ -1,4 +1,4 @@
-# initialised?
+# initialised textanalysis?
 has_ta <- function(x) {
   julia_exists(x)
 }
@@ -9,6 +9,24 @@ on_failure(has_ta) <- function(call, env) {
     crayon::red("not found"),
     " see `",
     crayon::blue("init_textanalysis"),
+    "`",
+    " or `",
+    crayon::blue("init_stringanalysis"),
+    "`."
+  )
+}
+
+# initialised stringanalysis?
+has_sa <- function(x) {
+  julia_exists(x)
+}
+
+on_failure(has_sa) <- function(call, env) {
+  paste0(
+    "Dependency ", 
+    crayon::red("not found"),
+    " see `",
+    crayon::blue("init_stringanalysis"),
     "`"
   )
 }
